@@ -1,0 +1,7 @@
+
+## Credentials
+config.json
+
+## Artifacts
+*pycache*
+*.egg-info*
