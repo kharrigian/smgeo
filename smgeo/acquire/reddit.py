@@ -73,9 +73,9 @@ class RedditData(object):
             config_file = os.path.join(os.path.abspath(__file__).split(__file__)[0],
                                     "config.json")
             config = json.load(open(config_file,"r"))["reddit"]
-            _praw = Reddit(**config)
+            self._praw = Reddit(**config)
             ## Initialize API Objects
-            self.api = PushshiftAPI(_praw)
+            self.api = PushshiftAPI(self._praw)
         else:
             ## Initialize API Objects
             self.api = PushshiftAPI()
@@ -469,7 +469,7 @@ class RedditData(object):
         end_epoch = self._get_end_date(end_date)
         ## Construct Query
         query_params = {
-            "q":query,
+            "title":'"{}"'.format(query),
             "before":end_epoch,
             "after":start_epoch,
             "limit":limit
