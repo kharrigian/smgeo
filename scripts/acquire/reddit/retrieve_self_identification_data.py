@@ -10,6 +10,7 @@ DATA_DIR = "./data/raw/reddit/labels/"
 from time import sleep
 from datetime import datetime
 import argparse
+import sys
 
 ## External Libaries
 import pandas as pd
@@ -76,7 +77,7 @@ def retrieve_submission_comments(filtered_submissions,
     ## Retrieve Comments
     comment_data = []
     failed_submissions = []
-    for url in tqdm(urls, desc="Submissions", total=len(urls)):
+    for url in tqdm(urls, desc="Submissions", total=len(urls), file=sys.stdout):
         data_retrieved = False
         for _ in range(max_retries):
             try:
@@ -115,7 +116,10 @@ def retrieve_location_submissions(subreddits=["amateurroomporn"],
     submissions = []
     for sub in subreddits:
         logger.info(f"Retrieving Submissions for r/{sub}")
-        for start, stop in tqdm(zip(date_range[:-1], date_range[1:]), desc="Time Period", total = len(date_range) - 1):
+        for start, stop in tqdm(zip(date_range[:-1], date_range[1:]),
+                                desc="Time Period",
+                                total = len(date_range) - 1,
+                                file=sys.stdout):
             for _ in range(max_retries):
                 try:
                     rng_submissions = reddit.retrieve_subreddit_submissions(sub,
