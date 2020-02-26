@@ -275,6 +275,43 @@ class RedditData(object):
             df = df.reset_index(drop=True)
         return df
 
+    def _getSubComments(self,
+                        comment,
+                        allComments):
+        """
+
+        """
+        ## Append Comment
+        allComments.append(comment)
+        ## Get Replies
+        if not hasattr(comment, "replies"):
+            replies = comment.comments()
+        else:
+            replies = comment.replies
+        ## Recurse
+        for child in replies:
+            self._getSubComments(child, allComments)
+
+    def _retrieve_submission_comments_praw(self,
+                                           submission_id):
+        """
+
+        """
+        ## Retrieve Submission
+        sub = self._praw.submission(submission_id)
+        ## Initialize Comment List
+        comments = sub.comments
+        ## Recursively Expand Comment Forest
+        commentsList = []
+        for comment in comments:
+            self._getSubComments(comment, commentsList)
+        ## Ignore Comment Forest Artifacts
+        commentsList = [c for c in commentsList if "MoreComments" not in str(type(c))]
+        ## Parse
+        if len(commentsList) > 0:
+            comment_df = self._parse_psaw_comment_request(commentsList)
+            return comment_df
+
     def retrieve_subreddit_submissions(self,
                                        subreddit,
                                        start_date=None,
@@ -332,6 +369,9 @@ class RedditData(object):
         req = self.api.search_comments(link_id=f"t3_{submission}")
         ## Retrieve and Parse data
         df = self._parse_psaw_comment_request(req)
+        ## Fall Back to PRAW
+        if self._init_praw and len(df) == 0:
+            df = self._retrieve_submission_comments_praw(submission_id=submission)
         if len(df) > 0:
             df = df.sort_values("created_utc", ascending=True)
             df = df.reset_index(drop=True)
