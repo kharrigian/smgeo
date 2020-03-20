@@ -1,6 +1,6 @@
 
 """
-General text tokenizer, geared toward social media text
+General text tokenizer, geared toward social media text.
 """
 
 ####################
@@ -15,17 +15,191 @@ from html.parser import HTMLParser
 
 ## External Libraries
 import emoji
-from nltk.corpus import stopwords
-
-## Local Modules
-from .helpers import flatten
 
 ####################
 ### Resources
 ####################
 
-## Stopwords
-STOPWORDS = stopwords.words("english")
+## Stopwords (These are English stopwords from NLTK)
+STOPWORDS = set(['i',
+                'me',
+                'my',
+                'myself',
+                'we',
+                'our',
+                'ours',
+                'ourselves',
+                'you',
+                "you're",
+                "you've",
+                "you'll",
+                "you'd",
+                'your',
+                'yours',
+                'yourself',
+                'yourselves',
+                'he',
+                'him',
+                'his',
+                'himself',
+                'she',
+                "she's",
+                'her',
+                'hers',
+                'herself',
+                'it',
+                "it's",
+                'its',
+                'itself',
+                'they',
+                'them',
+                'their',
+                'theirs',
+                'themselves',
+                'what',
+                'which',
+                'who',
+                'whom',
+                'this',
+                'that',
+                "that'll",
+                'these',
+                'those',
+                'am',
+                'is',
+                'are',
+                'was',
+                'were',
+                'be',
+                'been',
+                'being',
+                'have',
+                'has',
+                'had',
+                'having',
+                'do',
+                'does',
+                'did',
+                'doing',
+                'a',
+                'an',
+                'the',
+                'and',
+                'but',
+                'if',
+                'or',
+                'because',
+                'as',
+                'until',
+                'while',
+                'of',
+                'at',
+                'by',
+                'for',
+                'with',
+                'about',
+                'against',
+                'between',
+                'into',
+                'through',
+                'during',
+                'before',
+                'after',
+                'above',
+                'below',
+                'to',
+                'from',
+                'up',
+                'down',
+                'in',
+                'out',
+                'on',
+                'off',
+                'over',
+                'under',
+                'again',
+                'further',
+                'then',
+                'once',
+                'here',
+                'there',
+                'when',
+                'where',
+                'why',
+                'how',
+                'all',
+                'any',
+                'both',
+                'each',
+                'few',
+                'more',
+                'most',
+                'other',
+                'some',
+                'such',
+                'no',
+                'nor',
+                'not',
+                'only',
+                'own',
+                'same',
+                'so',
+                'than',
+                'too',
+                'very',
+                's',
+                't',
+                'can',
+                'will',
+                'just',
+                'don',
+                "don't",
+                'should',
+                "should've",
+                'now',
+                'd',
+                'll',
+                'm',
+                'o',
+                're',
+                've',
+                'y',
+                'ain',
+                'aren',
+                "aren't",
+                'couldn',
+                "couldn't",
+                'didn',
+                "didn't",
+                'doesn',
+                "doesn't",
+                'hadn',
+                "hadn't",
+                'hasn',
+                "hasn't",
+                'haven',
+                "haven't",
+                'isn',
+                "isn't",
+                'ma',
+                'mightn',
+                "mightn't",
+                'mustn',
+                "mustn't",
+                'needn',
+                "needn't",
+                'shan',
+                "shan't",
+                'shouldn',
+                "shouldn't",
+                'wasn',
+                "wasn't",
+                'weren',
+                "weren't",
+                'won',
+                "won't",
+                'wouldn',
+                "wouldn't"])
 
 ## Pronouns
 PRONOUNS = set([ 
@@ -363,7 +537,11 @@ def simpleTokenize(text):
 
     return zippedStr
 
-def addAllnonempty(master, smaller):
+def addAllnonempty(master,
+                   smaller):
+    """
+    Retrieve Non-empty Groups
+    """
     for s in smaller:
         strim = s.strip()
         if (len(strim) > 0):
@@ -387,6 +565,35 @@ def normalize_text(text):
     text = HTMLParser().unescape(text)
     return text
 
+####################
+### Helpers
+####################
+
+def get_ngrams(tokens,
+               min_n=1,
+               max_n=1):
+    """
+    Get n-gram tuples from a list of tokens
+
+    Args:
+        tokens (list): List of strings
+        min_n (int): Minimum n-gram
+        max_n (int): Maximum ngram
+    
+    Returns:
+        all_ngrams (list of tuples): Ngram lists.
+    """
+    ## Check Inputs
+    if min_n > max_n:
+        raise ValueError("min_n must be less than max_n")
+    if min_n == 0:
+        raise ValueError("min_n should be greater than 0")
+    ## Generate N-Gram Tuples
+    all_ngrams = []
+    for n in range(min_n, max_n+1):
+        all_ngrams.extend(list(zip(*[tokens[i:] for i in range(n)])))
+    return all_ngrams
+
 ## Emoji Separation
 def split_emojis(t):
     """
@@ -405,7 +612,20 @@ def split_emojis(t):
         split_t.append(t[cur_ind:])
     return split_t
 
+## Flattening List of Lists
+def flatten(l):
+    """
+    Flatten a list of lists by one level.
 
+    Args:
+        l (list of lists): List of lists
+
+    Returns:
+        flattened_list (list): Flattened list
+    """
+    flattened_list = [item for sublist in l for item in sublist]
+    return flattened_list
+    
 ####################
 ### Tokenizer
 ####################
@@ -413,7 +633,7 @@ def split_emojis(t):
 class Tokenizer(object):
 
     """
-    Tokenizer
+    Tokenizer. Can be imported by itself if desired.
     """
 
     def __init__(self,
@@ -436,7 +656,7 @@ class Tokenizer(object):
         forms of post-processing.
 
         Args:
-            stopwords (list or None): Stopword list
+            stopwords (list or None): Stopword list. Default is English stopwords from NLTK.
             keep_case (bool): If False, make tokens lowercase
             negate_handling (bool): If True, modify proceeding token. For
                                 example, "Can not wait" -> "Can not_wait"
@@ -745,7 +965,11 @@ class Tokenizer(object):
         Returns:
             tokens (list of str): Tokens, now excluding tokens that have digits.
         """
-        tokens = list(filter(lambda t:  not any(char.isdigit() for char in t), tokens))
+        tokens = list(filter(lambda t:  not any(char.isdigit() for char in t) or \
+                                        t.startswith("#") or \
+                                        t.startswith("@") or \
+                                        t.startswith("u/"),
+                                        tokens))
         return tokens
 
     def _replace_numbers(self,
@@ -760,7 +984,10 @@ class Tokenizer(object):
             tokens (list of str): Tokens, now with <NUMERIC> in place of tokens
                         that contain digits.
         """
-        tokens = list(map(lambda t: "<NUMERIC>" if any(char.isdigit() for char in t) else t, tokens))
+        tokens = list(map(lambda t: "<NUMERIC>" if (any(char.isdigit() for char in t) and \
+                                                    not t.startswith("#") and \
+                                                    not t.startswith("@") and \
+                                                    not t.startswith("u/")) else t, tokens))
         return tokens
     
     def _expand_emoji_groups(self,
@@ -817,6 +1044,11 @@ class Tokenizer(object):
         ## Upper Flag
         if self.upper_flag:
             tokens = self._upper_flag(tokens)
+        ## Numeric Values
+        if not self.keep_numbers:
+            tokens = self._strip_numbers(tokens)
+        else:
+            tokens = self._replace_numbers(tokens)
         ## Hashtags
         if not self.keep_hashtags:
             tokens = self._strip_hashtag(tokens)
@@ -824,7 +1056,7 @@ class Tokenizer(object):
             tokens = self._clean_hashtag(tokens)
         ## Case Normalization
         if not self.keep_case:
-            tokens = list(map(lambda i: i.lower() if i != "<UPPER_FLAG>" else i, tokens))
+            tokens = list(map(lambda i: i.lower() if not i.startswith("<") and not i.endswith(">") else i, tokens))
         ## Retweet Tokens
         if not self.keep_retweets:
             tokens = self._strip_retweets(tokens)
@@ -851,11 +1083,6 @@ class Tokenizer(object):
         ## Punctuation
         if not self.keep_punctuation:
             tokens = self._strip_punctuation(tokens)
-        ## Numeric Values
-        if not self.keep_numbers:
-            tokens = self._strip_numbers(tokens)
-        else:
-            tokens = self._replace_numbers(tokens)
         ## Emojis
         tokens = self._expand_emoji_groups(tokens)
         if self.emoji_handling is not None:
