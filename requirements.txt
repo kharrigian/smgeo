@@ -12,3 +12,4 @@ nltk
 pytest
 pytest-cov
 emoji
+unidecode
