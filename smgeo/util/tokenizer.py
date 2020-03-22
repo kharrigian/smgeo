@@ -807,7 +807,7 @@ class Tokenizer(object):
             tokens (list of str): Tokens without RT token
         """
         tokens = list(filter(lambda t: t.lower() != "rt", tokens))
-        if tokens[0] == ":":
+        if len(tokens) > 1 and tokens[0] == ":":
             tokens = tokens[1:]
         return tokens
     
