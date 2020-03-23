@@ -1,0 +1,3 @@
+geonameid,city,city_ascii,alternatenames,latitude,longitude,feature_class,feature_code,country_code,cc2,admin1_code,admin2_code,admin3_code,admin4_code,population,elevation,dem,timezone,modification_date,country,continent,ISO,state,state_ascii,county,county_ascii
+0,Washington,Washington,,,,,,US,,,,,,,,,America/New_York,10/15/08,United States,North America,US,District of Columbia,District of Columbia,,
+1,Washington DC,Washington DC,,,,,,US,,,,,,,,,America/New_York,10/15/08,United States,North America,US,District of Columbia,District of Columbia,,
