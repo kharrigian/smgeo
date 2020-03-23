@@ -13,3 +13,4 @@ pytest
 pytest-cov
 emoji
 unidecode
+geopy==1.21.0

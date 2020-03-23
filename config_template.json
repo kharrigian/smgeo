@@ -5,5 +5,8 @@
         "username": "REDDIT_USERNAME",
         "password": "REDDIT_PASSWORD",
         "user_agent": "APP_USER_AGENT"
+    },
+    "google":{
+        "api_key":"API_KEY"
     }
 }
