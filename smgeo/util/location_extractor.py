@@ -135,6 +135,21 @@ geo_abbreviations = pd.read_csv(geo_abbr_file)
 geo_affix_file = f"{DATA_DIR}resources/location_affixes.json"
 geo_affixes = json.load(open(geo_affix_file, "r"))
 
+## Country to Continent Map (Filling in Missing Countries)
+country_continent_map = geo_resources.set_index("country")["continent"].to_dict()
+country_continent_map["Antarctica"] = "Antarctica"
+country_continent_map["South Georgia and the South Sandwich Islands"] = "Antarctica"
+country_continent_map["French Southern Territories"] = "Antarctica"
+country_continent_map['The Bahamas'] = "North America"
+country_continent_map['Curaçao'] = "South America"
+country_continent_map["Côte d'Ivoire"] = "Africa"
+country_continent_map['Myanmar (Burma)'] = "Asia"
+country_continent_map['Åland Islands'] = "Europe"
+country_continent_map['Federated States of Micronesia'] = "Oceania"
+country_continent_map['Cape Verde'] = "Africa"
+country_continent_map['Palestine'] = "Asia"
+country_continent_map['Vatican City'] = "Europe"
+
 ##########################
 ### Language Data Resources
 ##########################
