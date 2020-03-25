@@ -1,5 +1,4 @@
 
-REQUEST_LIMIT = 100000
 
 #####################
 ### Imports
@@ -7,13 +6,32 @@ REQUEST_LIMIT = 100000
 
 ## Standard Libary
 import os
+import sys
 import json
 import datetime
+import requests
+from time import sleep
+from collections import Counter
 
 ## External Libaries
 import pandas as pd
+from tqdm import tqdm
 from praw import Reddit
 from psaw import PushshiftAPI
+
+## Local
+from ..util.helpers import chunks
+from ..util.logging import initialize_logger
+
+#####################
+### Globals
+#####################
+
+## Maximum Number of Results
+REQUEST_LIMIT = 100000
+
+## Logging
+LOGGER = initialize_logger()
 
 #####################
 ### Wrapper
@@ -26,7 +44,9 @@ class RedditData(object):
     """
 
     def __init__(self,
-                 init_praw=False):
+                 init_praw=False,
+                 max_retries=3,
+                 backoff=2):
         """
         Initialize a class to retrieve Reddit data based on
         use case and format into friendly dataframes.
@@ -36,12 +56,19 @@ class RedditData(object):
                     from Reddit API. Requires existence of 
                     config.json with adequate API credentials
                     in home directory
+            max_retries (int): Maximum number of query attempts before
+                               returning null result
+            backoff (int): Baseline number of seconds between failed 
+                           query attempts. Increases exponentially with
+                           each failed query attempt
         
         Returns:
             None
         """
         ## Class Attributes
         self._init_praw = init_praw
+        self._max_retries = max_retries
+        self._backoff = backoff
         ## Initialize APIs
         self._initialize_api_wrappers()
     
@@ -311,7 +338,75 @@ class RedditData(object):
         if len(commentsList) > 0:
             comment_df = self._parse_psaw_comment_request(commentsList)
             return comment_df
+    
+    def _parse_metadata(self,
+                        metadata):
+        """
 
+        """
+        metadata_columns = ["display_name",
+                            "restrict_posting",
+                            "wiki_enabled",
+                            "title",
+                            "primary_color",
+                            "active_user_count",
+                            "display_name_prefixed",
+                            "accounts_active",
+                            "public_traffic",
+                            "subscribers",
+                            "name",
+                            "quarantine",
+                            "hide_ads",
+                            "emojis_enabled",
+                            "advertiser_category",
+                            "public_description",
+                            "spoilers_enabled",
+                            "all_original_content",
+                            "key_color",
+                            "created",
+                            "submission_type",
+                            "allow_videogifs",
+                            "allow_polls",
+                            "collapse_deleted_comments",
+                            "allow_discovery",
+                            "link_flair_enabled",
+                            "subreddit_type",
+                            "suggested_comment_sort",
+                            "id",
+                            "over18",
+                            "description",
+                            "restrict_commenting",
+                            "allow_images",
+                            "lang",
+                            "whitelist_status",
+                            "url",
+                            "created_utc"]
+        metadata = dict((c, metadata[c]) for c in metadata_columns)
+        return metadata
+                          
+    def retrieve_subreddit_metadata(self,
+                                    subreddit):
+        """
+
+        """
+        ## Validate Configuration
+        if not self._init_praw:
+            raise ValueError("Must have initialized class with PRAW to access subreddit metadata")
+        ## Load Object and Fetch Metadata
+        backoff = self._backoff
+        for _ in range(self._max_retries):
+            try:
+                sub = self._praw.subreddit(subreddit)
+                sub._fetch()
+                ## Parse
+                metadata = vars(sub)
+                metadata_clean = self._parse_metadata(metadata)
+                return metadata_clean
+            except Exception as e:
+                LOGGER.info(e)
+                sleep(backoff)
+                backoff = 2 ** backoff
+    
     def retrieve_subreddit_submissions(self,
                                        subreddit,
                                        start_date=None,
@@ -337,17 +432,25 @@ class RedditData(object):
         ## Get Start/End Epochs
         start_epoch = self._get_start_date(start_date)
         end_epoch = self._get_end_date(end_date)
-        ## Construct Call
-        req = self.api.search_submissions(after=start_epoch,
-                                          before=end_epoch,
-                                          subreddit=subreddit,
-                                          limit=limit)
-        ## Retrieve and Parse Data
-        df = self._parse_psaw_submission_request(req)
-        if len(df) > 0:
-            df = df.sort_values("created_utc", ascending=True)
-            df = df.reset_index(drop=True)
-        return df
+        ## Make Query Attempt
+        backoff = self._backoff
+        for _ in range(self._max_retries):
+            try:
+                ## Construct Call
+                req = self.api.search_submissions(after=start_epoch,
+                                                  before=end_epoch,
+                                                  subreddit=subreddit,
+                                                  limit=limit)
+                ## Retrieve and Parse Data
+                df = self._parse_psaw_submission_request(req)
+                if len(df) > 0:
+                    df = df.sort_values("created_utc", ascending=True)
+                    df = df.reset_index(drop=True)
+                return df
+            except Exception as e:
+                LOGGER.info(e)
+                sleep(backoff)
+                backoff = 2 ** backoff
     
     def retrieve_submission_comments(self,
                                      submission):
@@ -365,17 +468,26 @@ class RedditData(object):
             submission = submission.split("comments/")[1].split("/")[0]
         if submission.startswith("t3_"):
             submission = submission.replace("t3_","")
-        ## Construct Call
-        req = self.api.search_comments(link_id=f"t3_{submission}")
-        ## Retrieve and Parse data
-        df = self._parse_psaw_comment_request(req)
-        ## Fall Back to PRAW
-        if self._init_praw and len(df) == 0:
-            df = self._retrieve_submission_comments_praw(submission_id=submission)
-        if len(df) > 0:
-            df = df.sort_values("created_utc", ascending=True)
-            df = df.reset_index(drop=True)
-        return df
+        ## Make Query Attempt
+        backoff = self._backoff
+        for _ in range(self._max_retries):
+            try:
+                ## Construct Call
+                req = self.api.search_comments(link_id=f"t3_{submission}")
+                ## Retrieve and Parse data
+                df = self._parse_psaw_comment_request(req)
+                ## Fall Back to PRAW
+                if self._init_praw and len(df) == 0:
+                    df = self._retrieve_submission_comments_praw(submission_id=submission)
+                ## Sort
+                if len(df) > 0:
+                    df = df.sort_values("created_utc", ascending=True)
+                    df = df.reset_index(drop=True)
+                return df
+            except Exception as e:
+                LOGGER.info(e)
+                sleep(backoff)
+                backoff = 2 ** backoff
     
     def retrieve_author_comments(self,
                                  author,
@@ -404,29 +516,47 @@ class RedditData(object):
         start_epoch = self._get_start_date(start_date)
         end_epoch = self._get_end_date(end_date)
         ## Automatic Limit Detection
+        backoff = self._backoff
+        for _ in range(self._max_retries):
+            try:
+                if limit is None:
+                    if self._init_praw:
+                        self.api._search_func = self.api._search
+                    counts = next(self.api.search_comments(author=author,
+                                                           before=end_epoch,
+                                                           after=start_epoch,
+                                                           aggs='author'))
+                    limit = sum([c["doc_count"] for c in counts["author"]])
+                    if self._init_praw:
+                        self.api._search_func = self.api._praw_search
+                break
+            except Exception as e:
+                LOGGER.info(e)
+                sleep(backoff)
+                backoff = 2 ** backoff
         if limit is None:
-            if self._init_praw:
-                self.api._search_func = self.api._search
-            counts = next(self.api.search_comments(author=author,
-                                                   before=end_epoch,
-                                                   after=start_epoch,
-                                                   aggs='author'))
-            limit = sum([c["doc_count"] for c in counts["author"]])
-            if self._init_praw:
-                self.api._search_func = self.api._praw_search
+            return None
         ## Construct query Params
         query_params = {"before":end_epoch,
                         "after":start_epoch,
                         "limit":limit,
                         "author":author}
-        ## Construct Call
-        req = self.api.search_comments(**query_params)
-        ## Retrieve and Parse Data
-        df = self._parse_psaw_comment_request(req)
-        if len(df) > 0:
-            df = df.sort_values("created_utc", ascending=True)
-            df = df.reset_index(drop=True)
-        return df
+        ## Make Query Attempt
+        backoff = self._backoff
+        for _ in range(self._max_retries):
+            try:
+                ## Construct Call
+                req = self.api.search_comments(**query_params)
+                ## Retrieve and Parse Data
+                df = self._parse_psaw_comment_request(req)
+                if len(df) > 0:
+                    df = df.sort_values("created_utc", ascending=True)
+                    df = df.reset_index(drop=True)
+                return df
+            except Exception as e:
+                LOGGER.info(e)
+                sleep(backoff)
+                backoff = 2 ** backoff
     
 
     def retrieve_author_submissions(self,
@@ -456,32 +586,50 @@ class RedditData(object):
         start_epoch = self._get_start_date(start_date)
         end_epoch = self._get_end_date(end_date)
         ## Automatic Limit Detection
+        backoff = self._backoff
+        for _ in range(self._max_retries):
+            try:
+                if limit is None:
+                    if self._init_praw:
+                        self.api._search_func = self.api._search
+                    counts = next(self.api.search_submissions(author=author,
+                                                            before=end_epoch,
+                                                            after=start_epoch,
+                                                            aggs='author'))
+                    limit = sum([c["doc_count"] for c in counts["author"]])
+                    if self._init_praw:
+                        self.api._search_func = self.api._praw_search
+                break
+            except Exception as e:
+                LOGGER.info(e)
+                sleep(backoff)
+                backoff = 2 ** backoff
         if limit is None:
-            if self._init_praw:
-                self.api._search_func = self.api._search
-            counts = next(self.api.search_submissions(author=author,
-                                                      before=end_epoch,
-                                                      after=start_epoch,
-                                                      aggs='author'))
-            limit = sum([c["doc_count"] for c in counts["author"]])
-            if self._init_praw:
-                self.api._search_func = self.api._praw_search
+            return None
         ## Construct query Params
         query_params = {"before":end_epoch,
                         "after":start_epoch,
                         "limit":limit,
                         "author":author}
-        ## Construct Call
-        req = self.api.search_submissions(**query_params)
-        ## Retrieve and Parse Data
-        df = self._parse_psaw_submission_request(req)
-        if len(df) > 0:
-            df = df.sort_values("created_utc", ascending=True)
-            df = df.reset_index(drop=True)
-        return df
+        ## Make Query Attempt
+        backoff = self._backoff
+        for _ in range(self._max_retries):
+            try:
+                ## Construct Call
+                req = self.api.search_submissions(**query_params)
+                ## Retrieve and Parse Data
+                df = self._parse_psaw_submission_request(req)
+                if len(df) > 0:
+                    df = df.sort_values("created_utc", ascending=True)
+                    df = df.reset_index(drop=True)
+                return df
+            except Exception as e:
+                LOGGER.info(e)
+                sleep(backoff)
+                backoff = 2 ** backoff
 
     def search_for_submissions(self,
-                               query,
+                               query=None,
                                subreddit=None,
                                start_date=None,
                                end_date=None,
@@ -509,24 +657,33 @@ class RedditData(object):
         end_epoch = self._get_end_date(end_date)
         ## Construct Query
         query_params = {
-            "title":'"{}"'.format(query),
             "before":end_epoch,
             "after":start_epoch,
             "limit":limit
         }
+        if query is not None:
+            query_params["title"] = '"{}"'.format(query)
         if subreddit is not None:
             query_params["subreddit"] = subreddit
-        ## Construct Call
-        req = self.api.search_submissions(**query_params)
-        ## Retrieve and Parse Data
-        df = self._parse_psaw_submission_request(req)
-        if len(df) > 0:
-            df = df.sort_values("created_utc", ascending=True)
-            df = df.reset_index(drop=True)
-        return df
+        ## Make Query Attempt
+        backoff = self._backoff
+        for _ in range(self._max_retries):
+            try:
+                ## Construct Call
+                req = self.api.search_submissions(**query_params)
+                ## Retrieve and Parse Data
+                df = self._parse_psaw_submission_request(req)
+                if len(df) > 0:
+                    df = df.sort_values("created_utc", ascending=True)
+                    df = df.reset_index(drop=True)
+                return df
+            except Exception as e:
+                LOGGER.info(e)
+                sleep(backoff)
+                backoff = 2 ** backoff
     
     def search_for_comments(self,
-                            query,
+                            query=None,
                             subreddit=None,
                             start_date=None,
                             end_date=None,
@@ -554,22 +711,164 @@ class RedditData(object):
         end_epoch = self._get_end_date(end_date)
         ## Construct Query
         query_params = {
-            "q":query,
             "before":end_epoch,
             "after":start_epoch,
             "limit":limit
         }
         if subreddit is not None:
             query_params["subreddit"] = subreddit
-        ## Construct Call
-        req = self.api.search_comments(**query_params)
-        ## Retrieve and Parse Data
-        df = self._parse_psaw_comment_request(req)
-        if len(df) > 0:
-            df = df.sort_values("created_utc", ascending=True)
-            df = df.reset_index(drop=True)
-        return df
+        if query is not None:
+            query_params["q"] = query
+        ## Make Query Attempt
+        backoff = self._backoff
+        for _ in range(self._max_retries):
+            try:
+                ## Construct Call
+                req = self.api.search_comments(**query_params)
+                ## Retrieve and Parse Data
+                df = self._parse_psaw_comment_request(req)
+                if len(df) > 0:
+                    df = df.sort_values("created_utc", ascending=True)
+                    df = df.reset_index(drop=True)
+                return df
+            except Exception as e:
+                LOGGER.info(e)
+                sleep(backoff)
+                backoff = 2 ** backoff
+    
+    def identify_active_subreddits(self,
+                                   start_date=None,
+                                   end_date=None,
+                                   search_freq=5):
+        """
+        Identify active subreddits based on submission histories
+
+        Args:
+            start_date (str, isoformat): Start date of activity
+            end_date (str, isoformat): End data of activity
+            search_freq (int): Minutes to consider per request. Lower frequency 
+                               means better coverage but longer query time.
         
+        Returns:
+            subreddit_count (pandas Series): Subreddit, Submission Count in Time Period
+        """
+        ## Get Start/End Epochs
+        start_epoch = self._get_start_date(start_date)
+        end_epoch = self._get_end_date(end_date)
+        ## Create Search Range
+        date_range = [start_epoch]
+        while date_range[-1] < end_epoch:
+            date_range.append(date_range[-1] + search_freq*60)
+        ## Query Subreddits
+        endpoint = "https://api.pushshift.io/reddit/search/submission/"
+        subreddit_count = Counter()
+        for start, stop in tqdm(zip(date_range[:-1], date_range[1:]), total = len(date_range)-1, file=sys.stdout):
+            ## Make Get Request
+            req = f"{endpoint}?after={start}&before={stop}&filter=subreddit&size=1000"
+            ## Cycle Through Attempts
+            backoff = self._backoff
+            for _ in range(self._max_retries):
+                try:
+                    resp = requests.get(req)
+                    ## Parse Request
+                    if resp.status_code == 200:
+                        data = resp.json()["data"]
+                        sub_count = Counter([i["subreddit"] for i in data])
+                        subreddit_count = subreddit_count + sub_count
+                        sleep(self.api.backoff)
+                        break
+                    else: ## Sleep with exponential backoff
+                        LOGGER.info(f"Request failed with status code {resp.status_code}")
+                        sleep(backoff)
+                        backoff = 2 ** backoff
+                except Exception as e:
+                    LOGGER.info(e)
+                    sleep(backoff)
+                    backoff = 2 ** backoff
+        ## Format
+        subreddit_count = pd.Series(subreddit_count).sort_values(ascending=False)
+        ## Drop User-Subreddits
+        subreddit_count = subreddit_count.loc[subreddit_count.index.map(lambda i: not i.startswith("u_"))]
+        return subreddit_count
+
+    def retrieve_subreddit_user_history(self,
+                                        subreddit,
+                                        start_date=None,
+                                        end_date=None,
+                                        history_type="comment",
+                                        docs_per_chunk=5000):
+        """
+        Args:
+            subreddit (str): Subreddit of interest
+            start_date (str, isoformat or None): Start date or None for querying posts
+            end_date (str, isoformat or None): End date or None for querying posts
+            history_type (str): "comment" or "submission": Type of post to get author counts for
+        
+        Returns:
+            authors (Series): Author post counts in subreddit. Ignores deleted authors
+                              and attempts to filter out bots
+        """
+        ## Get Start/End Epochs
+        start_epoch = self._get_start_date(start_date)
+        end_epoch = self._get_end_date(end_date)
+        ## Endpoint
+        if history_type == "comment":
+            endpoint = self.api.search_comments
+        elif history_type == "submission":
+            endpoint = self.api.search_submissions
+        else:
+            raise ValueError("history_type parameter must be either comment or submission")
+        ## Identify Number of Documents
+        backoff = self._backoff
+        docs = None
+        for _ in range(self._max_retries):
+            try:
+                docs = endpoint(subreddit=subreddit,
+                                after=start_epoch,
+                                before=end_epoch,
+                                size=0,
+                                aggs="subreddit",
+                                filter=["id"])
+                doc_count = next(docs)["subreddit"]
+                if len(doc_count) == 0:
+                    return None
+                doc_count = doc_count[0]["doc_count"]
+                break
+            except Exception as e:
+                LOGGER.info(e)
+                sleep(backoff)
+                backoff = 2 ** backoff
+        if docs is None:
+            return None
+        ## Create Uniform Time Chunks
+        n_chunks = doc_count // docs_per_chunk + 1
+        chunksize = (end_epoch-start_epoch) / n_chunks
+        date_range = [start_epoch]
+        while date_range[-1] < end_epoch:
+            date_range.append(date_range[-1]+chunksize)
+        date_range = list(map(int, date_range))
+        ## Query Authors
+        authors = Counter()
+        for start, stop in tqdm(zip(date_range[:-1], date_range[1:]), total=n_chunks, file=sys.stdout):
+            backoff = self._backoff
+            for _ in range(self._max_retries):
+                try:
+                    req = endpoint(subreddit=subreddit,
+                                after=start,
+                                before=stop,
+                                filter="author")
+                    resp = [a.author for a in req]
+                    resp = list(filter(lambda i: i != "[deleted]" and i != "[removed]" and not i.lower().endswith("bot"), resp))
+                    authors += Counter(resp)
+                    break
+                except Exception as e:
+                    LOGGER.info(e)
+                    sleep(backoff)
+                    backoff = 2 ** backoff
+        ## Format
+        authors = pd.Series(authors).sort_values(ascending=False)
+        return authors
+
     def convert_utc_epoch_to_datetime(self,
                                       epoch):
         """
