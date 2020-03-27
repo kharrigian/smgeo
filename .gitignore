@@ -5,3 +5,6 @@ config.json
 ## Artifacts
 *pycache*
 *.egg-info*
+
+## Data
+data/raw/reddit/authors/*.json.gz
