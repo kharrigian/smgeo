@@ -8,3 +8,4 @@ config.json
 
 ## Data
 data/raw/reddit/authors/*.json.gz
+data/processed/reddit/authors/*.json.gz
