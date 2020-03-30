@@ -13,4 +13,6 @@ pytest
 pytest-cov
 emoji
 unidecode
-geopy==1.21.0
+geopy>=1.21.0
+reverse-geocoder>=1.5.1
+global-land-mask>=0.0.3
