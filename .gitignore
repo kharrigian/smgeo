@@ -11,3 +11,7 @@ data/raw/reddit/authors/*.json.gz
 data/processed/reddit/authors/*.json.gz
 data/processed/reddit/features/
 data/results/
+
+## Plots
+plots/
+!plots/README.md

@@ -31,15 +31,15 @@ VOCAB_PARAMETERS = {
 }
 
 ## Modeling Parameters
-MODEL_NAME = "Global_TextOnly"
+MODEL_NAME = "Global_TextSubreddit"
 FILTER_TO_US = False
 MIN_MODEL_RESOLUTION = "administrative_area_level_1"
 TOP_K_TEXT = 1000
-TOP_K_SUBREDDITS = 1100
+TOP_K_SUBREDDITS = 400
 MIN_SUPPORT = 25
 RANDOM_STATE = 42
 USE_TEXT = True
-USE_SUBREDDIT = False
+USE_SUBREDDIT = True
 USE_TIME = False
 
 ## Cross Validation Parameters
