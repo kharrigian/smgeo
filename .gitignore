@@ -15,3 +15,6 @@ data/results/
 ## Plots
 plots/
 !plots/README.md
+
+## Models to Ignore
+models/reddit/*
