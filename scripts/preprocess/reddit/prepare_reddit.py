@@ -10,24 +10,6 @@ AUTHORS_PROCESS_DIR = "./data/processed/reddit/authors/"
 ## Multiprocessing
 NUM_PROCESSES = 8
 
-## Tokenization Parameters
-TOKENIZER_PARAMS = {
-                    "stopwords":None,
-                    "keep_case":False,
-                    "negate_handling":True,
-                    "negate_token":False,
-                    "upper_flag":False,
-                    "keep_punctuation":False,
-                    "keep_numbers":False,
-                    "expand_contractions":True,
-                    "keep_user_mentions":False,
-                    "keep_pronouns":True,
-                    "keep_url":False,
-                    "keep_hashtags":True,
-                    "keep_retweets":False,
-                    "emoji_handling":None
-                   }
-
 ## Re-run Processing on Existing data
 RERUN_PROCESSING = False
 
@@ -49,16 +31,12 @@ from multiprocessing import Pool
 from tqdm import tqdm
 
 ## Local Modules
-from smgeo.util.tokenizer import Tokenizer
-from smgeo.util.helpers import flatten
+from smgeo.model.preprocess import process_reddit_comments
 from smgeo.util.logging import initialize_logger
 
 #######################
 ### Globals
 #######################
-
-## Initialize Tokenizer
-TOKENIZER = Tokenizer(**TOKENIZER_PARAMS)
 
 ## Logging 
 LOGGER = initialize_logger()
@@ -102,28 +80,7 @@ def process_author_data(filename):
             json.dump(author_metadata, the_file)
         return
     ## Process Author Data
-    processed_author_data = []
-    comment_times = []
-    for comment in author_data:
-        comment_time_utc = datetime.utcfromtimestamp(comment["created_utc"])
-        comment_times.append(comment_time_utc)
-        comment_processed = {
-                    "text": [f"TOKEN={t}" for t in TOKENIZER.tokenize(comment["body"])],
-                    "subreddit": "SUBREDDIT={}".format(comment["subreddit"].lower()),
-                    "flair_text":[f"FLAIR_TOKEN={t}" for t in TOKENIZER.tokenize(comment["author_flair_text"])],
-                    "created_utc":{
-                                   "year":comment_time_utc.year,
-                                   "month":comment_time_utc.month,
-                                   "day":comment_time_utc.day,
-                                   "hour":comment_time_utc.hour,
-                                   "minute":comment_time_utc.minute
-                                  },
-        }
-        processed_author_data.append(comment_processed)
-    ## Sort Data (Newest Comments First)
-    processed_author_data = list(map(lambda i: i[0], 
-                                     sorted(zip(processed_author_data, comment_times), key = lambda x: x[1],
-                                            reverse=True)))
+    processed_author_data = process_reddit_comments(author_data)
     ## Cache Comments
     with gzip.open(author_outfile, "wt") as the_file:
         json.dump(processed_author_data, the_file)
