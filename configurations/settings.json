@@ -3,6 +3,7 @@
             "LABELS_DIR":"./data/raw/reddit/labels/",
             "AUTHORS_PROCESSED_DIR":"./data/processed/reddit/authors/",
             "DATA_CACHE_DIR":"./data/processed/reddit/features/",
-            "MODELS_DIR":"./models/reddit/"
+            "MODELS_DIR":"./models/reddit/",
+            "AUTHORS_RAW_DIR":"./data/raw/reddit/authors/"
             }
 }

@@ -174,20 +174,12 @@ class Vocabulary(object):
         user_data = self._select_n_recent_documents(user_data)
         user_data = self._select_first_n_tokens(user_data)
         return user_data
-    
-    def _load_and_count(self,
-                        filename):
-        """
-        Load preprocessed data and count the features.
 
-        Args:
-            filename (str): Path to a preprocessed text data file for a user.
-        
-        Returns:
-            fn_counts (dict): Token counts in the user's data file.
+    def _count(self,
+               fn_data):
         """
-        ## Load Data
-        fn_data = self._load_user_data(filename)
+
+        """
         ## Text
         if self._use_text:
             tokens = [i["text"] for i in fn_data]
@@ -218,6 +210,23 @@ class Vocabulary(object):
             "subreddit":subreddit_counts,
             "time":hour_counts
         }
+        return all_counts
+
+    def _load_and_count(self,
+                        filename):
+        """
+        Load preprocessed data and count the features.
+
+        Args:
+            filename (str): Path to a preprocessed text data file for a user.
+        
+        Returns:
+            fn_counts (dict): Token counts in the user's data file.
+        """
+        ## Load Data
+        fn_data = self._load_user_data(filename)
+        ## Count
+        all_counts = self._count(fn_data)
         return all_counts
     
     def fit(self,
