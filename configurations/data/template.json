@@ -1,0 +1,19 @@
+{
+    "NAME":"state_min5comments_250docs",
+    "MIN_RESOLUTION":"administrative_area_level_1",
+    "MIN_COMMENTS":5,
+    "VOCAB_PARAMETERS":{
+                        "text":true,
+                        "subreddits":true,
+                        "time":true,
+                        "text_vocab_max":null,
+                        "subreddit_vocab_max":null,
+                        "min_text_freq":10,
+                        "max_text_freq":null,
+                        "min_subreddit_freq":10,
+                        "max_subreddit_freq":null,
+                        "max_toks":null,
+                        "max_docs":250,
+                        "binarize_counter":true
+                        }
+}

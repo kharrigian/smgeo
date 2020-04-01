@@ -1,0 +1,8 @@
+{   
+    "reddit":{
+            "LABELS_DIR":"./data/raw/reddit/labels/",
+            "AUTHORS_PROCESSED_DIR":"./data/processed/reddit/authors/",
+            "DATA_CACHE_DIR":"./data/processed/reddit/features/",
+            "MODELS_DIR":"./models/reddit/"
+            }
+}

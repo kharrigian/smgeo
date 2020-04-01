@@ -1,46 +1,10 @@
 
+########################
+### Globals
+########################
 
-## Preprocessed Cache
-DATA_CACHE_NAME = "state_min5comments_250docs"
-
-## Directories
-LABELS_DIR = "./data/raw/reddit/labels/"
-AUTHORS_PROCESSED_DIR = "./data/processed/reddit/authors/"
-MODELS_DIR = "./models/"
-DATA_CACHE_DIR = "./data/processed/reddit/features/"
+## Place for Storing Cross Validation Results
 RESULTS_DIR = "./data/results/reddit/cross_validation/"
-
-## Dataset Parameters
-MIN_RESOLUTION = "administrative_area_level_1"
-MIN_COMMENTS = 5
-
-## Vocabulary Parameters
-VOCAB_PARAMETERS = {
-        "text":True,
-        "subreddits":True,
-        "time":True,
-        "text_vocab_max":None,
-        "subreddit_vocab_max":None,
-        "min_text_freq":10,
-        "max_text_freq":None,
-        "min_subreddit_freq":10,
-        "max_subreddit_freq":None,
-        "max_toks":None,
-        "max_docs":250,
-        "binarize_counter":True,
-}
-
-## Modeling Parameters
-MODEL_NAME = "Global_TextSubreddit"
-FILTER_TO_US = False
-MIN_MODEL_RESOLUTION = "administrative_area_level_1"
-TOP_K_TEXT = 1000
-TOP_K_SUBREDDITS = 400
-MIN_SUPPORT = 25
-RANDOM_STATE = 42
-USE_TEXT = True
-USE_SUBREDDIT = True
-USE_TIME = False
 
 ## Cross Validation Parameters
 K_FOLDS = 5
@@ -59,6 +23,7 @@ import os
 import sys
 import json
 import gzip
+import argparse
 from copy import deepcopy
 from datetime import datetime
 
@@ -69,7 +34,6 @@ import pandas as pd
 from tqdm import tqdm
 from geopy.distance import geodesic
 import matplotlib.pyplot as plt
-import reverse_geocoder as rg # pip install reverse_geocoder
 from sklearn import metrics
 from sklearn.model_selection import (KFold,
                                      StratifiedKFold,
@@ -88,54 +52,72 @@ LOGGER = initialize_logger()
 ### Helpers
 ########################
 
-def reverse_search(coordinates):
+def parse_command_line():
     """
-    Use the Geonames Database to Reverse Search Locations based on Coordinates
 
-    Args:
-        coordinates (2d-array): [Lon, Lat] values
-    
-    Returns:
-        result (list of dict): Reverse search results
     """
-    result = rg.search(list(map(tuple,coordinates[:,::-1])))
-    return result
+    ## Initialize Parser Object
+    parser = argparse.ArgumentParser(description="Reddit Geolocation Inference Cross-Validation")
+    ## Generic Arguments
+    parser.add_argument("data_config_path",
+                         help="Path to data configuration JSON file")
+    parser.add_argument("model_config_path",
+                        help="Path to model configuration JSON file")
+    ## Parse Arguments
+    args = parser.parse_args()
+    ## Check Arguments
+    if not os.path.exists(args.data_config_path):
+        raise FileNotFoundError(f"Could not find data_config_path: {args.data_config_path}")
+    if not os.path.exists(args.model_config_path):
+        raise FileNotFoundError(f"Could not find model_config_path: {args.model_config_path}")
+    return args
 
+def load_settings():
+    """
 
-def create_cross_validation_directory():
+    """
+    settings_file =  os.path.dirname(os.path.abspath(__file__)) + \
+                     "/../../../configurations/settings.json"
+    if not os.path.exists(settings_file):
+        raise FileNotFoundError(f"Could not find setting file in expected location: {settings_file}")
+    with open(settings_file, "r") as the_file:
+        settings_config = json.load(the_file)
+    return settings_config
+
+def load_data_config(args):
+    """
+
+    """
+    with open(args.data_config_path, "r") as the_file:
+        data_config = json.load(the_file)
+    return data_config
+
+def load_model_config(args):
+    """
+
+    """
+    with open(args.model_config_path, "r") as the_file:
+        model_config = json.load(the_file)
+    return model_config
+
+def create_cross_validation_directory(model_name):
     """
 
     """
     runtime = datetime.strftime(datetime.utcnow(), "%Y_%m_%d_%H_%M")
-    output_dir = f"{RESULTS_DIR}{runtime}_{MODEL_NAME}/"
+    output_dir = f"{RESULTS_DIR}{runtime}_{model_name}/"
     os.makedirs(output_dir)
     return output_dir
 
 def cache_run_parameters(run_dir,
-                         min_resolution,
-                         min_comments,
-                         vocabulary_parameters):
+                         data_config,
+                         model_config):
     """
 
     """
     config = {
-        "data":{
-            "min_resolution":min_resolution,
-            "min_comments":min_comments,
-            "vocabulary":vocabulary_parameters
-        },
-        "model":{
-            "model_name":MODEL_NAME,
-            "filter_to_us":FILTER_TO_US,
-            "min_resolution":MIN_MODEL_RESOLUTION,
-            "top_k_text":TOP_K_TEXT if USE_TEXT else 0,
-            "top_k_subreddits":TOP_K_SUBREDDITS if USE_SUBREDDIT else 0,
-            "min_support":MIN_SUPPORT,
-            "random_state":RANDOM_STATE,
-            "use_text":USE_TEXT,
-            "use_subreddit":USE_SUBREDDIT,
-            "use_time":USE_TIME
-        },
+        "data":data_config,
+        "model":model_config,
         "cross_validation":{
             "k_folds":K_FOLDS,
             "test_size":TEST_SIZE,
@@ -181,7 +163,8 @@ def filter_labels_by_resolution(labels,
     labels_filtered = labels_filtered.reset_index(drop=True).copy()
     return labels_filtered
 
-def load_metadata(author_list):
+def load_metadata(settings,
+                  author_list):
     """
     Load Author Metadata
 
@@ -191,6 +174,8 @@ def load_metadata(author_list):
     Returns:
         metadata (pandas DataFrame): Metadata dataframe
     """
+    ## Settings
+    AUTHORS_PROCESSED_DIR = settings.get("reddit").get("AUTHORS_PROCESSED_DIR")
     ## Metadata Files
     meta_files = list(map(lambda i: f"{AUTHORS_PROCESSED_DIR}{i}.meta.json.gz", author_list))
     ## Load Meta
@@ -329,7 +314,7 @@ def update_vocabulary(vocabulary,
         X_splice.extend(vocabulary._feature_inds[ftype])
         new_feature_ind[ftype] = list(range(cur_index, cur_index + len(ftype_features)))
         new_feature_names.extend(ftype_features)
-        cur_index += len(new_feature_names)
+        cur_index += len(ftype_features)
     ## Update X
     X = X[:,X_splice]
     ## Update Vocabulary
@@ -344,11 +329,18 @@ def distance_between(x, y):
     """
     return np.array(list(map(lambda i: geodesic(i[0], i[1]).miles, zip(x[:,::-1], y[:,::-1]))))
 
-def load_labels():
+def load_labels(settings,
+                data_config):
     """
 
     """
     LOGGER.info("Loading Labels and Metadata")
+    ## Directories from Settings
+    LABELS_DIR = settings.get("reddit").get("LABELS_DIR")
+    AUTHORS_PROCESSED_DIR = settings.get("reddit").get("AUTHORS_PROCESSED_DIR")
+    ## Data Parameters
+    MIN_RESOLUTION = data_config.get("MIN_RESOLUTION")
+    MIN_COMMENTS = data_config.get("MIN_COMMENTS")
     ## Load Labels
     label_file = f"{LABELS_DIR}author_labels.json.gz"
     labels = pd.read_json(label_file)
@@ -356,17 +348,26 @@ def load_labels():
     ## Filter Data Set by Resolution
     labels = filter_labels_by_resolution(labels, MIN_RESOLUTION)
     ## Load Metadata
-    metadata = load_metadata(labels["author"].tolist())
+    metadata = load_metadata(settings, labels["author"].tolist())
     ## Filter Data Set by Number of Commnets
     labels = filter_labels_by_comments(metadata, labels, MIN_COMMENTS)
     ## Merge Number of Comments
     labels = pd.merge(labels, metadata[["author","num_comments"]], how = "left", on = "author")
     return labels
 
-def prepare_feature_set(labels):
+def prepare_feature_set(settings,
+                        data_config,
+                        labels):
     """
 
     """
+    ## Settings
+    DATA_CACHE_DIR = settings.get("reddit").get("DATA_CACHE_DIR")
+    ## Data Configuration Parameters
+    DATA_CACHE_NAME = data_config.get("NAME")
+    VOCAB_PARAMETERS = data_config.get("VOCAB_PARAMETERS")
+    MIN_RESOLUTION = data_config.get("MIN_RESOLUTION")
+    MIN_COMMENTS = data_config.get("MIN_COMMENTS")
     ## Cache Directory
     data_cache_dir = f"{DATA_CACHE_DIR}{DATA_CACHE_NAME}/"
     ## Preprocess Data if Necessary, Otherwise Load Cached Version
@@ -397,13 +398,17 @@ def prepare_feature_set(labels):
         MIN_COMMENTS = VOCAB_PARAMETERS.pop("min_comments", None)
     return vocabulary, X, files, VOCAB_PARAMETERS, MIN_RESOLUTION, MIN_COMMENTS
 
-def filter_dataset_by_resolution(labels,
+def filter_dataset_by_resolution(model_config,
+                                 labels,
                                  files,
                                  X):
     """
 
     """
     LOGGER.info("Applying Location and Resolution Filters")
+    ## Configuration
+    FILTER_TO_US = model_config.get("FILTER_TO_US")
+    MIN_MODEL_RESOLUTION = model_config.get("MIN_MODEL_RESOLUTION")
     ## Filter Data to US
     if FILTER_TO_US:
         labels_ind = labels.set_index("source").loc[files]
@@ -420,13 +425,16 @@ def filter_dataset_by_resolution(labels,
     X = X[resolution_mask]
     return labels, files, X
 
-def create_split_dict(labels,
+def create_split_dict(model_config,
+                      labels,
                       files,
                       output_dir):
     """
 
     """
     LOGGER.info("Splitting Dataset")
+    ## Model Parameters
+    FILTER_TO_US = model_config.get("FILTER_TO_US")
     ## Identify Held-out Test Set
     train_dev_files, test_files = train_test_split(files,
                                                 test_size=TEST_SIZE,
@@ -457,7 +465,8 @@ def create_split_dict(labels,
         json.dump(split_dict, the_file)
     return split_dict
 
-def run_training(train_files,
+def run_training(model_config,
+                 train_files,
                  test_files,
                  train_ind,
                  test_ind,
@@ -468,6 +477,13 @@ def run_training(train_files,
     """
 
     """
+    ## Model Parameters
+    USE_TEXT = model_config.get("USE_TEXT")
+    USE_SUBREDDIT = model_config.get("USE_SUBREDDIT")
+    USE_TIME = model_config.get("USE_TIME")
+    MIN_SUPPORT = model_config.get("MIN_SUPPORT")
+    TOP_K_TEXT = model_config.get("TOP_K_TEXT")
+    TOP_K_SUBREDDITS = model_config.get("TOP_K_SUBREDDITS")
     ## Get Labels
     LOGGER.info("Isolating Coordinate Labels")
     y_train = labels.set_index("source").loc[[files[i] for i in train_ind]][["longitude","latitude"]].values
@@ -528,7 +544,8 @@ def run_training(train_files,
                            index=[files[i] for i in test_ind])
     return text_nl_scores, text_agg_nl_scores, sub_nl_scores, sub_agg_nl_scores, geo, train_res, dev_res
 
-def run_fold(fold,
+def run_fold(model_config,
+             fold,
              split_dict,
              files,
              X,
@@ -552,6 +569,7 @@ def run_fold(fold,
     dev_ind = [i for i, f in enumerate(files) if f in dev_files]
     ## Run Training Procedure
     text_nl_scores, text_agg_nl_scores, sub_nl_scores, sub_agg_nl_scores, geo, train_res, dev_res = run_training(
+            model_config=model_config,
             train_files=train_files,
             test_files=dev_files,
             train_ind=train_ind,
@@ -570,14 +588,15 @@ def run_fold(fold,
     LOGGER.info("Caching Model and Data Objects")
     if CACHE_MODELS:
         joblib.dump(geo, f"{fold_outdir}model.joblib")
-    if USE_TEXT:
+    if model_config.get("USE_TEXT"):
         text_nl_scores.to_csv(f"{fold_outdir}nl_text.csv")
         text_agg_nl_scores.to_csv(f"{fold_outdir}nl_text_agg.csv", index=False)
-    if USE_SUBREDDIT:
+    if model_config.get("USE_SUBREDDIT"):
         sub_nl_scores.to_csv(f"{fold_outdir}nl_subreddit.csv")
         sub_agg_nl_scores.to_csv(f"{fold_outdir}nl_subreddit_agg.csv", index=False)
 
-def train_full_model(split_dict,
+def train_full_model(model_config,
+                     split_dict,
                      files,
                      X,
                      vocabulary,
@@ -600,6 +619,7 @@ def train_full_model(split_dict,
     test_ind = [i for i, f in enumerate(files) if f in test_files]
     ## Run Training Procedure
     text_nl_scores, text_agg_nl_scores, sub_nl_scores, sub_agg_nl_scores, geo, train_res, test_res = run_training(
+            model_config=model_config,
             train_files=train_files,
             test_files=train_ind,
             train_ind=train_ind,
@@ -617,10 +637,10 @@ def train_full_model(split_dict,
     ## Cache Other Objects (Model, Non-localness Calculations)
     LOGGER.info("Caching Model and Data Objects")
     joblib.dump(geo, f"{model_outdir}model.joblib")
-    if USE_TEXT:
+    if model_config.get("USE_TEXT"):
         text_nl_scores.to_csv(f"{model_outdir}nl_text.csv")
         text_agg_nl_scores.to_csv(f"{model_outdir}nl_text_agg.csv", index=False)
-    if USE_SUBREDDIT:
+    if model_config.get("USE_SUBREDDIT"):
         sub_nl_scores.to_csv(f"{model_outdir}nl_subreddit.csv")
         sub_agg_nl_scores.to_csv(f"{model_outdir}nl_subreddit_agg.csv", index=False)
 
@@ -629,29 +649,43 @@ def main():
     """
 
     """
+    ## Parse Command Line
+    args = parse_command_line()
+    ## Load Settings, Configs
+    settings = load_settings()
+    data_config = load_data_config(args)
+    model_config = load_model_config(args)
     ## Create Output Directory
-    output_dir = create_cross_validation_directory()
+    output_dir = create_cross_validation_directory(model_name=model_config.get("NAME"))
     LOGGER.info(f"Results being cached in: {output_dir}")
     ## Load Labels
-    labels = load_labels()
+    labels = load_labels(settings, data_config)
     ## Prepare Feature Set (or Load Cached)
-    vocabulary, X, files, VOCAB_PARAMETERS, MIN_RESOLUTION, MIN_COMMENTS = prepare_feature_set(labels)
+    vocabulary, X, files, VOCAB_PARAMETERS, MIN_RESOLUTION, MIN_COMMENTS = prepare_feature_set(settings,
+                                                                                               data_config,
+                                                                                               labels)
     labels["num_comments"] = labels["num_comments"].map(lambda i: min(i, VOCAB_PARAMETERS["max_docs"]))
     ## Cache Cross Validation Parameters
     _ = cache_run_parameters(run_dir=output_dir,
-                             min_resolution=MIN_RESOLUTION,
-                             min_comments=MIN_COMMENTS,
-                             vocabulary_parameters=VOCAB_PARAMETERS)
+                             data_config=data_config,
+                             model_config=model_config)
     ## Filter Dataset By Desired Label Resolution
-    labels, files, X = filter_dataset_by_resolution(labels, files, X)
+    labels, files, X = filter_dataset_by_resolution(model_config,
+                                                    labels,
+                                                    files,
+                                                    X)
     ## Create Train/Dev/Test Splits
-    split_dict = create_split_dict(labels, files, output_dir)
+    split_dict = create_split_dict(model_config, 
+                                   labels,
+                                   files,
+                                   output_dir)
     ## Run Cross-Validation (If not applying to test split)
     if not RUN_ON_TEST:
         for fold in range(K_FOLDS):
             tstart = datetime.now()
             LOGGER.info(f"Beginning Fold {fold+1}/{K_FOLDS} at {tstart.isoformat()}")
-            _ = run_fold(fold,
+            _ = run_fold(model_config,
+                         fold,
                          split_dict,
                          files,
                          X,
@@ -664,7 +698,8 @@ def main():
     else:
         tstart = datetime.now()
         LOGGER.info(f"Starting Model Training at {tstart.isoformat()}")
-        _ = train_full_model(split_dict,
+        _ = train_full_model(model_config,
+                             split_dict,
                              files,
                              X,
                              vocabulary,
