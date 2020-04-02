@@ -200,6 +200,7 @@ def main():
                                          settings,
                                          users)
     ## Load Geolocation Inference Model
+    LOGGER.info("Loading Geolocation Inference Model")
     model = joblib.load(args.model_path)
     ## Prepare User Data
     X = prepare_data(model, user_data_paths)
