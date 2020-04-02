@@ -208,9 +208,11 @@ class GeolocationInference(object):
                                desc="GMM Posterior"):
             if model is None:
                 continue
-            p_c_u = np.exp(model.score_samples(coordinates)).reshape(1,-1)
             u = X[:,[ind]]
             nonzero = np.nonzero(u)[0]
+            if len(nonzero) == 0:
+                continue
+            p_c_u = np.exp(model.score_samples(coordinates)).reshape(1,-1)
             P[nonzero] += np.matmul(u[nonzero], p_c_u * self._pu[ind])
         ## Default to Prior for Users Without Features
         P[np.all(P == 0, axis=1)] += prior
