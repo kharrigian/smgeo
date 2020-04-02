@@ -1,0 +1,12 @@
+{
+    "NAME":"Global_TextSubredditTime",
+    "FILTER_TO_US":false,
+    "MIN_MODEL_RESOLUTION": "administrative_area_level_1",
+    "TOP_K_TEXT":50000,
+    "TOP_K_SUBREDDITS":1100,
+    "MIN_SUPPORT":25,
+    "USE_TEXT":true,
+    "USE_SUBREDDIT":true,
+    "USE_TIME":true,
+    "RANDOM_STATE":42
+   }

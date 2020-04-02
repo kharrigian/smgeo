@@ -1,0 +1,12 @@
+{
+    "NAME":"US_TextSubredditTime",
+    "FILTER_TO_US":true,
+    "MIN_MODEL_RESOLUTION": "locality",
+    "TOP_K_TEXT":30000,
+    "TOP_K_SUBREDDITS":650,
+    "MIN_SUPPORT":25,
+    "USE_TEXT":true,
+    "USE_SUBREDDIT":true,
+    "USE_TIME":true,
+    "RANDOM_STATE":42
+   }
