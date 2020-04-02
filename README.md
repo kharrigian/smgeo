@@ -74,3 +74,132 @@ Alternatively, to run tests and check package coverage, you can do so using
 ```
 pytest tests/ --cov=mhlib/ --cov-report=html -v -Wignore
 ```
+
+## Inference
+
+To infer the location of Reddit users using one of our pretrained models, you can use the following basic wrapper command:
+
+```
+python scripts/model/reddit/infer.py <model_path> <user_list> <output_csv>
+```
+
+* `<model_path>`: Path to a "model.joblib" file. See README in "./models/" for information about available models.
+* `<user_list>`: Path to a ".txt" file with one Reddit username per line. The code will pull comment histories for these users if they haven't already been queried.
+* `<output_csv>`: Name of a ".csv" file for storing the inferences.
+
+To see a full list of additional options for inference, you can run:
+
+```
+python scripts/model/reddit/infer.py --help
+```
+
+## Training
+
+If you are just interested in applying pretraned inference moels, the information contained above should be enough. However, if you are interested in understanding the full process that enabled us to train these models, feel free to keep reading.
+
+### Step 1: Identify Seed Data
+
+The major contribution of the original W-NUT paper was showing that one can use distant supervision to train geolocation inference models for Reddit. This is required because, unlike Twitter, Reddit does not have geo-tracking features as part of the platform. Moreover, Reddit users are pseudoynmous and are not required to link any of their offline identify with their online identity.
+
+Our solution to this problem was using self-identified disclosures of home location in a carefully curated set of Reddit submissions. In the original paper (and here as well), we identify roughly 1,400 submissions with titles similar to "Where are you from?" or "Where are you living?". In this updated version, we also use submissions in the r/AmateurRoomPorn subreddit, where many posts include the location of the room in the title.
+
+We search for submissions using `scripts/acquire/reddit/search_for_submissions.py`. This script generates a CSV of submission titles relevant to the aforementioned questions. The output of our query is found in `data/raw/reddit/labels/submission_candidates.csv`. This file was manually reviewed, with submissions that were unlikely to contain self-identified locaton disclosures marked to be ignored, alongside submissions with less than 50 comments. The result of the manual curation is found in `data/raw/reddit/labels/submission_candidates_filtered.py`.
+
+With the seed submissions identified, we then queried the comments from all relevant threads. Additionally, we queried all submissions from the r/AmateurRoomPorn subreddit. This was done using the `scripts/acquire/reddit/retrieve_self_identification_data.py` script. It shouldn't take long to requery this data. However, feel free to reachout to kharrigian@jhu.edu if you'd like the exact files used to train our pretrained models.
+
+### Step 2: Annotate Users
+
+With the seed data queried, we now want to associate Reddit users with their self-identified location disclosures. Our queries provide thousands of users and comments which would be infeasible to annotate by hand. Thus, we instead use a programmatic named-entity-recognition (NER) approach to identify disclosures in the comments and submission titles. This process is carried out in `scripts/annotate/reddit/extract_locations.py`. 
+
+The NER approach we use is based on exact matches to a gazeteer and other syntax-based rules. Once the location strings are extracted, we use the Google Geocoding API to assign likely coordinates for the location string. To bias the queries, we manually curate a mapping between subreddits and regions. For example, r/CasualUK is associated with Great Britain, and thus a mention of Scarborough in this subreddit is more likely to reference the city in England as opposed to Ontario Canada. The mapping of biases used for this iteration of the model is found in `data/raw/reddit/labels/subreddit_biases.csv`.
+
+### Step 3: Query User Comments and Preprocess
+
+Perhaps the most straightforward part of the training process is querying comment histories and processing them to be in a machine-readable format.
+
+Comment histories are queried from the Pushshift.io database using `scripts/acquire/reddit/retrieve_author_histories.py`. Raw histories are cached to disk for future use.
+
+Author histories are tokenized and cached for future use using `scripts/preprocess/reddit/prepare_reddit.py`. Caching of these preprocessed comment histories make vectorization for our models more efficient moving forward.
+
+### Step 4: Inference Model Training
+
+Inference models can be trained using `scripts/model/reddit/train.py`. The input to this script includes paths to a data configuration and a model configuration file. The syntax is as follows:
+
+```
+python scripts/model/reddit/train.py configurations/data/<data_config>.json configurations/data/<model_config>.json
+```
+
+##### Data Configuration
+
+Data set configurations are housed in `configurations/data/`. The base template included in this repository can be manipulated if desired (and you have access to preprocessed data). The cached data will be stored in directory specified by the `DATA_CACHE_DIR` parameter in `settings.json`.
+
+```
+{
+    "NAME":"state_min5comments_250docs",
+    "MIN_RESOLUTION":"administrative_area_level_1",
+    "MIN_COMMENTS":5,
+    "VOCAB_PARAMETERS":{
+                        "text":true,
+                        "subreddits":true,
+                        "time":true,
+                        "text_vocab_max":null,
+                        "subreddit_vocab_max":null,
+                        "min_text_freq":10,
+                        "max_text_freq":null,
+                        "min_subreddit_freq":10,
+                        "max_subreddit_freq":null,
+                        "max_toks":null,
+                        "max_docs":250,
+                        "binarize_counter":true
+                        }
+}
+```
+
+The parameters are as follows:
+* `NAME`: Name of the cache. Arbitrarily assigned to make it easy to keep track of preprocessed data.
+* `MIN_RESOLUTION`: Users have been labeled at various resoulutions (e.g. locality, country). This parameter specifies the minimum resolution to require for sampling users. For example, "administrative_area_level_1" would include users labeled at both a "locality" and "administrative_area_level_1" level.
+* `MIN_COMMENTS`: Minimum number of comments in the user's comment history to be kept in the data set.
+* `VOCAB_PARAMETERS`: Passed to the `Vocabulary` class as kwargs for learning the base vocabulary. It's recommended to lean on the side of having too large a vocabulary for this stage and then filtering down using the model parameters.
+* `text`: If True, include bag-of-words text features.
+* `subreddits`: If True, include bag-of-words subreddit features (e.g. what subreddits did the user post comments in).
+* `time`: If True, include the distribution of comments by hour of day (UTC).
+* `text_vocab_max`: Maximum number of text tokens to keep as features (most common)
+* `subreddit_vocab_max`: Maximum number of subreddits to kee as features (most common)
+* `min_text_freq`: Minimum occurrence of a text token in the data set.
+* `max_text_freq`: Maximum occurrence of a text token in the data set.
+* `min_subreddit_freq`: Minimum occurrence of a subreddit feature in the data set.
+* `max_subreddit_frew`: Maximum occurrence of a subreddit feature in the data set.
+* `max_toks`: Select the first *n* tokens from each comment.
+* `max_docs`: Select the *n* most recent comments from the user history.
+* `binarize_counter`: If True, the occurence of a token is only counted toward the total thresholds once per user. Otherwise, multiple uses by a single user count seprately in the total count.
+
+##### Model Configuration
+
+This file specified how you want the inference model to be trained. Model configurations are housed in `configurations/model/`. The base template included in this repository can be manipulated if desired. Configuratons for our pretrained models have been included as well for reference.
+
+```
+{
+ "NAME":"Global_TextSubreddit",
+ "FILTER_TO_US":false,
+ "MIN_MODEL_RESOLUTION": "administrative_area_level_1",
+ "TOP_K_TEXT":50000,
+ "TOP_K_SUBREDDITS":1100,
+ "MIN_SUPPORT":25,
+ "USE_TEXT":true,
+ "USE_SUBREDDIT":true,
+ "USE_TIME":false,
+ "RANDOM_STATE":42
+}
+```
+
+The parameters are as follows:
+* `NAME`: What the model file will be called.
+* `FILTER_TO_US`: If True, model training is restricted to users from the contiguous United States.
+* `MIN_MODEL_RESOLUTION`: Similar to `MIN_RESOLUTION` in the data configuration file. This is your chance to further restrict the user pool for training.
+* `TOP_K_TEXT`: Number of text features to include in the model, selected using Non-localness.
+* `TOP_K_SUBREDDITS`: Number of subreddit features to include in the model, selected using Non-localness.
+* `MIN_SUPPORT`: Minimum frequency of a feature across users to include in the model.
+* `USE_TEXT`: If True, use text features in the model (if available in the data cache).
+* `USE_SUBREDDIT`: If True, use subreddit features in the model (if available in data cache).
+* `USE_TIME`: If True, use temporal features in the model (if available in the data cache).
+* `RANDOM_STATE`: Random seed for training the model.
