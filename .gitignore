@@ -13,6 +13,12 @@ data/processed/reddit/features/*/*.joblib
 !data/processed/reddit/features/README.md
 data/results/
 
+## Dropbox Data
+data/raw/reddit/labels/author_labels.json.gz
+data/raw/reddit/labels/google_geocoder_results.json
+data/raw/reddit/labels/seed_submission_comments_2020-02-26.csv
+data/raw/reddit/labels/submission_titles_2020-02-26.csv
+
 ## Plots
 plots/
 !plots/README.md

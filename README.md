@@ -12,6 +12,8 @@ This repository provides the first (to my knowledge) geolocation inference appro
 }
 ```
 
+Please note that use of code or data in this repository is governed by the LICENSE file and Data Usage Agreement. If you plan to use this code, please fill out the Data Usage Agreement and send it to Keith Harrigian at kharrigian@jhu.edu.
+
 ## Installation
 
 All code was developed using Python 3.7+. Core functionality is contained within the `smgeo` package, processes such as data acquisition, annotation, and model training are related to the `scripts/` directory. We expect all code to be run from the root directory of this repository. 
@@ -21,6 +23,28 @@ To run any of the scripts, you will need to install the `smgeo` package first. W
 ```
 pip install -e .
 ```
+
+## Models and Data
+
+To download pretrained models and a subset of relevant data (e.g. user labels, geocoded strings), please fill out the Data Usage Agreement located in the root directory of this repository and send it to kharrigian@jhu.edu. The request will be generally be reviewed within 24 hours. Upon approval, you will receive a dropbox link where you can download the models and data. Note that we do not distribute any raw Reddit comment/submission data as part of this dump; if you plan on training your own models from scratch, it is recommended that you follow the instructions listed [below](#training).
+
+While we provide the code in an open source manner that would theoretically enable full reproduction of our models and data assets, we request that you still fill out a data usage agreement. We simply want to ensure that this code base is not used for any malicious reasons and that any user of code/data in this repository is aware of its distribution constraints.
+
+#### Data
+
+This repository houses the bare minimum data to recreate the training process from scratch (e.g. seed submissions, subreddit biases, location gazeteer). Included as well in the dropbox is the following:
+
+* `data/raw/reddit/labels/author_labels.json.gz`: Annotated Reddit user locations. Includes the comment or submission title which was used as a self-identified location disclosure, along with the extracted locations and geocodings. Note that because of the distant-supervision process we use for labeling, it is likely that this data is noisy. 
+* `data/raw/reddit/google_geocoder_results.json`: Mapping between (location string, region bias) to result from the Google Geocoding API. 
+* `data/raw/reddit/labels/seed_submission_comments_2020-02-26.csv`: Comments from the set of seed submissions used to annotate user locations.
+* `data/raw/reddit/labels/submission_titles_2020-02-26.csv`: Submissions from r/AmateurRoomPorn used to annotate user locations.
+
+#### Models
+
+We will provide two pretrained geolocation inference models upon request. In addition to the raw ".joblib" model file, we provide the configuration file used to train the model and the non-localness computations used to perform feature selection.
+
+* `models/reddit/US_TextSubredditTime/`: Contains model and associated data for inferring location of users in the contiguous United States. This model is useful if you are confident your sample of Reddit users lives within the contiguous United States.
+* `models/reddit/Global_TextSubredditTime/`: Contains model and associated data for inferring locations of users around the entire world. This model is useful if you are not confident your sample of Reddit users only lives within the contiguous United States.
 
 ## Configuration
 
@@ -72,7 +96,7 @@ pytest tests/ -Wignore -v
 Alternatively, to run tests and check package coverage, you can do so using
 
 ```
-pytest tests/ --cov=mhlib/ --cov-report=html -v -Wignore
+pytest tests/ --cov=smgeo/ --cov-report=html -v -Wignore
 ```
 
 ## Inference
