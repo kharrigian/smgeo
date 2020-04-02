@@ -29,3 +29,6 @@ models/reddit/*/*.csv
 
 ## Data Use Agreement
 data_usage_agreement.docx
+
+## Extra Configurations
+configurations/model/*.json
