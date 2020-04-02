@@ -2,7 +2,7 @@ pandas
 numpy
 matplotlib
 joblib
-scikit-learn
+scikit-learn==0.22.1
 scipy
 praw
 psaw
