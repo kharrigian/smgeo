@@ -9,7 +9,8 @@ config.json
 ## Data
 data/raw/reddit/authors/*.json.gz
 data/processed/reddit/authors/*.json.gz
-data/processed/reddit/features/
+data/processed/reddit/features/*/*.joblib
+!data/processed/reddit/features/README.md
 data/results/
 
 ## Plots
@@ -17,4 +18,5 @@ plots/
 !plots/README.md
 
 ## Models to Ignore
-models/reddit/*
+models/reddit/*/*.joblib
+models/reddit/*/*.csv
