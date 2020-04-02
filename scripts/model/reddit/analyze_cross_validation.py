@@ -4,7 +4,7 @@
 #########################
 
 ## Name of Analysis
-ANALYSIS_NAME = "US_Feature_Modality"
+ANALYSIS_NAME = "Global_Feature_Modality"
 
 ## Directories
 RESULTS_DIR = "./data/results/reddit/cross_validation/"
@@ -12,9 +12,9 @@ PLOTS_DIR = "./plots/"
 
 ## Cross-Validation Runs (Folder name, Label)
 CV_DIRECTORIES = [
-                ("2020_04_01_21_04_US_Text", "Text"),
-                ("2020_04_01_21_04_US_TextSubreddit", "Text + Subreddits"),
-                ("2020_04_01_21_04_US_TextSubredditTime", "Text + Subreddits + Time")
+                ("2020_04_01_21_01_Global_Text", "Text"),
+                ("2020_04_01_21_02_Global_TextSubreddit", "Text +\nSubreddits"),
+                ("2020_04_01_21_03_Global_TextSubredditTime", "Text +\nSubreddits +\nTime")
 ]
 
 ## Analysis Parameters
