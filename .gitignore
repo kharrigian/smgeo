@@ -20,3 +20,6 @@ plots/
 ## Models to Ignore
 models/reddit/*/*.joblib
 models/reddit/*/*.csv
+
+## Data Use Agreement
+data_usage_agreement.docx
