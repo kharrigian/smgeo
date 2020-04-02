@@ -4,7 +4,7 @@
 #########################
 
 ## Name of Analysis
-ANALYSIS_NAME = "Global_Feature_Modality"
+ANALYSIS_NAME = "US_Feature_Modality"
 
 ## Directories
 RESULTS_DIR = "./data/results/reddit/cross_validation/"
@@ -12,8 +12,9 @@ PLOTS_DIR = "./plots/"
 
 ## Cross-Validation Runs (Folder name, Label)
 CV_DIRECTORIES = [
-                ("2020_03_31_19_23_Global_TextOnly", "Text"),
-                ("2020_03_31_20_05_Global_TextSubreddit", "Text + Subreddits")
+                ("2020_04_01_21_04_US_Text", "Text"),
+                ("2020_04_01_21_04_US_TextSubreddit", "Text + Subreddits"),
+                ("2020_04_01_21_04_US_TextSubredditTime", "Text + Subreddits + Time")
 ]
 
 ## Analysis Parameters
@@ -245,9 +246,9 @@ def load_cross_validation_results(directory_name,
     prediction_df = pd.concat(prediction_df)
     prediction_df = prediction_df.sort_values(["fold","group"])
     ## Append Data Parameters from Config
-    prediction_df["data_resolution"] = config["data"]["min_resolution"]
-    prediction_df["data_min_comments"] = config["data"]["min_comments"]
-    prediction_df["data_vocabulary_params"] = json.dumps(config["data"]["vocabulary"])
+    prediction_df["data_resolution"] = config["data"]["MIN_RESOLUTION"]
+    prediction_df["data_min_comments"] = config["data"]["MIN_COMMENTS"]
+    prediction_df["data_vocabulary_params"] = json.dumps(config["data"]["VOCAB_PARAMETERS"])
     ## Append Model Parameters from Config
     for attribute, value in config["model"].items():
         prediction_df[f"model_{attribute}"] = value
