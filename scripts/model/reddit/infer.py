@@ -16,6 +16,7 @@ import argparse
 
 ## External Libraries
 import joblib
+import numpy as np
 from tqdm import tqdm
 import pandas as pd
 from scipy.sparse import vstack
@@ -63,6 +64,10 @@ def parse_command_line():
                         default=250,
                         type=int,
                         help="Maximum number of comments to retrieve for each user. No guaranetee they are the most recent.")
+    parser.add_argument("--min_comments",
+                        default=0,
+                        type=int,
+                        help="Only make inferences who have at least this many comments in their post history. Users with more comments tend to have more accurate predictions.")
     parser.add_argument("--grid_cell_size",
                         default=.5,
                         type=float,
@@ -75,6 +80,10 @@ def parse_command_line():
                         default=False,
                         action="store_true",
                         help="If this flag specified, the argmax of predictions will be reverse geocoded")
+    parser.add_argument("--known_coordinates",
+                         default=False,
+                         action="store_true",
+                         help="If specified, code will try to load in known training coordinates to restrict inference search space.")
     ## Parse Arguments
     args = parser.parse_args()
     ## Check That Required Files Exist
@@ -154,6 +163,7 @@ def prepare_data(model,
 
     """
     X = []
+    n = []
     for user_file in tqdm(user_data_paths, total=len(user_data_paths), file=sys.stdout, desc="Vectorizing User Data"):
         ## Load Raw Data
         with gzip.open(user_file, "r") as the_file:
@@ -163,6 +173,8 @@ def prepare_data(model,
         ## Data Filtering
         user_data_list = model._vocabulary._select_n_recent_documents(user_data_list)
         user_data_list = model._vocabulary._select_first_n_tokens(user_data_list)
+        ## Add Number of Comments to Cache
+        n.append(len(user_data_list))
         ## Count
         user_data_counts = model._vocabulary._count(user_data_list)
         ## Vectorize
@@ -170,7 +182,20 @@ def prepare_data(model,
         X.append(user_X)
     ## Stack
     X = vstack(X).tocsr()
-    return X
+    return X, n
+
+def load_known_coordinates(settings):
+    """
+
+    """
+    LOGGER.info("Loading Known Coordinates")
+    author_training_file = "{}author_labels.json.gz".format(settings["reddit"]["LABELS_DIR"])
+    if not os.path.exists(author_training_file):
+        raise FileNotFoundError(f"Could not identify training data for loading known coordinates at: {author_training_file}. \
+                                  Check placement of the label data or turn off the --known_coordinates flag.")
+    labels = pd.read_json(author_training_file)
+    coordinates = labels[["longitude","latitude"]].drop_duplicates().values
+    return coordinates
 
 def reverse_search(coordinates):
     """
@@ -203,15 +228,25 @@ def main():
     LOGGER.info("Loading Geolocation Inference Model")
     model = joblib.load(args.model_path)
     ## Prepare User Data
-    X = prepare_data(model, user_data_paths)
+    X, n = prepare_data(model, user_data_paths)
     ## Create Coordinate Grid
-    coordinates = model._create_coordinate_grid(args.grid_cell_size)
+    if not args.known_coordinates:
+        coordinates = model._create_coordinate_grid(args.grid_cell_size)
+    else:
+        coordinates = load_known_coordinates(settings)
+    ## Filter by Comment Size
+    X_mask = np.nonzero([i >= args.min_comments for i in n])[0]
+    X = X[X_mask]
+    users = [users[i] for i in X_mask]
+    n = [n[i] for i in X_mask]
     ## Make Predictions
     LOGGER.info("Making Inferences")
     _, P = model.predict_proba(X, coordinates)
     y_pred = pd.DataFrame(index=users,
                           data=coordinates[P.argmax(axis=1)],
                           columns=["longitude_argmax","latitude_argmax"])
+    ## Append Number of Comments Used to Make Predictions
+    y_pred["n_comments"] = n
     ## Reverse Geocoding
     if args.reverse_geocode:
         LOGGER.info("Reversing the Geolocation Inferences")
