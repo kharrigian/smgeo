@@ -111,11 +111,23 @@ python scripts/model/reddit/infer.py <model_path> <user_list> <output_csv>
 * `<user_list>`: Path to a ".txt" file with one Reddit username per line. The code will pull comment histories for these users if they haven't already been queried.
 * `<output_csv>`: Name of a ".csv" file for storing the inferences.
 
-To see a full list of additional options for inference, you can run:
+There are several customizable parameters to include when running the inference script. You can see them by running the following command (or reading further).
 
 ```
 python scripts/model/reddit/infer.py --help
 ```
+
+#### Inference Arguments
+
+* `--overwrite_existing_histories` - By default, post histories for a Reddit user are collected once and cached for future use. If this argument is included, a new query will be made to collect recent comment data.
+* `--start_date` - ISO-format string representing the start date for collecting user comment data. Default is "2008-01-01". Recent data more be indicative of a person's language if they have moved.
+* `--end_date` - ISO-format string representing the end data for collecting user comment data. Default is the current date. Filtering out new data could be useful if analyzing historical posts.
+* `--comment_limit` - Integer representing the maximum number of comments collected for each user. Default is 250. Decreasing speeds up query time, but risks diminishing classification performance.
+* `--min_comments` - Integer specifying the minimum number of comments found in a user's history to qualify for inference. In general, users with more comments (>50) have more accurate inferences.
+* `--grid_cell_size` - Float specifying the size in degrees of each grid cell to make inferences over. Only relevant if not using the `--known_coordinates` flag.
+* `--posterior` - If this flag is included, the posterior over all coordinates considered by the model will be output for each user.
+* `--reverse_geocode` - If included, the argmax of predictions will be assigned nominal geographic information (e.g. city, state, country)
+* `--known_coordinates` - If specified (and you have access to the training label set), this will restrict inference coordinates to those seen during training time instead of using a standard grid of coordinates. Useful for identifying known cities as opposed to general regions.
 
 ## Training
 
