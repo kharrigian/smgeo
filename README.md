@@ -71,7 +71,7 @@ If you want to query any data using the official Reddit API (PRAW) or geocode ne
 
 #### Settings (Directories)
 
-Reference directories are specified in `configurations/settings.json`. All of the directories included in the default file are created by default when you clone this directory. If you instead want to store data in different directories, you can specify so within this file.
+Reference directories are specified in `configurations/settings.json`. All of the directories included in the default file are created by default when you clone this directory. If you instead want to store data in different directories, you can specify so within this file. In general, we recommend keeping this structure to make understanding references within scripts easy.
 
 ```
 {   
