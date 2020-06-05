@@ -54,7 +54,14 @@ LOGGER = initialize_logger()
 
 def parse_command_line():
     """
+    Identify the data configuration and model configuration
+    by parsing the command line
 
+    Args:
+        None 
+    
+    Returns:
+        args (Argparse object): Parsed command line arguments
     """
     ## Initialize Parser Object
     parser = argparse.ArgumentParser(description="Reddit Geolocation Inference Cross-Validation")
@@ -74,7 +81,13 @@ def parse_command_line():
 
 def load_settings():
     """
+    Load repository settings
 
+    Args:
+        None
+    
+    Returns:
+        settings_config (dict): Path to relevant directories (e.g. data, models)
     """
     settings_file =  os.path.dirname(os.path.abspath(__file__)) + \
                      "/../../../configurations/settings.json"
@@ -86,7 +99,13 @@ def load_settings():
 
 def load_data_config(args):
     """
+    Load data processing configuration
 
+    Args:
+        args (Argparse object): Command-line arguments
+    
+    Returns:
+        data_config (dict): Data processing configuration
     """
     with open(args.data_config_path, "r") as the_file:
         data_config = json.load(the_file)
@@ -94,7 +113,13 @@ def load_data_config(args):
 
 def load_model_config(args):
     """
+    Load model training configuration
 
+    Args:
+        args (Argparse object): Command-line arguments
+    
+    Returns:
+        model_config (dict): Model training parameters
     """
     with open(args.model_config_path, "r") as the_file:
         model_config = json.load(the_file)
@@ -102,7 +127,13 @@ def load_model_config(args):
 
 def create_cross_validation_directory(model_name):
     """
+    Create a directory for storing cross-validation outputs
 
+    Args:
+        model_name (str): Name of the experiment to use for naming the directory
+    
+    Returns:
+        output_dir (str): Path to cross-validation output directory
     """
     runtime = datetime.strftime(datetime.utcnow(), "%Y_%m_%d_%H_%M")
     output_dir = f"{RESULTS_DIR}{runtime}_{model_name}/"
@@ -113,7 +144,15 @@ def cache_run_parameters(run_dir,
                          data_config,
                          model_config):
     """
+    Save the parameters used for the cross-validation experiment
 
+    Args:
+        run_dir (str): Path to cross-validation output directory
+        data_config (dict): Data processing parameters
+        model_config (dict): Model training parameters
+    
+    Returns:
+        None, saves parameters to disk
     """
     config = {
         "data":data_config,
@@ -325,14 +364,29 @@ def update_vocabulary(vocabulary,
 
 def distance_between(x, y):
     """
+    Calculate the geodesic distance in miles between two arrays of coordinates
 
+    Args:
+        x (2d-array): [lon, lat] coordinates
+        y (2d-array): [lon, lat] coordinates
+
+    Returns:
+        dist (1d-array): Geodesic distance
     """
-    return np.array(list(map(lambda i: geodesic(i[0], i[1]).miles, zip(x[:,::-1], y[:,::-1]))))
+    dist = np.array(list(map(lambda i: geodesic(i[0], i[1]).miles, zip(x[:,::-1], y[:,::-1]))))
+    return dist
 
 def load_labels(settings,
                 data_config):
     """
+    Load automatically curated labels
 
+    Args:
+        settings (dict): Repository settings file
+        data_config (dict): Data processing configuration
+    
+    Returns:
+        labels (pandas DataFrame): Author location labels and history metadata
     """
     LOGGER.info("Loading Labels and Metadata")
     ## Directories from Settings
@@ -359,7 +413,20 @@ def prepare_feature_set(settings,
                         data_config,
                         labels):
     """
+    Learn vocabulary and create training feature set
 
+    Args:
+        settings (dict): Repository settings (e.g. data directories)
+        data_config (dict): Data processing paramters
+        labels (pandas DataFrame): User location labels
+
+    Returns:
+        vocabulary (Vocabulary class): Learned vocabulary object
+        X (csr matrix): Feature matrix
+        files (list): List of filenames associated with each row in X
+        VOCAB_PARAMETERS (dict): Vocabulary parameters
+        MIN_RESOLUTION (str): Resolution used for filtering out users
+        MIN_COMMENTS (int): Minimum comments required in user history not to filter
     """
     ## Settings
     DATA_CACHE_DIR = settings.get("reddit").get("DATA_CACHE_DIR")
@@ -403,7 +470,18 @@ def filter_dataset_by_resolution(model_config,
                                  files,
                                  X):
     """
+    Isolate users whose location meets a certain resolution criteria (e.g. city, state)
 
+    Args:
+        model_config (dict): Model training parameters
+        labels (pandas Dataframe): User location labels
+        files (list): List of processed data files associated with rows in X
+        X (csr_matrix): Filtered feature matrix
+    
+    Returns:
+        labels (pandas DatAFrame): Filtered location labels
+        files (list): List of filenames aligned with rows in X
+        X (csr_matrix): Feature matrix (filtered)
     """
     LOGGER.info("Applying Location and Resolution Filters")
     ## Configuration
@@ -430,7 +508,17 @@ def create_split_dict(model_config,
                       files,
                       output_dir):
     """
+    Identify held-out test set and cross-validation splits
 
+    Args:
+        model_config (dict): Model training parameters
+        labels (pandas DataFrame): User location labels
+        files (list): User identifying files 
+        output_dir (str): Path to cross validation output directory
+                          for saving splits
+    
+    Returns:
+        split_dict (dict): Mapping between train, dev, test splits
     """
     LOGGER.info("Splitting Dataset")
     ## Model Parameters
@@ -475,7 +563,27 @@ def run_training(model_config,
                  X,
                  vocabulary):
     """
+    Train model on a subset of users, evaluate on train and dev
 
+    Args:
+        model_config (dict): Model training parameters
+        train_files (list): Files to use for training
+        test_files (list): Files to use for development
+        train_ind (list): Indices in X to use for training
+        test_ind (list): Indices in X to use for development
+        files (list): Full list of user files in X
+        labels (pandas DataFrame): Raw user location annotations 
+        X (csr_matrix): Feture matrix
+        vocabulary (Vocabulary): Pre-fit Vocabulary
+    
+    Returns:
+        text_nl_scores (pandas DataFrame): Raw non-localness scores for text
+        text_agg_nl_scores (pandas DataFrame): Text non-localness scores aggregated over location
+        sub_nl_scores (pandas DataFrame): Raw non-localness scores for subreddits
+        sub_agg_nl_scores (pandas DataFrame): Subreddit non-localness scores agreegated over location
+        geo (GeolocationInferenceModel): Trained geolocation inference model
+        train_res (dict): Training predictions and ground truth
+        dev_res (dict): Development predictions and ground truth
     """
     ## Model Parameters
     USE_TEXT = model_config.get("USE_TEXT")
@@ -553,7 +661,19 @@ def run_fold(model_config,
              labels,
              output_dir):
     """
+    Run one cross-validation fold (training and evaluation)
 
+    Args:
+        model_config (dict): Model training parameters
+        fold (int): Which k-fold to consider
+        split_dict (dict): Train/dev/test splits
+        files (list): List of user files aligned with X
+        vocabulary (Vocabulary): Learned vocabulary object
+        labels (pandas DataFrame): User locations
+        output_dir (str): Path to run output directory
+    
+    Returns:
+        None, saves results to disk in respective fold directory
     """
     ## Create Output Directory
     fold_outdir = f"{output_dir}Fold_{fold}/"
@@ -603,7 +723,17 @@ def train_full_model(model_config,
                      labels,
                      output_dir):
     """
+    Train geolocation inference model on all available training data,
+    test on held-out test set
 
+    Args:
+        model_config (dict): Model training parameters
+        split_dict (dict): Cross-validation splits
+        files (list): User filenames aligned with rows in X
+        X (csr_matrix): Feature matrix
+        vocabulary (Vocabulary): Learned vocabulary object
+        labels (pandas DataFrame): User location labels
+        output_dir (str): Path to run output directory
     """
     ## Create Output Directory
     model_outdir = f"{output_dir}Model/"
@@ -647,7 +777,13 @@ def train_full_model(model_config,
 
 def main():
     """
+    Run cross validation and evaluate on test data if desired.
 
+    Args:
+        None
+
+    Returns:
+        None
     """
     ## Parse Command Line
     args = parse_command_line()

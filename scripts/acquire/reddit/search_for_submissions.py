@@ -39,7 +39,16 @@ def get_query_groups(start_date="2005-08-01",
                      query_freq="3M",
                      query_limit=100000):
     """
+    Create a set of dictonaries specifying submission query terms
 
+    Args:
+        start_date (str): ISO-format datetime for starting the search
+        end_date (str): ISO-format datetime for ending the search
+        query_freq (str): Time to consider per query
+        query_limit (int): Maximum number of results to return
+    
+    Returns:
+        query_groups (list of dict): Title query parameter list
     """
     ## Search Terms
     search_terms = [
@@ -68,7 +77,16 @@ def get_query_groups(start_date="2005-08-01",
 def filter_submission_results(submission_results,
                               min_comments=50):
     """
+    Drop submission results that are duplicates or do not meet
+    a minimum comment size
 
+    Args:
+        submission_results (pandas DataFrame): Submission metadata DF
+        min_comments (int): Minimum number of unique comments to keep a 
+                            submission
+    
+    Returns:
+        submission_results (pandas DataFrame): Filtered results
     """
     ## Drop Duplicates
     submission_results = submission_results.drop_duplicates(subset=["id"])
@@ -80,7 +98,13 @@ def filter_submission_results(submission_results,
 
 def main():
     """
+    Query submissions to use for manual filtering.
 
+    Args:
+        None
+    
+    Returns:
+        None
     """
     ## Initialize API
     r = RedditData(False)

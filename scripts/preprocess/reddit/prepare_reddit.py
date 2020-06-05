@@ -47,7 +47,14 @@ LOGGER = initialize_logger()
 
 def process_author_data(filename):
     """
+    Format raw comment data into a processed format, including
+    tokenized text
 
+    Args:
+        filename (str): Path to .json.gz file of comments from a single user
+    
+    Returns:
+        None, saves processed data and metadata to disk
     """
     ## Identify Author Name
     author = os.path.basename(filename).split(".json.gz")[0]
@@ -101,7 +108,13 @@ def process_author_data(filename):
 
 def main():
     """
+    Process raw comment data, saving to disk
 
+    Args:
+        None
+    
+    Returns:
+        None
     """
     ## Setup Output Directory
     if not os.path.exists(AUTHORS_PROCESS_DIR):

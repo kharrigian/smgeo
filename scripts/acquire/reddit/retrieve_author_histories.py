@@ -29,7 +29,14 @@ LOGGER = initialize_logger()
 
 def get_threads_to_ignore():
     """
+    Identify threads used for annotation that should not be included in
+    any user's post history
 
+    Args:
+        None
+    
+    Returns:
+        combined_links (set): Submission IDs to ignore
     """
     ## Load Queried Comment Data
     seed_comment_file = f"{LABELS_DIR}seed_submission_comments_2020-02-26.csv"
@@ -50,7 +57,17 @@ def query_author_data(reddit,
                       label_source_date,
                       link_ids_to_ignore):
     """
+    Query comment history for a single user. Considers at most
+    90 days after and 2 years before the user's annotation post
 
+    Args:
+        reddit (RedditData): Library API wrapper
+        author (str): Name of reddit user
+        label_source_date (int): Date the comment used for annotation came from
+        link_ids_to_ignore (set): Submission IDs to filter out from comment data
+    
+    Returns:
+        None, dumps JSON data to disk
     """
     ## Establish Write File
     author_file = f"{AUTHORS_DIR}{author}.json.gz"
@@ -81,7 +98,14 @@ def query_author_data(reddit,
 
 def main():
     """
+    Query author history in serial. Save raw
+    data to disk as Gzipped JSON lists
 
+    Args:
+        None
+    
+    Returns:
+        None
     """
     ## Output Directory
     if not os.path.exists(AUTHORS_DIR):
