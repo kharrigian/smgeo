@@ -30,6 +30,7 @@ logger = initialize_logger()
 def parse_arguments():
     """
     Parse command-line to identify configuration filepath.
+
     Args:
         None
     
@@ -56,7 +57,13 @@ def parse_arguments():
 
 def load_filtered_submissions(filtered_submission_file=f"{DATA_DIR}submission_candidates_filtered.csv"):
     """
+    Load CSV with manually-filtered submissions (includes ignore column)
 
+    Args:
+        filtered_submission_file (str): Path to manually-filtered submission list
+    
+    Returns:
+        filtered_submissions (pandas DataFrame): List of acceptable self-disclosure submissions
     """
     ## Load Filtered Submissions
     filtered_submissions = pd.read_csv(filtered_submission_file)
@@ -68,7 +75,16 @@ def retrieve_submission_comments(filtered_submissions,
                                  max_retries=3,
                                  sleep_time=5):
     """
+    Pull all available comments from dataframe of filtered submissions
 
+    Args:
+        filtered_submissions (pandas DataFrame): Submission metadata
+        max_retries (int): Maximum number of query attempts before moving on
+        sleep_time (int): Time in seconds to wait between failed query attempts
+    
+    Returns:
+        comment_data (pandas DataFrame): All found comments
+        failed_submissions (list): List of submission URLS that encountered errors
     """
     ## Get URLS
     urls = filtered_submissions["full_link"].tolist()
@@ -101,7 +117,19 @@ def retrieve_location_submissions(subreddits=["amateurroomporn"],
                                   max_retries=3,
                                   sleep_time=5):
     """
+    Retrieve submissions where we expect people to self-disclosure their
+    location in the title (e.g. r/amateurroomporn)
 
+    Args:
+        subreddits (list fo str): Subreddits to consider
+        start_date (str): ISO-format minimum query date
+        end_date (str): ISO-format maximum query date
+        limit (int): Maximum number of submissions to retrieve
+        max_retries (int): Maximum attempts before moving on from a subreddit
+        sleep_time (float): Time in seconds to wait between failed attempts
+    
+    Returns:
+        submissions (pandas DataFrame): Submission metadata
     """
     ## Separate Query Range by Month
     date_range = list(pd.date_range(start_date, end_date, freq="1M"))
@@ -137,7 +165,14 @@ def retrieve_location_submissions(subreddits=["amateurroomporn"],
 
 def main():
     """
+    Retrieve comments and titles where we expect people
+    to self-disclose their geographic location
 
+    Args:
+        None
+    
+    Returns:
+        None
     """
     ## Parse Command Line Arguments
     args = parse_arguments()
