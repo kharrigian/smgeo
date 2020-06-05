@@ -1,4 +1,8 @@
 
+"""
+Post-hoc analysis of cross-validation results
+"""
+
 #########################
 ### Configuration
 #########################
@@ -71,7 +75,18 @@ def bootstrap_confidence_interval(x1,
                                   sample_percent=30,
                                   alpha = 0.05):
     """
+    Compute a statistic using a bootstrapped confidence interval
 
+    Args:
+        x1 (array): Array of data
+        x2 (array or None): Optional second array of data (e.g. for classification scores)
+        func (callable): Score function. Default is mean
+        samples (int): Number of random samples to use
+        sample_percent (float [0,100]): Percent of samples to use for each bootsrap calculation
+        alpha (float [0,0.5]): Type 1 error rate. E.g. 0.05 returns 95% confidence interval around stat
+    
+    Returns:
+        ci (array): [Lower, Median, Upper] statistics
     """
     ## Check Input Data
     N = len(x1)
@@ -97,7 +112,13 @@ def bootstrap_confidence_interval(x1,
 
 def summarize_performance(prediction_df):
     """
+    Compute inference statistics on a DataFrame of predictions
 
+    Args:
+        prediction_df (pandas DataFrame): All predictions from k-fold results
+    
+    Returns:
+        summary_df (pandas DataFrame): Classification stats for each group, fold
     """
     summary_df = []
     ## Cycle Through Group and Fold
@@ -154,7 +175,14 @@ def summarize_performance(prediction_df):
 
 def accuracy_at_d(error, d = 100):
     """
+    Compute inference accuracy at a mile threshold d
 
+    Args:
+        error (1d-array): Inference error in miles
+        d (float): Max threshold to consider a correct inference
+    
+    Returns:
+        acc (float): Percentage of correct samples within threshold distance
     """
     if not isinstance(error, np.ndarray):
         error = np.array(error)
@@ -166,7 +194,14 @@ def get_confidence_intervals(prediction_df,
                              sample_percent=30,
                              alpha=0.05):
     """
+    Get confidence intervals around major classification statistics
 
+    Args:
+        prediction_df (pandas DataFrame): Cross validation predictions
+        n_samples (int): Number of bootstrap samples
+        sample_percent (float [0,100]): Percentage of available samples to consider per
+                                        bootstrap sample
+        alpha (float [0,0.5]): Type 1 error rate (e.g. 0.05 = 95% confidence level)
     """
     confidence_intervals = {"train":{}, "dev":{}}
     for group in ["train","dev"]:
@@ -223,7 +258,14 @@ def load_cross_validation_results(directory_name,
                                   sample_percent=30,
                                   alpha=0.05):
     """
+    Load results from a cross-validation run
 
+    Args:
+        directory (name): Name of the cross-validation run directory
+        n_samples (int): Number of bootstrap samples to use for computing stats
+        sample_percent (float [0,100]): Percentage of samples to user for each
+                                        bootstrap sample
+        alpha (float [0,0.5]): Type 1 error rate (e.g. 0.05 -> 95% Confidence Level)
     """
     full_path = f"{RESULTS_DIR}{directory_name}/"
     ## Load Configuration
@@ -267,7 +309,15 @@ def plot_bar(summary_stats_df,
              confidence_intervals,
              metric):
     """
+    Create a bar plot showing performance over cross-validation results
 
+    Args:
+        summary_stats_df (pandas DataFrame): Concatenated summary statistics for all runs
+        confidence_intervals (dict): Confidence intervals for each run, group, statistic
+        metric (str): Name of the metric to plot
+    
+    Returns:
+        fig, axes (matplotlib): Training and Development performance comparison between runs
     """
     ## Initialize Figure
     fig, axes = plt.subplots(1, 2, figsize=(10,5.8), sharey=True)
@@ -311,7 +361,14 @@ def plot_bar(summary_stats_df,
 
 def main():
     """
+    Run quantitative analysis of inference performance, comparing
+    multiple cross-validation runs
 
+    Args:
+        None
+
+    Returns:
+        None
     """
     ## Create Plot Directory
     LOGGER.info("Creating Analysis Directory")

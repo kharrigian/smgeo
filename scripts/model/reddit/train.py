@@ -37,7 +37,14 @@ LOGGER = initialize_logger()
 
 def parse_command_line():
     """
+    Identify data processing configuration and model training configuration
+    from command line input
 
+    Args:
+        None
+
+    Returns:
+        args (argparse object): Command-line arguments
     """
     ## Initialize Parser Object
     parser = argparse.ArgumentParser(description="Reddit Geolocation Inference Cross-Validation")
@@ -57,7 +64,14 @@ def parse_command_line():
 
 def load_settings():
     """
+    Load repository settings
 
+    Args:
+        None
+    
+    Returns:
+        settings_config (dict): Path to relevant directories (e.g. data, models)
+    
     """
     settings_file =  os.path.dirname(os.path.abspath(__file__)) + \
                      "/../../../configurations/settings.json"
@@ -69,7 +83,13 @@ def load_settings():
 
 def load_data_config(args):
     """
+    Load data processing configuration
 
+    Args:
+        args (Argparse object): Command-line arguments
+    
+    Returns:
+        data_config (dict): Data processing configuration
     """
     with open(args.data_config_path, "r") as the_file:
         data_config = json.load(the_file)
@@ -77,7 +97,13 @@ def load_data_config(args):
 
 def load_model_config(args):
     """
+    Load model training configuration
 
+    Args:
+        args (Argparse object): Command-line arguments
+    
+    Returns:
+        model_config (dict): Model training parameters
     """
     with open(args.model_config_path, "r") as the_file:
         model_config = json.load(the_file)
@@ -86,7 +112,14 @@ def load_model_config(args):
 def create_model_directory(settings,
                            model_config):
     """
+    Create a directory for storing model training outputs
 
+    Args:
+        settings (dict): Repository paths (includes MODELS_DIR)
+        model_config (dict): Model training parameters
+    
+    Returns:
+        model_dir (str): Path to model training output directory
     """
     ## Parameters
     MODELS_DIR = settings.get("reddit").get("MODELS_DIR")
@@ -103,7 +136,15 @@ def cache_run_parameters(run_dir,
                          data_config,
                          model_config):
     """
+   Save the parameters used for the cross-validation experiment
 
+    Args:
+        run_dir (str): Path to cross-validation output directory
+        data_config (dict): Data processing parameters
+        model_config (dict): Model training parameters
+    
+    Returns:
+        None, saves parameters to disk
     """
     config = {
         "data":data_config,
@@ -152,6 +193,7 @@ def load_metadata(settings,
     Load Author Metadata
 
     Args:
+        settings (dict): Repository data paths
         author_list (list of str): Names of the reddit users
 
     Returns:
@@ -310,7 +352,14 @@ def update_vocabulary(vocabulary,
 def load_labels(settings,
                 data_config):
     """
+    Load automatically curated labels
 
+    Args:
+        settings (dict): Repository settings file
+        data_config (dict): Data processing configuration
+    
+    Returns:
+        labels (pandas DataFrame): Author location labels and history metadata
     """
     LOGGER.info("Loading Labels and Metadata")
     ## Directories from Settings
@@ -337,7 +386,20 @@ def prepare_feature_set(settings,
                         data_config,
                         labels):
     """
+    Learn vocabulary and create training feature set
 
+    Args:
+        settings (dict): Repository settings (e.g. data directories)
+        data_config (dict): Data processing paramters
+        labels (pandas DataFrame): User location labels
+
+    Returns:
+        vocabulary (Vocabulary class): Learned vocabulary object
+        X (csr matrix): Feature matrix
+        files (list): List of filenames associated with each row in X
+        VOCAB_PARAMETERS (dict): Vocabulary parameters
+        MIN_RESOLUTION (str): Resolution used for filtering out users
+        MIN_COMMENTS (int): Minimum comments required in user history not to filter
     """
     ## Settings
     DATA_CACHE_DIR = settings.get("reddit").get("DATA_CACHE_DIR")
@@ -381,6 +443,18 @@ def filter_dataset_by_resolution(model_config,
                                  files,
                                  X):
     """
+    Isolate users whose location meets a certain resolution criteria (e.g. city, state)
+
+    Args:
+        model_config (dict): Model training parameters
+        labels (pandas Dataframe): User location labels
+        files (list): List of processed data files associated with rows in X
+        X (csr_matrix): Filtered feature matrix
+    
+    Returns:
+        labels (pandas DatAFrame): Filtered location labels
+        files (list): List of filenames aligned with rows in X
+        X (csr_matrix): Feature matrix (filtered)
 
     """
     LOGGER.info("Applying Location and Resolution Filters")
@@ -410,7 +484,21 @@ def run_training(model_config,
                  X,
                  vocabulary):
     """
+    Run model training on all available data
 
+    Args:
+        model_config (dict): Model training parameters
+        files (list): User data files aligned with rows in X
+        labels (pandas DataFrame): User location labels
+        X (csr_matrix): Feature matrix
+        vocabulary (Vocabulary): Learned vocabulary objects associated with X
+
+    Returns:
+        text_nl_scores (pandas DataFrame): Raw non-localness scores for text
+        text_agg_nl_scores (pandas DataFrame): Text non-localness scores aggregated over location
+        sub_nl_scores (pandas DataFrame): Raw non-localness scores for subreddits
+        sub_agg_nl_scores (pandas DataFrame): Subreddit non-localness scores agreegated over location
+        geo (GeolocationInferenceModel): Trained geolocation inference model
     """
     ## Model Parameters
     USE_TEXT = model_config.get("USE_TEXT")
@@ -463,7 +551,13 @@ def run_training(model_config,
 
 def main():
     """
+    Run training procedure
 
+    Args:
+        None
+
+    Returns:
+        Saves trained model to disk
     """
     ## Parse Command Line
     args = parse_command_line()

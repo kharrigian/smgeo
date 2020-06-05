@@ -36,7 +36,13 @@ LOGGER = initialize_logger()
 
 def parse_command_line():
     """
+    Parse command line for inference parameters
 
+    Args:
+        None
+    
+    Returns:
+        args (Argparse object): Command-line arguments
     """
     ## Initialize Parser Object
     parser = argparse.ArgumentParser(description="Infer home location of reddit users using a pretrained model.")
@@ -99,7 +105,13 @@ def parse_command_line():
 
 def load_settings():
     """
+    Load repository-wide settings parameters
 
+    Args:
+        None
+
+    Returns:
+        settings_config (dict): Repository-wide settings (e.g. data paths)
     """
     LOGGER.info("Loading Settings")
     settings_file =  os.path.dirname(os.path.abspath(__file__)) + \
@@ -112,7 +124,14 @@ def load_settings():
 
 def load_users(args):
     """
+    Load the names of Reddit users to infer locations for
 
+    Args:
+        args (Argparse object): Command-line arguments, includes user_list which
+                                is a path to a txt file
+    
+    Returns:
+        users (list of str): User names to infer location for
     """
     LOGGER.info("Loading User List")
     with open(args.user_list, "r") as the_file:
@@ -124,7 +143,15 @@ def retrieve_user_data(args,
                        settings,
                        user_list):
     """
+    Retrieve and cache comment history data for users
 
+    Args:
+        args (Argparse object): Command-line arguments
+        settings (dict): Repository-wide settings
+        user_list (list): List of users to infer locations for
+
+    Returns:
+        user_files (list): Paths to raw user files
     """
     LOGGER.info("Querying User Data")
     ## Cache Directory
@@ -160,7 +187,15 @@ def retrieve_user_data(args,
 def prepare_data(model,
                  user_data_paths):
     """
+    Format raw comment data into vectorized format
 
+    Args:
+        model (GeolocationInferenceModel): Trained inference model
+        user_data_paths (list): List of raw data files
+    
+    Returns:
+        X (csr_matrix): Feature matrix for application users
+        n (list): Comment counts associated with each user
     """
     X = []
     n = []
@@ -186,7 +221,13 @@ def prepare_data(model,
 
 def load_known_coordinates(settings):
     """
+    Load coordinates used for training the original model (e.g. known cities)
 
+    Args:
+        settings (dict): Repository-wide settings (e.g. data paths)
+    
+    Returns:
+        coordinates (2d-array): [Lon, Lat] coordinates to use for prediction
     """
     LOGGER.info("Loading Known Coordinates")
     author_training_file = "{}author_labels.json.gz".format(settings["reddit"]["LABELS_DIR"])
@@ -212,7 +253,13 @@ def reverse_search(coordinates):
 
 def main():
     """
+    Infer locations for a list of Reddit users
 
+    Args:
+        None
+    
+    Returns:
+        None
     """
     ## Parse Command Line Arguments
     args = parse_command_line()
