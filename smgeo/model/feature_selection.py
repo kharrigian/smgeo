@@ -91,7 +91,8 @@ class Nonlocalness(object):
         Args:
             vocabulary (Vocabulary object): Initialized vocabulary class
             alpha (float): Smoothing parameter for probability calculations
-            beta (float [0, 1]): How much to weight non-localness vs. frequency
+            beta (float [0, 1]): How much to weight non-localness vs. frequency. Higher
+                                 value up-weights non-localness
             min_support (int): Minimum frequency (user-based) for keeping in dataset
                                during transformation
         """

@@ -26,7 +26,14 @@ from smgeo.util.tokenizer import (Tokenizer,
 
 def _safe_decode(text):
     """
+    Apply unidecode to a text field, checking if
+    it is null first
 
+    Args:
+        text (str): ASCII string
+    
+    Returns:
+        text (str): Original string in unicode
     """
     if pd.isnull(text):
         return text
@@ -173,12 +180,15 @@ ignore_words = set(list(map(lambda i: i.strip(), open(ignore_words_file, "r").re
 class LocationExtractor(object):
 
     """
-
+    Location Extractor. Find locations in free-text strings
     """
 
     def __init__(self):
         """
+        Location Extractor. Find locations in free-text strings
 
+        Args:
+            None
         """
         ## Class Initialization
         self._initialize_class_resources()
@@ -189,13 +199,26 @@ class LocationExtractor(object):
     
     def __repr__(self):
         """
+        Return clean human-readable name of class.
 
+        Args:
+            None
+        
+        Returns:
+            desc (str): Description of the class
         """
         return "LocationExtractor()"
     
     def _initialize_class_resources(self):
         """
+        Initialize resources and methods useful for identifying
+        location strings in free text. Reference global objects
 
+        Args:
+            None
+        
+        Returns:
+            None
         """
         ## Geo Resources
         self._geo_resources = geo_resources.copy()
@@ -226,7 +249,13 @@ class LocationExtractor(object):
     
     def _compile_gazeteer(self):
         """
+        Combine strings into a single gazetteer
 
+        Args:
+            None
+        
+        Returns:
+            None
         """
         ## Initialize Gazeteer
         self.gazeteer = set()
@@ -249,13 +278,26 @@ class LocationExtractor(object):
 
     def _compile_abbreviations(self):
         """
+        Create a mapping between abbreviations and their full name
 
+        Args:
+            None
+        
+        Returns:
+            None
         """
         self.abbr_map = dict((y, x) for _, (x,y) in self._geo_abbr[["name","abbreviation"]].iterrows())
 
     def _compile_geolocation_hierarchy(self):
         """
+        Create a dictionary that maps location strings to other location
+        strings at higher geographic levels (e.g. city -> state, country)
 
+        Args:
+            None
+        
+        Returns:
+            None
         """
         self.geo_hierarchy = {"city":{},"county":{},"state":{},"country":{}}
         ## Country -> Continent
@@ -294,7 +336,14 @@ class LocationExtractor(object):
     def _filter_out_substrings(self,
                                strings):
         """
+        Filter out strings in a list which are substrings
+        of another item in the list
 
+        Args:
+            strings (list): List of strings to filter
+        
+        Returns:
+            filtered_strings (list): List of strings without substrings
         """
         strings = sorted(set(strings), key=lambda x: len(x))
         filtered_strings = []
@@ -313,7 +362,15 @@ class LocationExtractor(object):
     def _look_for_exact_match(self,
                               tokens):
         """
+        Create n-grams of a token list and find all that 
+        match to our gazeteer.
 
+        Args:
+            tokens (list): List of tokens
+        
+        Returns:
+            matches_filtered (list): List of string matches to the
+                                     gazeteer
         """
         ## Get Lowercase N-Grams
         ngrams = get_ngrams([t.lower() for t in tokens], 1, 4)
@@ -330,7 +387,14 @@ class LocationExtractor(object):
     def _combine_syntax_matches(self,
                                 matches):
         """
+        Combine syntax-based location matches that occur
+        next to each other
 
+        Args:
+            matches (list): List of syntax-based location matches
+        
+        Returns:
+            combined_syntax_matches (list): Combined location strings
         """
         n_matches = len(matches)
         if n_matches == 1:
@@ -351,7 +415,16 @@ class LocationExtractor(object):
                                tokens,
                                window = 4):
         """
+        Look for span of tokens that reflects a standard
+        syntax location reference (e.g. City, State, Country)
 
+        Args:
+            tokens (list): List of tokens in a sentence
+            window (int): How many tokens to allow to left and right when
+                          checking for start/end of match
+        
+        Returns:
+            syntax_matches (list): List of possible syntax matches
         """
         n = len(tokens)
         j = 1
@@ -435,7 +508,14 @@ class LocationExtractor(object):
     def _expand_abbreviations(self,
                               tokens):
         """
+        Transform abbreviations into their full name
 
+        Args:
+            tokens (list): List of tokens in a sentence
+        
+        Returns:
+            expanded_tokens (list): Original list of tokens with any matched
+                                    abbreviations expanded to their full name
         """
         expanded_tokens = [tokens[0]]
         for i in range(1, len(tokens)):
@@ -450,6 +530,16 @@ class LocationExtractor(object):
     def _find_sub_list(self,
                        sl,
                        l):
+        """
+        Find lists within lists
+
+        Args:
+            sl (list): List to look for
+            l (list): Large list of items to search within
+        
+        Returns:
+            results (list): Start, end indice spans of matches
+        """
         results = []
         sll = len(sl)
         for ind in (i for i,e in enumerate(l) if e==sl[0]):
@@ -461,7 +551,16 @@ class LocationExtractor(object):
                         tokens,
                         matches):
         """
+        For any location string matches, look for modifiers before
+        and after in the affix dictionary
 
+        Args:
+            tokens (list): List of tokens in a sentence
+            matches (list): List of existing location-matches
+        
+        Returns:
+            affixed_matches (list): List of matches with any affixes identified
+                                    in the token list
         """
         n = len(tokens)
         tokens_lower = list(map(lambda i: i.lower(), tokens))
@@ -487,7 +586,13 @@ class LocationExtractor(object):
     def _find_locations(self,
                         sent):
         """
+        Find location mentions within a sentence
 
+        Args:
+            sent (str): Free-form text sentence
+        
+        Returns:
+            affixed_matches (list): List of identified location matches
         """
         ## Tokenize Sentence
         tokens = self.tokenizer.tokenize(sent)
@@ -508,7 +613,14 @@ class LocationExtractor(object):
     def _merge_overlap(self,
                        matches):
         """
+        Combine location matches that share a string 
+        E.g. "los angeles, california" and "california, US"
 
+        Args:
+            matches (list): List of matched location strings
+        
+        Returns:
+            merged_matches (list): Combined match list
         """
         merged_matches = []
         seen = set()
@@ -531,7 +643,15 @@ class LocationExtractor(object):
     def _combine_using_hierarchy(self,
                                  matches):
         """
+        Combine string location matches based on the gazeteer geographic
+        hierarchy (e.g. city, state, country, continent)
 
+        Args:
+            matches (list): List of proposed string location matches
+        
+        Returns:
+            reg_matches (list): Matches, combining any that fall in the same location
+                                hierarchy
         """
         combined_matches = []
         reg_matches = []
@@ -566,7 +686,14 @@ class LocationExtractor(object):
     def _is_all_commons(self,
                         match):
         """
+        Helper noting if all tokens in a matched hierarchy are made
+        of common words
 
+        Args:
+            match (str): Proposed location match
+        
+        Returns:
+            is_match (bool): Whether all tokens in the match are common words
         """
         if all(m in self._common_words for m in match.replace(", ","").split()):
             return True
@@ -575,7 +702,13 @@ class LocationExtractor(object):
     def find_locations(self,
                        text):
         """
+        Find locations within a string of text
 
+        Args:
+            text (str): Input free-form text (potentially a paragraph)
+        
+        Returns:
+            locations (list): List of recognized location strings
         """
         ## Translate to Ascii
         text = unidecode(text)

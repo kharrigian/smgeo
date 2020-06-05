@@ -16,6 +16,9 @@ from html.parser import HTMLParser
 ## External Libraries
 import emoji
 
+## Local
+from .helpers import flatten
+
 ####################
 ### Resources
 ####################
@@ -597,7 +600,14 @@ def get_ngrams(tokens,
 ## Emoji Separation
 def split_emojis(t):
     """
+    Separate a span of emojis into multiple separate
+    emojis
 
+    Args:
+        t (str): Input string that potentially has emojis
+    
+    Returns:
+        split_t (list): List of emojis split separately
     """
     emojis_found = emoji_r.findall(t)
     split_t = []
@@ -612,20 +622,6 @@ def split_emojis(t):
         split_t.append(t[cur_ind:])
     return split_t
 
-## Flattening List of Lists
-def flatten(l):
-    """
-    Flatten a list of lists by one level.
-
-    Args:
-        l (list of lists): List of lists
-
-    Returns:
-        flattened_list (list): Flattened list
-    """
-    flattened_list = [item for sublist in l for item in sublist]
-    return flattened_list
-    
 ####################
 ### Tokenizer
 ####################
@@ -993,7 +989,13 @@ class Tokenizer(object):
     def _expand_emoji_groups(self,
                              tokens):
         """
+        Split a series of multiple emojis
 
+        Args:
+            tokens (list): List of token strings
+        
+        Returns:
+            tokens (list): List of tokens, with emoji groups split separately
         """
         tokens = list(map(lambda t: split_emojis(t) if any(char in emoji.UNICODE_EMOJI for char in t) else [t], tokens))
         tokens = flatten(tokens)
@@ -1002,7 +1004,13 @@ class Tokenizer(object):
     def _strip_emojis(self,
                       tokens):
         """
+        Remove emojis from a list of tokens
 
+        Args:
+            tokens (list): Input list of strings
+        
+        Returns:
+            tokens (list): Token list without any emojis
         """
         tokens = list(filter(lambda t: t not in emoji.UNICODE_EMOJI, tokens))
         return tokens
@@ -1010,7 +1018,13 @@ class Tokenizer(object):
     def _replace_emojis(self,
                         tokens):
         """
+        Replace emojis with a generic <EMOJI> token
 
+        Args:
+            tokens (list): Input list of strings
+        
+        Returns:
+            tokens (list): Tokens with emojis replace with generic string
         """
         tokens = list(map(lambda t: "<EMOJI>" if t in emoji.UNICODE_EMOJI else t, tokens))
         return tokens

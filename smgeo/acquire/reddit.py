@@ -306,7 +306,14 @@ class RedditData(object):
                         comment,
                         allComments):
         """
+        Recursive function for expanding comment tree
 
+        Args:
+            comment (object): Comment object from PRAW
+            allComments (list): List of cached comments
+        
+        Returns:
+            None, appends comments and replies to allComments
         """
         ## Append Comment
         allComments.append(comment)
@@ -322,7 +329,14 @@ class RedditData(object):
     def _retrieve_submission_comments_praw(self,
                                            submission_id):
         """
+        Retrieve comments from a submission using PRAW incase PSAW
+        fails
 
+        Args:
+            submission_id (str): Unique identifier for a submission
+        
+        Returns:
+            comment_df (pandas DataFrame): DataFrame of submission comments
         """
         ## Retrieve Submission
         sub = self._praw.submission(submission_id)
@@ -342,7 +356,14 @@ class RedditData(object):
     def _parse_metadata(self,
                         metadata):
         """
+        Sort through subreddit metadata and collect
+        the relevant attributes
 
+        Args:
+            metadata (dict): Metadata result
+        
+        Returns:
+            metadata (dict): Subset of relevant subreddit metadata fields
         """
         metadata_columns = ["display_name",
                             "restrict_posting",
@@ -387,7 +408,13 @@ class RedditData(object):
     def retrieve_subreddit_metadata(self,
                                     subreddit):
         """
+        Retrieve metadata (current as of the request) for a subreddit
 
+        Args:
+            subreddit (str): Name of a subreddit
+        
+        Returns:
+            metadata_clean (dict): Relevant subreddit metadata
         """
         ## Validate Configuration
         if not self._init_praw:
@@ -803,6 +830,7 @@ class RedditData(object):
             start_date (str, isoformat or None): Start date or None for querying posts
             end_date (str, isoformat or None): End date or None for querying posts
             history_type (str): "comment" or "submission": Type of post to get author counts for
+            docs_per_chunk (int): Approxmiate query limit (number of comments) per request
         
         Returns:
             authors (Series): Author post counts in subreddit. Ignores deleted authors

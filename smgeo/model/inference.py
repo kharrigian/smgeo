@@ -46,7 +46,7 @@ f1_score = metrics.make_scorer(
 class GeolocationInference(object):
     
     """
-
+    Geolocation Inference Model (GMM)
     """
 
     def __init__(self,
@@ -58,7 +58,17 @@ class GeolocationInference(object):
                  mixture_kwargs = {"n_components":5,"covariance_type":"diag"},
                  random_state = 42):
         """
+        Geolocation inference model based on gaussian mixture model density estimates
 
+        Args:
+            vocabulary (object): Learned vocabulary
+            n_time_bins (int): Number of temporal bins to use for training
+            time_norm (str or None): How to normalize temporal features
+            time_as_percentile (bool): If True, creates bins using percentile distribution
+                                       over longitude instead of linear spacing.
+            time_model_kwargs (dict): Arguments for logistic regression temporal estimator
+            mixture_kwargs (dict): Parameters for the gaussian mixture model estimators
+            random_state (int): Random seed for fitting estimators
         """
         ## Class Attributes/Parameters
         self._vocabulary = vocabulary
@@ -76,14 +86,27 @@ class GeolocationInference(object):
 
     def __repr__(self):
         """
+        Human-readable string describing the class
 
+        Args:
+            None
+        
+        Returns:
+            desc (str): Description of class
         """
         return "GeolocationInference()"
     
     def _create_coordinate_grid(self,
                                 cell_size = 1):
         """
+        Create a grid of lon/lat points based on training
+        boundaries
 
+        Args:
+            cell_size (float): Degrees contained within each grid cell
+        
+        Returns:
+            coordinate_grid (array): Coordinate grid (land-mass only)
         """
         ## Boundaries
         xmin = int(self._coord_bounds[0][0] - 1)
@@ -111,7 +134,15 @@ class GeolocationInference(object):
                      X,
                      y):
         """
+        Fit a single mixture model, update cache in place
 
+        Args:
+            i (int): Index of the feature being trained on
+            X (csr matrix): Input feature matrix
+            y (2d-array): Lon/Lat coordinates for training
+        
+        Returns:
+            None
         """
         ## Construct Training Sample
         S = []
@@ -261,7 +292,17 @@ class GeolocationInference(object):
                              feature,
                              coordinates=None):
         """
+        Plot the probabilitiy distribution over coordinates for a given
+        feature name
 
+        Args:
+            feature (str): Name of the feature to plot distribution for
+            coordinates (2d-array or None): If desired, a subset of coordinates
+                                            to use for plotting a distribution.
+                                            By default, creates a coordinate grid
+        
+        Returns:
+            fig, ax (matplotlib objects): Figure object
         """
         ## Check for Feature/Model
         if feature not in self._vocabulary.feature_to_idx:

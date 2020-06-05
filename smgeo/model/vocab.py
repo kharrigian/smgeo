@@ -103,6 +103,13 @@ class Vocabulary(object):
     def _create_dict_vectorizer(self,
                                 vocab):
         """
+        Create a DictVectorizer object given a list of vocabulary
+
+        Args:
+            vocab (iterable): Sorted list of feature names for the Vectorizer
+        
+        Returns:
+            _count2vec (DictVectorizer): Count -> csr_matrix Class
         """
         feature_to_idx = dict((n, i) for i, n in enumerate(vocab))
         _count2vec = DictVectorizer(separator=":")
@@ -144,7 +151,14 @@ class Vocabulary(object):
     def _select_first_n_tokens(self,
                                user_data):
         """
+        Select the first n tokens from each tokenized list
 
+        Args:
+            user_data (list): List of user data dictionaries
+        
+        Returns:
+            user_data (list): Original list, tokens downsampled so
+                              that only the first n remain per post
         """
         ## Downsample Tokens
         if self._max_toks is not None:
@@ -178,7 +192,13 @@ class Vocabulary(object):
     def _count(self,
                fn_data):
         """
+        Count occurrences of features in a user's processed data
 
+        Args:
+            fn_data (list): List of processed user data dictionaries
+
+        Returns:
+            all_counts (dict): "text","subreddit","time" feature counts
         """
         ## Text
         if self._use_text:
@@ -308,7 +328,14 @@ class Vocabulary(object):
     def _vectorize_file(self,
                         filename):
         """
+        Count tokens within a file and vectorize the tokens
 
+        Args:
+            filename (str): Path to processed data file
+        
+        Returns:
+            filename (str): Input filename
+            X (csr_matrix): Sparse vector of token counts
         """
         ## Load and Count User Data
         user_data = self._load_and_count(filename)
@@ -319,7 +346,13 @@ class Vocabulary(object):
     def _vectorize_user_data(self,
                              user_data):
         """
+        Create a sparse vector based on processed user data
 
+        Args:
+            user_data (dict): Counted user data distributions
+        
+        Returns:
+            X (csr_matrix): Sparse vector representation of user data
         """
         X = []
         if self._use_text:
@@ -334,7 +367,15 @@ class Vocabulary(object):
     def transform(self,
                   filenames):
         """
+        Transform processed user data files into a csr_matrix
+        representation
 
+        Args:
+            filenames (list): List of processed data files
+        
+        Returns:
+            filenames (list): List of filenames aligned with output X rows
+            X (csr_matrix): Feature matrix
         """
         ## Get Vectorized Forms of Data
         mp = Pool(self._jobs)
