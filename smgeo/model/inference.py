@@ -233,6 +233,11 @@ class GeolocationInference(object):
             P_time = y_lon_pred_prob[:, coordinate_lon_bins]
             P_time = normalize(P_time, axis=1, norm="l1")
             P = np.multiply(P, P_time)
+        ## Normalize Posterior
+        P = np.divide(P,
+                      np.nansum(P, axis=1).reshape(-1,1),
+                      out=np.ones_like(P) * np.nan,
+                      where = np.nansum(P, axis=1).reshape(-1,1) > 0)
         return coordinates, P
 
     def predict(self,
