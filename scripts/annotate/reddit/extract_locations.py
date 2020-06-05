@@ -34,7 +34,13 @@ LOGGER = initialize_logger()
 
 def _initialize_google_geocoder(config_file="config.json"):
     """
+    Load Google Cloud credentials and initialize Google Geocoder
 
+    Args:
+        config_file (str): Path to credential file (relative to current directory)
+    
+    Returns:
+        geocoder (GoogleV3): Initialize geocoder object
     """
     ## Load Credentials
     if not os.path.exists(config_file):
@@ -49,9 +55,19 @@ def _initialize_google_geocoder(config_file="config.json"):
     geocoder = GoogleV3(api_key=config.get("api_key"))
     return geocoder
 
-def geocode_string(query, geocoder, region=None):
+def geocode_string(query,
+                   geocoder,
+                   region=None):
     """
+    Assign geographic coordinates to a string
 
+    Args:
+        query (str): Proposed location string
+        geocoder (GoogleV3): Initialized geocoder wrapper
+        region (str or None): Regional bias for the query
+    
+    Returns:
+        response_dict (dict): Geocoding result
     """
     ## Make Request
     query_time_utc = datetime.utcnow().isoformat()
@@ -81,7 +97,12 @@ def flatten_geocoding_result(location_string,
                              region_bias,
                              res):
     """
+    Flatten address components into their own dictionary key
 
+    Args:
+        location_string (str): Original query
+        region_bias (str or None): Regional bias for the result
+        res (dict): Geocoding result
     """
     ## Check Result
     if len(res) == 0:
@@ -112,9 +133,18 @@ def flatten_geocoding_result(location_string,
     return res_copy
 
 
-def geometric_median(X, eps=1e-5):
+def geometric_median(X,
+                     eps=1e-5):
     """
+    Find the geometric median of an array of points
     Source: https://stackoverflow.com/questions/30299267/geometric-median-of-multidimensional-points
+    
+    Args:
+        X (array): Coordinates to find median of
+        eps (float): Numerical underflow limit
+
+    Returns:
+        median (array): Geometric median of input array
     """
     y = np.mean(X, 0)
 
@@ -143,9 +173,21 @@ def geometric_median(X, eps=1e-5):
 
         y = y1
 
-def find_maximal_overlap(author, df, geo_flat_df):
+def find_maximal_overlap(author,
+                         df, 
+                         geo_flat_df):
     """
+    Find lowest degree of geographic overlap for all locations
+    associated with an author
 
+    Args:
+        author (str): Name of the Reddit user
+        df (pandas DataFrame): Comment data
+        geo_flat_df (pandas DataFrame): All possible geographic hierarchies
+    
+    Returns:
+        resolution (pandas DataFrame): Location at lowest level of overlap between
+                                       all possibilities
     """
     ## Geographic Levels in Order of Resolution (Subset of All)
     ordered_levels = ["locality",
