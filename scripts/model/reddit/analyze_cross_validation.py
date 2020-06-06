@@ -303,7 +303,7 @@ def load_cross_validation_results(directory_name,
                                                     n_samples,
                                                     sample_percent,
                                                     alpha)
-    return summary_df, confidence_intervals
+    return summary_df, confidence_intervals, prediction_df
 
 def plot_bar(summary_stats_df,
              confidence_intervals,
@@ -358,6 +358,97 @@ def plot_bar(summary_stats_df,
     fig.tight_layout()
     return fig, axes
 
+def compute_support_effect(prediction_df):
+    """
+
+    """
+    LOGGER.info("Computing Performance ~ Comment Support")
+    ## Get Thresholds
+    max_thresh = prediction_df.groupby(["source","group","fold"])["num_comments"].max().min()
+    thresholds = [0]
+    while thresholds[-1] < max_thresh:
+        thresholds.append(int(min(max_thresh, thresholds[-1]+20)))
+    ## Add Reverse Geocoding
+    prediction_df["reverse_true"] = reverse_search(prediction_df[["longitude_true","latitude_true"]].values)
+    prediction_df["reverse_pred"] = reverse_search(prediction_df[["longitude_pred","latitude_pred"]].values)
+    ## Compute Scores at Each Threshold
+    support_effects = []
+    for source in tqdm(prediction_df["source"].unique(), desc="Source", position=1, leave=False):
+        for t in tqdm(thresholds, desc="Threshold", position=2, leave=False):
+            ## Isolate Source/Threshold Subset
+            source_data = prediction_df.loc[(prediction_df["source"]==source)&
+                                            (prediction_df["num_comments"]>=t)]
+            ## Cycle Through Group and Fold
+            source_summary = []
+            for group in ["train","dev"]:
+                for fold in source_data["fold"].unique():
+                    ## Isolate Subset
+                    pred_subset = source_data.loc[(prediction_df["fold"]==fold)&
+                                                    (prediction_df["group"]==group)]
+                    ## Score Performance
+                    pred_performance = {
+                        "fold":fold,
+                        "group":group,
+                        "median_error":pred_subset["error"].median(),
+                        "mean_error":pred_subset["error"].mean(),
+                        "acc_at_100":(pred_subset["error"]<=100).sum() / len(pred_subset)
+                    }
+                    ## Classification Metrics (Various Levels)
+                    levels = ["name","admin1","cc"]
+                    level_names = ["city","state","country"]
+                    for l, (level, level_name) in enumerate(zip(levels, level_names)):
+                        l_true = list(map(lambda i: ", ".join([i[j] for j in levels[l:]]), pred_subset["reverse_true"].values))
+                        l_pred = list(map(lambda i: ", ".join([i[j] for j in levels[l:]]), pred_subset["reverse_pred"].values))
+                        for score_func, score_name in zip([metrics.f1_score, metrics.precision_score, metrics.recall_score, metrics.accuracy_score],
+                                                          ["f1","precision","recall","accuracy"]):
+                            if score_name == "accuracy":
+                                score = score_func(l_true,
+                                                   l_pred,
+                                                   sample_weight=None)
+                            else:
+                                score = score_func(l_true,
+                                                   l_pred,
+                                                   average="weighted",
+                                                   zero_division=0)
+                            pred_performance[f"{level}_{score_name}"] = score
+                    source_summary.append(pred_performance)
+            source_summary = pd.DataFrame(source_summary)
+            source_summary["score_threshold"] = t
+            source_summary["num_users"] = len(source_data)
+            source_summary["source"] = source
+            support_effects.append(source_summary)
+    ## Concatenate
+    support_effects = pd.concat(support_effects).reset_index(drop=True)
+    return support_effects
+
+def plot_support_effect(support_effect_df,
+                        metric):
+    """
+
+    """
+    ## Aggregate
+    scores_agg = support_effect_df.groupby(["group","source","score_threshold"]).agg({metric:[np.mean,np.std,len]})[metric]
+    scores_agg = scores_agg.reset_index()
+    ## Add Standard Error
+    scores_agg["standard_error"] = scores_agg["std"] / np.sqrt(scores_agg["len"]-1)
+    ## Plot
+    fig, ax = plt.subplots(1, 2, figsize=(10,5.8), sharey=True)
+    for g,group in enumerate(["train","dev"]):
+        for s,(source,name) in enumerate(CV_DIRECTORIES):
+            plot_data = scores_agg.loc[(scores_agg["source"]==source)&
+                                       (scores_agg["group"]==group)]
+            ax[g].errorbar(plot_data["score_threshold"],
+                           plot_data["mean"],
+                           plot_data["standard_error"],
+                           color=f"C{s}",
+                           label=name.replace("\n"," "))
+        ax[g].set_xlabel("Comment Threshold",fontweight="bold")
+        if g == 0:
+            ax[g].set_ylabel(metric.replace("_", " ").title(), fontweight="bold")
+        ax[g].legend(loc="upper right",frameon=True,fontsize=8)
+        ax[g].set_title(group.title(),loc="left",fontweight="bold")
+    fig.tight_layout()
+    return fig, ax
 
 def main():
     """
@@ -378,22 +469,31 @@ def main():
     ## Get Results
     LOGGER.info("Loading and Summarizing Performance")
     summary_stats_df = []
+    predictions_df = []
     confidence_intervals = {}
     for dir_name, dir_lbl in CV_DIRECTORIES:
         LOGGER.info(f"Processing Results For `{dir_lbl}`")
-        model_summary, model_confidence_ints = load_cross_validation_results(dir_name,
-                                                                             n_samples=CI_N_SAMPLES,
-                                                                             sample_percent=CI_SAMPLE_PERCENT,
-                                                                             alpha=CI_ALPHA)
+        model_summary, model_confidence_ints, model_preds = load_cross_validation_results(dir_name,
+                                                                                          n_samples=CI_N_SAMPLES,
+                                                                                          sample_percent=CI_SAMPLE_PERCENT,
+                                                                                          alpha=CI_ALPHA)
         model_summary["name"] = dir_lbl
         summary_stats_df.append(model_summary)
+        predictions_df.append(model_preds)
         confidence_intervals[dir_lbl] = model_confidence_ints
     summary_stats_df = pd.concat(summary_stats_df).reset_index(drop=True)
+    predictions_df = pd.concat(predictions_df).reset_index(drop=True)
     ## Create Summary Figures
-    metrics = list(list(confidence_intervals.values())[0]["train"].keys())
-    for m in metrics:
+    plot_metrics = list(list(confidence_intervals.values())[0]["train"].keys())
+    for m in plot_metrics:
         fig, ax = plot_bar(summary_stats_df, confidence_intervals, m)
         fig.savefig(f"{analysis_dir}{m}.png")
+        plt.close(fig)
+    ## Evaluation ~ Comment Support Thresholds
+    support_effect_df = compute_support_effect(predictions_df)
+    for m in plot_metrics:
+        fig, ax = plot_support_effect(support_effect_df, m)
+        fig.savefig(f"{analysis_dir}comment_support_{m}.png")
         plt.close(fig)
 
 ####################
