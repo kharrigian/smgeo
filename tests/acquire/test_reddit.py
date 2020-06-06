@@ -4,7 +4,9 @@
 #######################
 
 ## Standard
+import os
 import pytz
+import json
 from datetime import datetime
 
 ## External Libraries
@@ -33,8 +35,32 @@ def reddit_praw():
 
     """
     ## Initialize with PRAW
-    reddit = RedditData(init_praw=True)
+    try:
+        reddit = RedditData(init_praw=True)
+    except FileNotFoundError:
+        reddit = MockRedditDataPraw()
+    ## Check Credentials are Valid
+    try:
+        reddit.api.r.user.me()
+    except Exception as e:
+        if e.response.json()["message"] == "Unauthorized":
+            reddit = MockRedditDataPraw()
     return reddit
+
+#######################
+### Mocking
+#######################
+
+class MockRedditDataPraw(RedditData):
+
+    def __init__(self):
+        """
+
+        """
+        ## Inherit Existing Methods
+        super(MockRedditDataPraw, self).__init__(False)
+        ## Update API
+        self.api.r = 1
 
 #######################
 ### Tests
@@ -147,7 +173,10 @@ def test_retrieve_author_comments(reddit_psaw,
     assert isinstance(com_psaw, pd.DataFrame)
     assert isinstance(com_praw, pd.DataFrame)
     assert com_psaw.shape == com_praw.shape
-    assert com_praw.body.values[0] != com_psaw.body.values[0] # Edited typo in comment
+    if isinstance(reddit_praw.api.r, int):
+        assert com_praw.body.values[0] == com_psaw.body.values[0]
+    else:
+        assert com_praw.body.values[0] != com_psaw.body.values[0] # Edited typo in comment
     len(com_praw.body.values[0].split()) == len(com_psaw.body.values[0].split())
     assert com_psaw.author.values[0] == com_praw.author.values[0] == "HuskyKeith"
 
