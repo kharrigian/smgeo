@@ -1,0 +1,691 @@
+author,id,link_id,source,subreddit,text,locations_formatted,geocoded_city,geocoded_subcounty,geocoded_county,geocoded_state,geocoded_country,geocoded_continent,label_correct,true_resolution,geocoded_resolution,true_city,true_subcounty,true_county,true_state,true_country,true_continent,error_reason
+PKhooker,c6efvoz,t3_10l12s,comments,AskReddit,"East Austin, I definitely lock the doors.",<east austin>,Austin,,Travis County,Texas,United States,North America,1,city,city,,,,,,,
+Xerg,djsg6zl,t3_6l6pol,comments,synthesizers,"Buffalo, NY; 38; Software engineer. ","<buffalo, new york>",Buffalo,,Erie County,New York,United States,North America,1,city,city,,,,,,,
+EpoxyD,cnjxox1,t3_2rv35z,comments,AskReddit,Belgium.,<belgium>,,,,,Belgium,Europe,1,country,country,,,,,,,
+Starklet,ca1obna,t3_1emhwd,comments,AskReddit,"BC, Canada, earth, Milky Way galaxy. Pretty nice place.",<canada>,,,,,Canada,North America,1,state,country,,,,British Columbia,Canada,North America,ner_abbreviation
+e36,c20btfe,t3_i2bin,comments,AskReddit,"Saint Paul, Minnesota.  One of the most bike- and homosexual-friendly cities in the country.  We also have terrible roads and worse drivers.","<saint paul, minnesota>",Saint Paul,,Ramsey County,Minnesota,United States,North America,1,city,city,,,,,,,
+lyndonBeej,dokfco8,t3_779o79,comments,billiards,North Dakota,<north dakota>,,,,North Dakota,United States,North America,1,state,state,,,,,,,
+GigaLumpinator,du6ifxt,t3_7x6hxw,comments,DIY_eJuice,"Charleston, SC here. ","<charleston, south carolina>",Charleston,,Charleston County,South Carolina,United States,North America,1,city,city,,,,,,,
+Saychi,d1mvcdm,t3_4d126i,comments,rupaulsdragrace,Finland~,<finland>,,,,,Finland,Europe,1,country,country,,,,,,,
+UDub9,c04kdiy,t3_6pzzo,comments,AskReddit,"Orange County, CA:  $9.50/ea","<orange county, california>",,,Orange County,California,United States,North America,1,county,county,,,,,,,
+vancityoriginals,c6elgq4,t3_10l12s,comments,AskReddit,"Unlocked. . Whistler, BC. ","<whistler, british columbia>",Whistler,Whistler,Squamish-Lillooet,British Columbia,Canada,North America,1,city,city,,,,,,,
+Dr-Pepper-Phd,dr5zbf0,t3_7jfptd,comments,teenagers,Tennessee to Georgia ,<georgia>; <tennessee>,,,,,United States,North America,1,state,country,,,,,United States,North America,multiple_locations
+Seeking_New_Smale,ce27vr0,t3_1swys5,comments,secretsanta,"Nashville, TN. :)","<nashville, tennessee>",Nashville,,Davidson County,Tennessee,United States,North America,1,city,city,,,,,,,
+LizardyLeppord,em5sp6,,submissions,AmateurRoomPorn,"My dining rooms current state in the middle of reno’s . Cincinnati, oh.",<cincinnati>,Cincinnati,,Hamilton County,Ohio,United States,North America,1,city,city,,,,,,,
+SBareS,c4055ym,t3_qsbm8,comments,atheism,"Holstebro, Denmark","<holstebro, denmark>",Holstebro,,,,Denmark,Europe,1,city,city,,,,,,,
+teflonpepe,c88qif3,t3_17tmop,comments,AskReddit,Southern Illinois. Lots of rednecks and lots of corn.,<southern illinois>,Carbondale,Carbondale Township,Jackson County,Illinois,United States,North America,1,region,city,,,,Illinois,United States,North America,geocoding_specificity
+kamakazi813,csr2gab,t3_3bzy7h,comments,cycling,"Seattle, WA ","<seattle, washington>",Seattle,,King County,Washington,United States,North America,1,city,city,,,,,,,
+TakethatBobaFett,c6aasf1,t3_103zqo,comments,AskReddit,Denton TX (Lived around DFW my whole life),<denton>,Denton,,Denton County,Texas,United States,North America,1,city,city,,,,,,,
+SirCrest_YT,ddwxusm,t3_5utea0,comments,DataHoarder,"I live in South Florida, I got Comcast. I pay $160 for my 75/10",<south florida>,West Palm Beach,,Palm Beach County,Florida,United States,North America,1,region,city,,,,Florida,United States,North America,geocoding_specificity
+DarthFikus,dqw8qlw,t3_7i4vmj,comments,AskReddit,"Croatia, 11:31. Am at work.",<croatia>,,,,,Croatia,Europe,1,country,country,,,,,,,
+vordhosbn_,cgfq8st,t3_21r30m,comments,unitedkingdom,"Newcastle. I pay £280 a month, sharing with 3 others.",<newcastle>,Newcastle upon Tyne,,Tyne and Wear,England,United Kingdom,Europe,1,city,city,,,,,,,
+Zebra28,c6a9dsu,t3_103zqo,comments,AskReddit,"Des Moines, IA","<des moines, iowa>",Des Moines,,Polk County,Iowa,United States,North America,1,city,city,,,,,,,
+QTsexkitten,eqri2g4,t3_bzchxo,comments,Everton,"Louisville, Kentucky.","<louisville, kentucky>",Louisville,,Jefferson County,Kentucky,United States,North America,1,city,city,,,,,,,
+MorlaTheAncientOne,djc414u,t3_6j7067,comments,skam,"29, female, New Zealand!",<new zealand>,,,,,New Zealand,Oceania,1,country,country,,,,,,,
+IndoTraveler,c3sr3qm,t3_pw9hs,comments,indonesia,Di California,<california>,,,,California,United States,North America,1,state,state,,,,,,,
+ewokninga,c6aa06c,t3_103zqo,comments,AskReddit,"Storm Lake, IA",<iowa>,,,,Iowa,United States,North America,1,city,state,Storm Lake,,,Iowa,United States,North America,stopwords
+DefenestrationExpert,c6a8dvk,t3_103zqo,comments,AskReddit,"About 30 minutes from Binghamton, NY","<binghamton, new york>",Binghamton,,Broome County,New York,United States,North America,1,city,city,,,,,,,
+opusrandy,cod1l2t,t3_2uyxwz,comments,AskReddit,"I am from America, and I've heard great things about visiting Germany. Great beer, lots of tourist spots. Language is also very cool, would love to learn it. ",<germany>,,,,,Germany,Europe,0,country,country,,,,,United States,North America,multiple_locations
+BhanginOutHealz,eh2jv6d,t3_atmxqg,comments,lakers,"Anchorage, AK!","<anchorage, alaska>",Anchorage,,Anchorage,Alaska,United States,North America,1,city,city,,,,,,,
+Jmoneysosa,deajfuu,t3_5wjg6y,comments,OnePieceTC,Ohio !,<ohio>,,,,Ohio,United States,North America,1,state,state,,,,,,,
+DestroyedGenius,c14fe3x,t3_e10o8,comments,AskReddit,"Newport, RI, USA","<newport, rhode island, united states>",Newport,,Newport County,Rhode Island,United States,North America,1,city,city,,,,,,,
+SlickVolkyl,cfj8796,t3_1yccbt,comments,wicked_edge,"You can also catch me in the Allentown, PA area...","<allentown, pennsylvania>",Allentown,Salisbury Township,Lehigh County,Pennsylvania,United States,North America,1,city,city,,,,,,,
+BlueTeamRuless,catnmhd,t3_1henpc,comments,teenagers,New Mexico. Because where else would you test Nuclear Bombs then a giant desert?,<new mexico>,,,,New Mexico,United States,North America,1,state,state,,,,,,,
+Makegooduseof,d4p7m7s,t3_4pym2f,comments,headphones,"Seoul, Korea. We got a couple of specialist shops, while the Best Buy equivalents and Apple resellers like to promote Beats and Bose.","<seoul, korea>",Seoul,,,Seoul,South Korea,Asia,1,city,city,,,,,,,
+blacklotus21,c6aa8s2,t3_103zqo,comments,AskReddit,"Philadelphia, PA","<philadelphia, pennsylvania>",Philadelphia,,Philadelphia County,Pennsylvania,United States,North America,1,city,city,,,,,,,
+MoPhats,cycchq2,t3_3yc203,comments,CHIBears,"Minneapolis, MN","<minneapolis, minnesota>",Minneapolis,,Hennepin County,Minnesota,United States,North America,1,city,city,,,,,,,
+UhYah52,duyfpq5,t3_80utfr,comments,summonerswar,"South Africa,Cape Town(Global Server) :)","<south africa, cape town(global server>",Cape Town,,Cape Town,Western Cape,South Africa,Africa,1,city,city,,,,,,,
+TheCleaner97,drifvb6,t3_7kujyk,comments,roosterteeth,"Kentucky, USA, 20, I started with Funhaus and then got hooked on the RT Podcast and Cow Chop ","<kentucky, united states>",,,,Kentucky,United States,North America,1,state,state,,,,,,,
+kbmj3,ean96qj,t3_a0wns3,comments,survivor,"Denver, Colorado! ","<denver, colorado>",Denver,,Denver County,Colorado,United States,North America,1,city,city,,,,,,,
+vandosant,c4eonfs,t3_sjiy9,comments,Guitar,"Denver, CO. I play an Ibanez Artcore through a Peavey Bandit. We also have drums, a synthesizer, bass guitars and amps, and a tambourine!","<denver, colorado>",Denver,,Denver County,Colorado,United States,North America,1,city,city,,,,,,,
+aitheos,eta493h,t3_cal7bd,comments,AskWomen,"$5800 / mo, in Seattle. 7 bedrooms, 2 bathrooms.",<seattle>,Seattle,,King County,Washington,United States,North America,1,city,city,,,,,,,
+darksmiles22,c406ceb,t3_qsbm8,comments,atheism,"Fayetteville, AR, USA","<fayetteville, arkansas, united states>",Fayetteville,Fayetteville Township,Washington County,Arkansas,United States,North America,1,city,city,,,,,,,
+botanyisfun,c6a9fsk,t3_103zqo,comments,AskReddit,"North Dartmouth, Massachusetts",<massachusetts>; <north dartmouth>,,,,Massachusetts,United States,North America,1,city,state,North Dartmouth,,,Massachusetts,United States,North America,linking
+Ainjyll,ckagtjp,t3_2fjwkm,comments,Homebrewing,"Greenville, SC as of January of this year. ","<greenville, south carolina>",Greenville,,Greenville County,South Carolina,United States,North America,1,city,city,,,,,,,
+PranicEther,c2e5iew,t3_jmik7,comments,nyc,"East Norwich, Long Island",<east norwich>,East Norwich,Oyster Bay,Nassau County,New York,United States,North America,1,city,city,,,,,,,
+KillTheStarChild,c405m1c,t3_qsbm8,comments,atheism,"Adelaide, South Australia, Australia, Oceania, Southern Hemisphere, Earth, Sol System, Milky Way, Universe 2321, Multiverse 6 ","<adelaide, south australia, australia, oceania, southern hemisphere>",Adelaide,,,South Australia,Australia,Oceania,1,city,city,,,,,,,
+LaniMermaid,dw946q3,t3_86lvzh,comments,podcasts,"Saipan, Commonwealth of the Northern Mariana Islands (a commonwealth of the US)","<saipan, commonwealth>; <northern mariana islands>",,,,,Northern Mariana Islands,Oceania,1,state,country,Saipan,,,,Northern Mariana Islands,Oceania,linking
+j-r-uddin,elp7qqm,t3_bgxtkt,comments,solotravel,The Gower peninsular in South Wales. Rhossili beach and 3 cliffs bay,<south wales>,,,Rhondda Cynon Taff,Wales,United Kingdom,Europe,1,region,state,,,,Wales,United Kingdom,Europe,geocoding_specificity
+hot4hotz,c3v6m2z,t3_q6rkf,comments,Gunners,"north of toronto, ontario","<toronto, ontario>",Toronto,,Toronto Division,Ontario,Canada,North America,1,city,city,,,,,,,
+somethingsteamroll,coa96yf,t3_2uo0c4,comments,GrandTheftAutoV_PC,"New Jersey, US","<new jersey, united states>",,,,New Jersey,United States,North America,1,state,state,,,,,,,
+EINSER,c6abdqu,t3_103zqo,comments,AskReddit,Düsseldorf in germany...,<germany>,,,,,Germany,Europe,1,city,country,Düsseldorf,,,,Germany,Europe,unicode_handling
+afultz075,c88wodv,t3_17tmop,comments,AskReddit,"Central Pennsylvania.
+
+Cons: Tons of rednecks and white trash. Awful job market/ low wages. Weather is either freezing cold or unbearably hot and humid, we get maybe 3 months of the year where weather is comfortable. Not much variety of food/restaurants (good luck finding Thai food or good sushi around here).
+
+Pros: Scenery is gorgeous. Lots of mountains and rivers for outdoor activities. Loads of back roads to explore. Lots of state parks and places to camp on the weekend. Low cost of living. Lots of townie bars with dirt cheap booze.
+
+It's not a horrible place to live if you like to live a simpler kind of lifestyle. ",<pennsylvania>,,,,Pennsylvania,United States,North America,1,region,state,,,,Pennsylvania,United States,North America,geocoding_specificity
+HimTiser,c6aaj9s,t3_103zqo,comments,AskReddit,"Rolla, MO","<rolla, missouri>",Rolla,,Phelps County,Missouri,United States,North America,1,city,city,,,,,,,
+ValerieLovesMath,d183tni,t3_4bdd71,comments,AskWomen,"I live in Philadelphia and feel like I fit in pretty well, especially in that I can get on a crowded train or bus and not have anyone talk to me or expect me to talk to them. I guess that's an American northeast thing. I couldn't live in the south or in SoCal where everyone just chit chats all the time.
+
+On a more local scale I'm a knitting liberal who loves beer, coffee, food, and running, which hits my neighborhood pretty damn spot on.",<philadelphia>,Philadelphia,,Philadelphia County,Pennsylvania,United States,North America,1,city,city,,,,,,,
+jvca,djc9m9p,t3_6j7067,comments,skam,"Portugal, 17, male",<portugal>,,,,,Portugal,Europe,1,country,country,,,,,,,
+MoaningMyrtle,c820ckt,t3_173uxa,comments,tolkienfans,"Southwest Ohio, here. When I was in second grade, I was obsessed with The Borrowers. I claimed it as my favorite book until fourth grade when I read The Lion, the Witch, and the Wardrobe. My teacher at the time knew how much I loved these two books and how much I loved reading in general and sent me home with The Hobbit. I fell in love with it. The summer after fifth grade, I got the LotR trilogy and read them as quickly as possible. 
+
+I didn't know there were any more than that for a long time, though. I was a Sophomore in high school when I found out The Silmarillion, Unfinished Tales, or any other books about Middle Earth existed. I had picked up a Tolkien Bestiary and saw all of these unfamiliar titles cited. I still haven't read Children of Huren and some of the histories and I'm now 25. ",<southwest ohio>,,,,Ohio,United States,North America,1,region,state,,,,Ohio,United States,North America,geocoding_specificity
+stylinghead,c1d5ozv,t3_f3s6j,comments,bicycling,Portland Oregon. Riding a 1964 Scwinn Typhoon and a 70's Velosolex one speed with a kick brake. ,"<portland, oregon>",Portland,,Multnomah County,Oregon,United States,North America,1,city,city,,,,,,,
+Crayshack,c70cvjy,t3_12y37w,comments,NYGiants,"Virginia side of DC suburbs (Fairfax County).  I inherited the G-men from my dad, who grew up on Long Island.","<fairfax county, virginia>",,,Fairfax County,Virginia,United States,North America,1,county,county,,,,,,,
+Chronic_BOOM,c6aandw,t3_103zqo,comments,AskReddit,"Sacramento,CA!!
+
+""The City of Trees""
+
+No, seriously. Google it, yo. ","<sacramento, california>",Sacramento,,Sacramento County,California,United States,North America,1,city,city,,,,,,,
+endz420,c6a9zug,t3_103zqo,comments,AskReddit,"Simcoe, ON, Canada","<simcoe, ontario, canada>",Simcoe,Norfolk County,Norfolk County,Ontario,Canada,North America,1,city,city,,,,,,,
+ConditionDelta,cggc5el,t3_21tbxv,comments,vertcoin,From the U.S but I live in Thailand,<thailand>,,,,,Thailand,Asia,1,country,country,,,,,,,
+emryslives,dnxthtx,t3_74f2n5,comments,AskReddit,"Australian.
+Few major observations:
+- your elections are bankrolled by candidates
+- separation between president and congress in terms of political power is significant and yet all the attention is on the POTUS to get all the work done.
+- lobbying (in Australia political donations of like over 10 or 11 thousand have to be disclosed).
+- what in the actual fuck is civil forfeiture and who let that happen 
+- healthcare pls 
+- why so many guns
+
+On the plus side I think America is one of the most patriotic 1st world countries (that im familiar with) and there sense of national pride is impressive. In Australia we tend to not give a fuck about much.. ",<australia>,,,,,Australia,Oceania,1,country,country,,,,,,,
+Antauron,csb9ybb,t3_3ac76a,comments,metalgearsolid,"21, England, Berkshire","<england, berkshire>",,,,England,United Kingdom,Europe,1,city,state,,,Berkshire,England,United Kingdom,Europe,reverse_syntax
+Starsy,cdl9lyq,t3_1ral6e,comments,NBASpurs,Atlanta.,<atlanta>,Atlanta,,Fulton County,Georgia,United States,North America,1,city,city,,,,,,,
+eileancuisine,epqbyk,,submissions,AmateurRoomPorn,"Afternoon sun touching paying my humble apartment a visit in Milwaukee, WI","<milwaukee, wisconsin>",Milwaukee,,Milwaukee County,Wisconsin,United States,North America,1,city,city,,,,,,,
+theJD85,duyehaw,t3_80utfr,comments,summonerswar,"Weert, The Netherlands - EU server","<weert, netherlands>",,,Weert,Limburg,Netherlands,Europe,1,county,county,,,,,,,
+-BipolarPolarBear-,cba8eix,t3_1j1t82,comments,teenagers,"I live in Altanta, Georgia! Coke > Pepsi","<altanta, georgia>",Atlanta,,Fulton County,Georgia,United States,North America,1,city,city,,,,,,,
+businessgoesbeauty,dltcpc1,t3_6uhnan,comments,AskWomen,"Columbus OH $1400 2 br townhome w/ basement, small enclosed backyard and one car garage 1,100 sq ft about?",<columbus>,Columbus,,Franklin County,Ohio,United States,North America,1,city,city,,,,,,,
+angelofdeaf,c76f1fu,t3_13r49d,comments,AskWomen,"I'm from New Zealand, I like it here. ",<new zealand>,,,,,New Zealand,Oceania,1,country,country,,,,,,,
+InappropriateRerun,dq19clk,t3_7dtb1d,comments,IWantOut,"North Hollywood, CA. 1 bedroom apartment $1200 pretty decent size, pool, laundry in building. Nothing too crazy","<north hollywood, california>",Los Angeles,,Los Angeles County,California,United States,North America,1,neighborhood,city,North Hollywood,,Los Angeles,California,United States,North America,geocoder_error
+shyyviolet,c6a9y30,t3_103zqo,comments,AskReddit,"west chester, pa",<west chester>,West Chester,,Chester County,Pennsylvania,United States,North America,1,city,city,,,,,,,
+areyoufloyd,dxqgevo,t3_8dichm,comments,RedLetterMedia,"Calcutta, India!","<calcutta, india>",Kolkata,,,West Bengal,India,Asia,1,city,city,,,,,,,
+MrsBakedApplePie,f9oo5vw,t3_e67fev,comments,AskReddit,"Lima, Peru 🇵🇪","<lima, peru>",Lima,,,Callao Region,Peru,South America,1,city,city,,,,,,,
+queefatron,d1ayvo2,t3_4boa8m,comments,bodybuilding,"Texas, and it's stupid big. 28 shows this year and that's just under the NPC/IFBB. Home of the original metroflex and crazy competitive scene. ",<texas>,,,,Texas,United States,North America,1,state,state,,,,,,,
+imajohnny517,c6aa1wa,t3_103zqo,comments,AskReddit,"Albany, NY","<albany, new york>",Albany,,Albany County,New York,United States,North America,1,city,city,,,,,,,
+Lightningblitzz,d07bdm0,t3_46pvr2,comments,BokuNoHeroAcademia,Canada,<canada>,,,,,Canada,North America,1,country,country,,,,,,,
+wesevans,cfmzx89,t3_1yr3sw,comments,AskReddit,"Texas. I don't often drink cokes, but when I do I like it to be either Vanilla Coke or Cream Soda.",<texas>,,,,Texas,United States,North America,1,state,state,,,,,,,
+KickAssCommie,c6a9qid,t3_103zqo,comments,AskReddit,"Grande Prairie, Alberta, Canada :)","<grande prairie, alberta, canada>",Grande Prairie,Grande Prairie County No. 1,Division No. 19,Alberta,Canada,North America,1,city,city,,,,,,,
+Orgasmus,c6abcgs,t3_103zqo,comments,AskReddit,"Uppsala, Sweden","<uppsala, sweden>",Uppsala,,,Uppsala County,Sweden,Europe,1,city,city,,,,,,,
+Armsaresame,bcq2g7,,submissions,AmateurRoomPorn,"Mismatched patterns here in Hartford, CT","<hartford, connecticut>",Hartford,,Hartford County,Connecticut,United States,North America,1,city,city,,,,,,,
+septimus03,c6aaclp,t3_103zqo,comments,AskReddit,"East Lansing, Michigan","<east lansing, michigan>",East Lansing,,Ingham County,Michigan,United States,North America,1,city,city,,,,,,,
+imthenorth,cxi3ron,t3_3uuv9d,comments,digitalnomad,"I've just arrived in Auckland New Zealand, 10mb up 0.5mb up from my airbnb, seams like a nice city so far but looking to hit the road and see more of the scenery out side the city. ","<auckland, new zealand>",Auckland,,,Auckland,New Zealand,Oceania,1,city,city,,,,,,,
+ste515,c7ro88e,t3_160anb,comments,AskReddit,"Dublin, Ireland","<dublin, ireland>",Dublin,,,County Dublin,Ireland,Europe,1,city,city,,,,,,,
+naewilder,cfj94ic,t3_1yccbt,comments,wicked_edge,"Columbus, OH","<columbus, ohio>",Columbus,,Franklin County,Ohio,United States,North America,1,city,city,,,,,,,
+bhalp1,chs6cdv,t3_26lf8c,comments,AskReddit,New York City. Pedestrians don't obey the traffic lights.,<new york city>,New York,,,New York,United States,North America,1,city,city,,,,,,,
+okyeahmhm,e9q2g3k,t3_9x6gw7,comments,ForeverAlone,"Virginia, USA.","<virginia, united states>",,,,Virginia,United States,North America,1,state,state,,,,,,,
+FallCat,cb4usv1,t3_1ihaah,comments,polyamory,"Australia, SA  ",<australia>,,,,,Australia,Oceania,1,country,country,,,,,,,
+njjlala,fczhkvu,t3_ejou28,comments,Catholicism,Brazil,<brazil>,,,,,Brazil,South America,1,country,country,,,,,,,
+beanzamillion21,cpau5zx,t3_2yk73f,comments,NBASpurs,Fort Worth,<fort worth>,Fort Worth,,Tarrant County,Texas,United States,North America,1,city,city,,,,,,,
+wildwichtel,c0eymsa,t3_9xujx,comments,Libertarian,"Hamburg, Germany","<hamburg, germany>",Hamburg,,,Hamburg,Germany,Europe,1,city,city,,,,,,,
+Miss_nuts_a_bit,cgv5cu5,t3_23am23,comments,teenagers,"I live in Germany. Looking at the US made me realize that our system here isn't even that bad (free and universal healthcare, multiple party system etc.). People are raging if the train is ten minutes late, which says something about our punctuality (I'm punctual too so that's good) and the usual punctuality of our trains. We are allowed to drink low percentage alcoholics at the age of 16 and high percentage with 18, also I live in Bavaria and the reputation regarding our educational system is one of the best in our country which is neat.","<bavaria, germany>",,,,Bavaria,Germany,Europe,1,city,city,,,,,,,
+Godlord2,cr0qrhu,t3_352ldx,comments,giantbomb,"Northwest Ohio, I do maintenance/landscaping, that sort of stuff. Having long podcasts like the Bombcast is a godsend for this sort of work.",<northwest ohio>,Lima,American Township,Allen County,Ohio,United States,North America,1,region,city,,,,Ohio,United States,North America,geocoding_specificity
+jessoftheweirding,c406yl5,t3_qsbm8,comments,atheism,"Norfolk, Virginia, USA","<norfolk, virginia, united states>",Norfolk,,,Virginia,United States,North America,1,city,city,,,,,,,
+b700dyr34pr,c6a9vjh,t3_103zqo,comments,AskReddit,"Anthony, El Paso, Texas","<anthony, el paso, texas>",Anthony,,El Paso County,Texas,United States,North America,1,city,city,,,,,,,
+Bologna_1,d89gkgh,t3_55buk2,comments,Accounting,"$70,000 + bonus in Boston with MSA and CPA, just left public for private",<boston>,Boston,,Suffolk County,Massachusetts,United States,North America,1,city,city,,,,,,,
+BoojMaster,cgv2wnj,t3_23ajdi,comments,PKA,"Nettlake,Minnesota","<nettlake, minnesota>",Nett Lake,Nett Lake,St. Louis County,Minnesota,United States,North America,1,city,city,,,,,,,
+OniZ18,c4043uz,t3_qsbm8,comments,atheism,"Geelong, Victoria, Australia","<geelong, victoria, australia>",Geelong,,Greater Geelong City,Victoria,Australia,Oceania,1,city,city,,,,,,,
+donnie_cum,duy0a2s,t3_80syq8,comments,washingtonwizards,"Im from Brisbane, Australia","<brisbane, australia>",Brisbane,,,Queensland,Australia,Oceania,1,city,city,,,,,,,
+effjay90,cdetac3,t3_1qmh82,comments,detroitlions,"Syracuse, NY","<syracuse, new york>",Syracuse,,Onondaga County,New York,United States,North America,1,city,city,,,,,,,
+rsw909,cm3f0di,t3_2md53a,comments,unitedkingdom,Co-op 99. Lancashire,<lancashire>,,,Lancashire,England,United Kingdom,Europe,1,county,county,,,,,,,
+Rusty-Unicorn,drp3ea6,t3_7lum7q,comments,AskReddit,Hong Kong in a small village. Its 7pm here :),<hong kong>,,,,,Hong Kong,Asia,1,country,country,,,,,,,
+animalcule,c6a9fci,t3_103zqo,comments,AskReddit,"Zionsville, IN","<zionsville, indiana>",Zionsville,Eagle Township,Boone County,Indiana,United States,North America,1,city,city,,,,,,,
+5peasinapod,cur358n,t3_3jouuv,comments,AskReddit,"Arkansas. 
+
+We're not all rednecks.",<arkansas>,,,,Arkansas,United States,North America,1,state,state,,,,,,,
+Lorf30,c6a8vrb,t3_103zqo,comments,AskReddit,"Couhmil King, WI",<wisconsin>,,,,Wisconsin,United States,North America,1,state,state,,,,,,,
+giddyup281,ex1m90y,t3_cr38zn,comments,AskReddit,"SouthEast Europe (Balkans).
+Not all stomach ache, but when i'm experiencing diarhea, Coke is used as a first measure. A lot of people here use it (younger ones though, 30 and under, older generations still think Coke is a poison and should not be consumed by anyone).",<europe>,,,,,,Europe,1,region,continent,,,,,Europe,,gazeteer
+Legibly,db351r6,t3_5huohl,comments,AskReddit,Everybody says pop around here. (Northern Illinois) ,<northern illinois>,DeKalb,DeKalb Township,DeKalb County,Illinois,United States,North America,1,region,city,,,,Illinois,United States,North America,geocoding_specificity
+fortheLOVEofBACON,cnjx7de,t3_2rv35z,comments,AskReddit,"Seattle, WA","<seattle, washington>",Seattle,,King County,Washington,United States,North America,1,city,city,,,,,,,
+Bruce_lee2000,c6abw5l,t3_103zqo,comments,AskReddit,"Tübingen, Germany","<tubingen, germany>",Tübingen,Tübingen,Tübingen,Baden-Württemberg,Germany,Europe,1,city,city,,,,,,,
+senorrawr,d0czldy,t3_47fm4y,comments,AskMen,"18 from the suburbs of NYC, but I'm going to school in Rochester (Go Tigers!)",<rochester>,Rochester,,Monroe County,New York,United States,North America,1,city,city,,,,,,,
+nym4dora,bng46l,,submissions,AmateurRoomPorn,My Cambridge MA living room,<cambridge>,Cambridge,,Cambridgeshire,England,United Kingdom,Europe,0,city,city,Cambridge,,,Massachusetts,United States,North America,disambiguation
+this_is_taking4ever,du2wvl7,t3_7wr8fw,comments,exmuslim,Kosovo,<kosovo>,,,,,Kosovo,Europe,1,country,country,,,,,,,
+windymemo,c408f4f,t3_qsbm8,comments,atheism,"Toronto, Ontario.","<toronto, ontario>",Toronto,,Toronto Division,Ontario,Canada,North America,1,city,city,,,,,,,
+dan0005,d7kw3uj,t3_52i40f,comments,Everton,"Alabama, USA","<alabama, united states>",,,,Alabama,United States,North America,1,state,state,,,,,,,
+ExoSuburbia,e9u3q4r,t3_9xbra7,comments,TuberSimulator,"Alberta, Canada!","<alberta, canada>",,,,Alberta,Canada,North America,1,state,state,,,,,,,
+bigolelesbian,e52g55o,t3_9bb7oa,comments,actuallesbians,"16, West Virginia. Pls help me >_<",<west virginia>,,,,West Virginia,United States,North America,1,state,state,,,,,,,
+denominat0r,efscf3p,t3_ancg1l,comments,AskReddit,Belarus. 13:11,<belarus>,,,,,Belarus,Europe,1,country,country,,,,,,,
+jmlb92,cy2kbwp,t3_3x7uoc,comments,FCInterMilan,Honduras,<honduras>,,,,,Honduras,North America,1,country,country,,,,,,,
+lmgbbrt33,deklql1,t3_5xs31h,comments,AskReddit,"Adelaide, Australia","<adelaide, australia>",Adelaide,,,South Australia,Australia,Oceania,1,city,city,,,,,,,
+firebound12,d7i4yd5,t3_527uc3,comments,TheSilphRoad,"Canada, moto g plus 2015, no update.",<canada>,,,,,Canada,North America,1,country,country,,,,,,,
+DharmaEther,8fny29,,submissions,AmateurRoomPorn,"View from the couch, Livingroom/Dining area Portland,OR. We have a mini-me so kids toys are about.","<portland, oregon>",Portland,,Multnomah County,Oregon,United States,North America,1,city,city,,,,,,,
+Davey_G_,es3u8g,,submissions,AmateurRoomPorn,"Just made a Vocal Booth under my steps, me for scale. Washington, DC.","<washington, district of columbia>",Washington,,District of Columbia,District of Columbia,United States,North America,1,city,city,,,,,,,
+radsarahmc,df9xx5a,t3_60wuxq,comments,Indiemakeupandmore,"Northeast Ohio (Canton, Akron, Cleveland)!",<northeast ohio>,,,,Ohio,United States,North America,1,region,state,,,,Ohio,United States,North America,multiple_locations
+mcopper89,coajzhp,t3_2uo0c4,comments,GrandTheftAutoV_PC,"I am not actually in the crew yet, but I am in Alaska UTC -9:00.",<alaska>,,,,Alaska,United States,North America,1,state,state,,,,,,,
+towelface,c3t3f9t,t3_pw9hs,comments,indonesia,"Deket Berlin! Rame juga yah di eropa.
+",<berlin>,Berlin,,,Berlin,Germany,Europe,1,city,city,,,,,,,
+goodwithoutgod,c14ow3t,t3_e26ze,comments,AskReddit,"Whenever I visit a new place, I wonder if I'd like to live there.  Portland was close, but so far, nothing is better than Austin, TX.","<portland>; <austin, texas>",,,,,United States,North America,1,city,country,Austin,,,Texas,United States,North America,multiple_locations
+mp4-30h,cvy7ro4,t3_3olhgz,comments,formula1,2001 Malaysian GP; I'm from Sydney Australia,"<sydney, australia>",Sydney,,,New South Wales,Australia,Oceania,1,city,city,,,,,,,
+lxOMEGAxl,c6ykxit,t3_12vdrd,comments,miamidolphins,South Carolina? Columbia?,"<columbia, south carolina>",Columbia,,Richland County,South Carolina,United States,North America,1,city,city,,,,,,,
+SuperDuper999,c405l5f,t3_qsbm8,comments,atheism,"Eau Claire, Wisconsin","<eau claire, wisconsin>",Eau Claire,,Eau Claire County,Wisconsin,United States,North America,1,city,city,,,,,,,
+justlikepersephone,crhrrom,t3_36trfm,comments,rupaulsdragrace,"Arizona. I didn't get completely consumed until I realized that these queens helped me accept myself more positively as a woman... They're magnificent, confident creatures. I have so much more knowledge in drag culture, lgbt community, make up, etc. I'm so happy that I have this community. ",<queens>; <arizona>,,,,,United States,North America,1,state,country,,,,Arizona,United States,North America,multiple_locations
+grotty101,c6ac82c,t3_103zqo,comments,AskReddit,"Portage, WI ","<portage, wisconsin>",Portage,,Columbia County,Wisconsin,United States,North America,1,city,city,,,,,,,
+ultasol,dfan0sj,t3_60wuxq,comments,Indiemakeupandmore,"Near Portland, OR","<portland, oregon>",Portland,,Multnomah County,Oregon,United States,North America,1,city,city,,,,,,,
+M0ntage,c6a9hcn,t3_103zqo,comments,AskReddit,"Suzhou, Jiangsu Province, China","<suzhou, jiangsu, china>",Suzhou,,,Jiangsu,China,Asia,1,city,city,,,,,,,
+Chazzyphant,e8aoq3i,t3_9qla9e,comments,femalefashionadvice,"I'm in Denver, and most people consider this the ""Midwest"", although some say West or Southwest. I see a few different typical fashions: 
+
+1: athleisure is huge, especially in a higher income bracket. Spending the day hiking, biking, working out, or other outdoor sports and then going to brunch wearing sports gear is not seen as a faux pas here. Your toned and sporty bod IS your biggest accessory and swag. 
+
+2: I also see ""hipster"" type wear with a focus on a rugged, ""blue collar"" vintage look (shearling lined denim jackets, bandannas, engineer boots, coveralls as an outfit, [these](https://i.imgur.com/0EAvR9p.jpg) boots, little or no makeup and very natural hair with a bright lip) or true 50s and 60s beatnik and rockabilly looks. Very little 70s, 80s or punk/goth. I just saw almost 2000 hipsters at an event on Sunday so I got to see a HUGE amount of 20 something and early 30 something fashion! 
+
+3: The third category I see would be kind of...typical everyday not fashionable but not unfashionable stuff. Jeans with a tee or blouse and cardigan. A printed top and black slacks and ballet flats. A dress with sandals---but nothing really ""done"", ya know? Definitely more on the casual ""Target basics"" end of things. 
+
+I don't stick out per se, but I rarely see people dressed like me here! ",<denver>,Denver,,Denver County,Colorado,United States,North America,1,city,city,,,,,,,
+HudsonsirhesHicks,c6a9vbv,t3_103zqo,comments,AskReddit,"Burlington, Vermont","<burlington, vermont>",Burlington,,Chittenden County,Vermont,United States,North America,1,city,city,,,,,,,
+marlabinger,c6aa33q,t3_103zqo,comments,AskReddit,"Fredericksburg, Virginia","<fredericksburg, virginia>",Fredericksburg,,,Virginia,United States,North America,1,city,city,,,,,,,
+Sjoerd_050,etrbi8n,t3_cd20e4,comments,Groningen,"North Korea, here to spy on you guys.",<north korea>,,,,,North Korea,Asia,1,country,country,,,,,,,
+PPowers7,esav3m4,t3_c6rqac,comments,Gunners,"columbus, oh",<columbus>,Columbus,,Franklin County,Ohio,United States,North America,1,city,city,,,,,,,
+Poppy29252,dymfzse,t3_8ht6w1,comments,actuallesbians,"Albuquerque, NM. We have lesbian lizards. ","<albuquerque, new mexico>",Albuquerque,,Bernalillo County,New Mexico,United States,North America,1,city,city,,,,,,,
+pall_mall_blackout,chcmxq9,t3_250gnh,comments,TwoXChromosomes,"Hair tie or pony tail holder. Cincinnati, Ohio.","<cincinnati, ohio>",Cincinnati,,Hamilton County,Ohio,United States,North America,1,city,city,,,,,,,
+JakeVuitton18,fca2w2s,t3_egsk7w,comments,gayyoungold,Kentucky 20M here,<kentucky>,,,,Kentucky,United States,North America,1,state,state,,,,,,,
+jmwbb,d18ou62,t3_4beeb6,comments,teenagers,"Large-ish town (500 000) in Ontario.
+
+Super sweet to live here, lots of stuff to do, great country, beautiful weather :)",<ontario>,,,,Ontario,Canada,North America,1,state,state,,,,,,,
+TheParkwayDrive,c402grk,t3_qsbm8,comments,atheism,"San Diego, California, United states.","<united states>; <san diego, california, united>",,,,,United States,North America,1,city,country,San Diego,,,California,United States,North America,"parsing, multiple_locations"
+misssabrinafairchild,esiys4,,submissions,AmateurRoomPorn,sunny foyer // south florida,<florida>,,,,Florida,United States,North America,1,region,state,,,,Florida,United States,North America,parsing
+lucyferian,crh0yxw,t3_36trfm,comments,rupaulsdragrace,"Paris, France. The posts about it on ONTD made me start watching. I started on season 3.","<paris, france>",Paris,,Paris,Île-de-France,France,Europe,1,city,city,,,,,,,
+fromeout11,c407vvh,t3_qsbm8,comments,atheism,"Binghamton, NY, USA","<binghamton, new york, united states>",Binghamton,,Broome County,New York,United States,North America,1,city,city,,,,,,,
+EveUnraveled,fciq31b,t3_eh8ovk,comments,exjw,Washington State,<washington>,,,,Washington,United States,North America,1,state,state,,,,,,,
+deceptivelyinnocent7,bg8hfo,,submissions,AmateurRoomPorn,Living Room in Los Angeles,<los angeles>,Los Angeles,,Los Angeles County,California,United States,North America,1,city,city,,,,,,,
+Wswanson001,cvytgf6,t3_3omm9z,comments,NoMansSkyTheGame,"36, currently floating in South Carolina. Anybody know if they make a waterproof PS4?",<south carolina>,,,,South Carolina,United States,North America,1,state,state,,,,,,,
+kiwibirdofdoom,c7rijjp,t3_160anb,comments,AskReddit,"Karachi, Pakistan","<karachi, pakistan>",Karachi,,Karachi City,Sindh,Pakistan,Asia,1,city,city,,,,,,,
+ospr3y,cfvkm26,t3_1zntjy,comments,ForeverAlone,"Southeast USA (specifically, Georgia)",<georgia>,,,,Georgia,United States,North America,1,state,state,,,,,,,
+AMK-88,e6b8uqt,t3_9h91bj,comments,boardgames,"Axis & Allies Global 1940
+
+Boston (Somerville)",<boston>; <somerville>,,,,Massachusetts,United States,North America,1,city,state,Somerville,,,Massachusetts,United States,North America,multiple_locations
+oh_five,d40807u,t3_4n1ssf,comments,crossfit,California Bay Area!,<california bay>,,,,California,United States,North America,1,region,state,San Francisco,,,California,United States,North America,geocoding_specificity
+Oukaria,emjezdi,t3_bkm7a5,comments,AskEurope,"Weather right now is very good in Tokyo, when it’s not raining. Got some sunburns in a picnic few days ago.
+
+But fuck summer, hot humid piece of shit weather.",<tokyo>,Tokyo,,,Tokyo,Japan,Asia,1,city,city,,,,,,,
+manamachine,d8rttiw,t3_57glwe,comments,polyamory,Live in Montreal ,<montreal>,Montreal,,Montreal,Quebec,Canada,North America,1,city,city,,,,,,,
+Alpha-Bromega,ds39l60,t3_7nl27v,comments,edmproduction,"Riverside, CA","<riverside, california>",Riverside,,Riverside County,California,United States,North America,1,city,city,,,,,,,
+darkbluebird,cgot7tj,t3_22of5z,comments,SNSD,PORTUGAL <3 honestly i feel lonely in here -.- (as a SONE and a kpoper),<portugal>,,,,,Portugal,Europe,1,country,country,,,,,,,
+mlr1004,er25ej,,submissions,AmateurRoomPorn,"Sunny afternoon in the new living room. Wales, UK","<wales, united kingdom>",,,,Wales,United Kingdom,Europe,1,state,state,,,,,,,
+aecht,du6u402,t3_7xb1ba,comments,OkCupid,Austin. Pros: gas is cheap. Cons: Everything else,<austin>,Austin,,Travis County,Texas,United States,North America,1,city,city,,,,,,,
+fplay,c6aa40s,t3_103zqo,comments,AskReddit,"St. Paul, MN","<st. paul, minnesota>",Saint Paul,,Ramsey County,Minnesota,United States,North America,1,city,city,,,,,,,
+jxxj000,ehlqyie,t3_awct0q,comments,AskReddit,Colorado ,<colorado>,,,,Colorado,United States,North America,1,state,state,,,,,,,
+dassnoseek,c405984,t3_qsbm8,comments,atheism,"Perth, Western Australia, Australia","<perth, western australia>",Perth,,,Western Australia,Australia,Oceania,1,city,city,,,,,,,
+refance,dsa44b6,t3_7oiyox,comments,BokuNoHeroAcademia,Brazil,<brazil>,,,,,Brazil,South America,1,country,country,,,,,,,
+HitThisJeffrey,cdr99t4,t3_1ruslg,comments,AskMen,Pennsylvania! The land of white-tailed deer and yuengling beer!,<pennsylvania>,,,,Pennsylvania,United States,North America,1,state,state,,,,,,,
+Huskies25,c6a8j5s,t3_103zqo,comments,AskReddit,"Howell, NJ","<howell, new jersey>",Howell Township,,Monmouth County,New Jersey,United States,North America,1,city,city,,,,,,,
+Schizofennec,cj50mju,t3_2bfv2c,comments,furry,Missouri currently :P,<missouri>,,,,Missouri,United States,North America,1,state,state,,,,,,,
+short-term,cdepk8m,t3_1qmh82,comments,detroitlions,"Richmond, Va
+","<richmond, va>",Richmond,,,Virginia,United States,North America,1,city,city,,,,,,,
+doritofacethehungry,c6abh9c,t3_103zqo,comments,AskReddit,"Salmon Arm, British Columbia, Canada!","<british columbia, canada>",,,,British Columbia,Canada,North America,1,city,state,Salmon Arm,,,British Columbia,Canada,North America,stopwords
+guitar_emoji,dks2uuc,t3_6ptadv,comments,Emo,"I'm from the Washington D.C. area and [Origami Angel](http://origamiangel.bandcamp.com/album/quiet-hours) is absolutely killing it. FFO: The Obsessives when they were emo, Pedro The Lion & American Football. Go pick up a tape or CD!",<washington>,,,,Washington,United States,North America,0,city,state,Washington,,,District of Columbia,United States,North America,"disambiguation, parsing"
+Rickenbacker69,cn26opm,t3_2q0t99,comments,EliteDangerous,"Sweden, and I like Betty Jade's idea :). 
+
+Though my real-life piloting bonus is being able to hold it for 4-5 hours - you don't want to pee in a bag if you don't really, really have to!",<sweden>,,,,,Sweden,Europe,1,country,country,,,,,,,
+ChainsawDoctor,c6s11gp,t3_1243f0,comments,hockey,"Boston, Righty, 6 yrs old","<boston, righty>",Boston,,Suffolk County,Massachusetts,United States,North America,1,city,city,,,,,,,
+Superchecker,cpdzpat,t3_2yxeic,comments,CasualConversation,"Vancouver, Canada... I enjoy any extra time I can get with my lovely wife...","<vancouver, canada>",Vancouver,,Greater Vancouver,British Columbia,Canada,North America,1,city,city,,,,,,,
+ParisaDelara,f3fip8z,t3_dgjnxj,comments,Random_Acts_Of_Amazon,"NW Indiana. It’s currently sunny, but cold.",<indiana>,,,,Indiana,United States,North America,1,state,state,,,,,,,
+Cereal230,emhtui2,t3_bkm7a5,comments,AskEurope,"Belgrade, summers can get really hot which sucks, but overall I lile the weather. I only wish there was more snow in the winter",<belgrade>,Belgrade,,City of Belgrade,,Serbia,Europe,1,city,city,,,,,,,
+FlukyS,c5xlo5r,t3_yozsn,comments,starcraft,Ireland,<ireland>,,,,,,,1,country,country,,,,,,,
+G0ldbond,ew33pp2,t3_cmfh5t,comments,matt,Regina Matt. Yes it rhymes with fun.,<regina>,Regina,Sherwood No. 159,Division No. 6,Saskatchewan,Canada,North America,1,city,city,,,,,,,
+hilasaurus,d5eftl6,t3_4t0mxg,comments,weddingplanning,"£950 for full day coverage including bridal prep photos (we're estimating 9 hours, but the photographer is happy to do longer if needed), full rights and a digital copy of all shots, and a coffee-table style album. Single shooter, providing her own food, who has also offered to do parents' albums for £50 each. And we're in Scotland :)",<scotland>,,,,Scotland,United Kingdom,Europe,1,state,state,,,,,,,
+eliboySM,coi1poc,t3_2viwa6,comments,pcmasterrace,"Romania, ~$7, 100 Mbps. But I can get gigabit for~$15. ",<romania>,,,,,Romania,Europe,1,country,country,,,,,,,
+ChopperDave2007,cl826hq,t3_2j3a29,comments,AskMen,From San Diego. My NFL team is the broncos... my family hates me. ,<san diego>,San Diego,,San Diego County,California,United States,North America,1,city,city,,,,,,,
+KXPN,c2e7xpj,t3_jkztd,comments,aiclass,"Hello world
+
+I'm from Bogotá, Colombia. I'm studying right now, and knowledge is always welcome! I'd love to be able to be part of the course.","<bogota, colombia>",Bogota,,,Bogota,Colombia,South America,1,city,city,,,,,,,
+Aerinex,dcbzav8,t3_5nh2c6,comments,CowChop,"Atlanta, Georgia!
+
+Yes even the southeast enjoys CowChop","<atlanta, georgia>",Atlanta,,Fulton County,Georgia,United States,North America,1,city,city,,,,,,,
+drunky44,c7rnb43,t3_160anb,comments,AskReddit,"worcester, MA
+","<worcester, massachusetts>",Worcester,,Worcester County,Massachusetts,United States,North America,1,city,city,,,,,,,
+LeonamLobo,dgvhg4k,t3_67zjtn,comments,ForeverAlone,Brazil,<brazil>,,,,,Brazil,South America,1,country,country,,,,,,,
+ZacharyGibs,c6ablf6,t3_103zqo,comments,AskReddit,"Victoria, BC or Saanich, BC if you wanna get specific ;)","<victoria, british columbia>",Victoria,,Capital,British Columbia,Canada,North America,1,city,city,,,,,,,
+schmeera,9ptwx8,,submissions,AmateurRoomPorn,My cozy living room in Estonia,<estonia>,,,,,Estonia,Europe,1,country,country,,,,,,,
+robo86,c0suq2r,t3_bn3rk,comments,motorcycles,"Massapequa Park, NY
+Honda Shadow 750RS","<massapequa park, new york honda>",Levittown,Hempstead,Nassau County,New York,United States,North America,1,city,city,,,,,,,
+Hikkigonenuts,eaazodn,t3_9zo2sb,comments,fountainpens,Canadian in Chandigarh,<chandigarh>,Chandigarh,,Chandigarh,Chandigarh,India,Asia,1,city,city,,,,,,,
+SqueakyToast,c6a9jvo,t3_103zqo,comments,AskReddit,"Redding, CA","<redding, california>",Redding,,Shasta County,California,United States,North America,1,city,city,,,,,,,
+thomasjs,c6acapz,t3_103zqo,comments,AskReddit,"Lead, SD",<south dakota>,,,,South Dakota,United States,North America,1,city,state,Lead,,,South Dakota,United States,North America,stopwords
+-OPTHOMASPRIME-,cpoasoc,t3_300u9w,comments,FIFA,IRELAND!,<ireland>,,,,,,,0,country,MISSING,,,,,Ireland,Europe,geocoder_error
+bumblehole,ckaxzbo,t3_2fmuyd,comments,funny,BANGOR!,<bangor>,Bangor,Orono Town,Penobscot County,Maine,United States,North America,1,city,city,,,,,,,
+itsMalarky,ccnfhuo,t3_1nj7ry,comments,ECRs,"YO! This thread is old but i figured i'd contribute anyhow.
+
+In true east coast fashion, New Hampshire.
+
+live free or die.",<new hampshire>,,,,New Hampshire,United States,North America,1,state,state,,,,,,,
+MolinasMitt,cxe4zc6,t3_3udvvn,comments,secretsanta,Arkansas to the New England States.... Don't wanna give too much away!,<arkansas>; <new england>,,,,,United States,North America,1,region,country,,,,,United States,North America,multiple_locations
+rgr83,c6a9qi4,t3_103zqo,comments,AskReddit,Mexico City,<mexico city>,Mexico City,,,Mexico City,Mexico,North America,1,city,city,,,,,,,
+icelumni,c6aae4z,t3_103zqo,comments,AskReddit,"Brookings SD, USA","<brookings, united states>",Brookings,,Brookings County,South Dakota,United States,North America,1,city,city,,,,,,,
+OopsieIcantdance,chxoa3s,t3_275v3f,comments,teenagers,Pennsylvania,<pennsylvania>,,,,Pennsylvania,United States,North America,1,state,state,,,,,,,
+Raingembow,clr8nmh,t3_2l3qwa,comments,teenagers,"Brighton, UK","<brighton, united kingdom>",Brighton,,Brighton and Hove,England,United Kingdom,Europe,1,city,city,,,,,,,
+budy8,c7rmt7l,t3_160anb,comments,AskReddit,"Haarlem near amsterdam, the Nederlands",<haarlem>; <amsterdam>,,,,North Holland,Netherlands,Europe,1,state,state,,,,,,,
+needleworkreverie,emel8ej,t3_bk7klq,comments,DeathPositive,"Washington, DC, USA","<washington, district of columbia, united states>",Washington,,District of Columbia,District of Columbia,United States,North America,1,city,city,,,,,,,
+Jus10Crummie,dq86qf1,t3_7euwhk,comments,fantasyfootball,"Im shocked Atlanta hasn't popped up yet, well not really everyone prefers college football and still thinks the Cowboys are best team in the NFC.",<atlanta>,Atlanta,,Fulton County,Georgia,United States,North America,1,city,city,,,,,,,
+tapszac,esazgu4,t3_c6rqac,comments,Gunners,"Wilmington, North Carolina, United States","<wilmington, north carolina, united states>",Wilmington,Wilmington,New Hanover County,North Carolina,United States,North America,1,city,city,,,,,,,
+VaporCloud,cs6ks2i,t3_39s2an,comments,bodybuilding,"Argentina, residing in the U.S.",<argentina>,,,,,Argentina,South America,0,country,country,,,,,United States,North America,"movement, parsing"
+idgafatg,c6aah2a,t3_103zqo,comments,AskReddit,"Jenison, Michigan","<jenison, michigan>",Georgetown Township,,Ottawa County,Michigan,United States,North America,1,city,city,,,,,,,
+BigWalt,c0u2479,t3_coeer,comments,AskReddit,"Palo Alto, CA","<palo alto, california>",Palo Alto,,Santa Clara County,California,United States,North America,1,city,city,,,,,,,
+LittleShittler,d1xuoo6,t3_4e7x9b,comments,AskReddit,South East Texas which is the best part of Texas.,<east texas>,,,,Texas,United States,North America,1,region,state,,,,Texas,United States,North America,geocoding_specificity
+diggexpat,c2ivef0,t3_kb3n5,comments,AskReddit,"Columbus, OH. 1440sq ft. 3BR mortgage is $450/mo.","<columbus, ohio>",Columbus,,Franklin County,Ohio,United States,North America,1,city,city,,,,,,,
+spatulainevitable,bzp5o5,,submissions,AmateurRoomPorn,"My current study/home office in Lisbon, Portugal","<lisbon, portugal>",Lisbon,,,Lisbon,Portugal,Europe,1,city,city,,,,,,,
+hailmarythatails,c6aakls,t3_103zqo,comments,AskReddit,"Des Moines, IA","<des moines, iowa>",Des Moines,,Polk County,Iowa,United States,North America,1,city,city,,,,,,,
+PoppaCappucino,cevvaya,t3_1vl5vv,comments,MCFC,"Failsworth, Manchester.","<failsworth, manchester>",Failsworth,,Greater Manchester,England,United Kingdom,Europe,1,city,city,,,,,,,
+WhyaintweatDorsia,csfwtix,t3_3at9xh,comments,AskReddit,"Montreal, Canada. ","<montreal, canada>",Montreal,,Montreal,Quebec,Canada,North America,1,city,city,,,,,,,
+zemsta,c0bcmjt,t3_93o6n,comments,AskReddit,"19, Chicago, part time construction.",<chicago>,Chicago,,Cook County,Illinois,United States,North America,1,city,city,,,,,,,
+potatoman57,c404l7l,t3_qsbm8,comments,atheism,"Newcastle, Australia","<newcastle, australia>",Newcastle,,,New South Wales,Australia,Oceania,1,city,city,,,,,,,
+Dudi123,feja5kg,t3_epgaj8,comments,AskReddit,Southern California,<southern california>,,,,California,United States,North America,1,city,city,,,,,,,
+Chadtucket_,az6edj,,submissions,AmateurRoomPorn,"10X10 tiny college apartment bedroom, wishing I was on the east coast. WI, USA",<united states>,,,,,United States,North America,1,state,country,,,,Wisconsin,United States,,parsing
+tomoli_06,arx202,,submissions,AmateurRoomPorn,"Our new living room in our tiny little cottage in Kent, UK","<kent, united kingdom>",,,Kent,England,United Kingdom,Europe,1,county,county,,,,,,,
+Hackergrad,dd069kp,t3_5qia0x,comments,kancolle,Philippines.,<philippines>,,,,,Philippines,Asia,1,country,country,,,,,,,
+OvenCookie,c8yo35s,t3_1almwh,comments,LiverpoolFC,"My Uncle George nipple crippled me till I renounced Man United and supported Liverpool.
+
+Apologies for supporting those wankers, I was 5!",<liverpool>,Liverpool,,Merseyside,England,United Kingdom,Europe,1,city,city,,,,,,,
+FlumeLife,ec2hsvn,t3_a7f29w,comments,teenagers,China 🇨🇳🇨🇳,<china>,,,,,China,Asia,1,country,country,,,,,,,
+J_A_Y_x,e93bf4d,t3_9tzuoa,comments,CollegeBasketball,Union County New Jersey and I rep Siena and Seton Hall,"<siena>; <union county, new jersey>",,,,,United States,North America,1,county,country,,,Union County,New Jersey,United States,North America,"multiple_locations, linking"
+jojonatanhm,duyc8nu,t3_80utfr,comments,summonerswar,"Navegantes, South of Brazil - Global server","<navegantes, south of brazil>",Navegantes,,Navegantes,State of Santa Catarina,Brazil,South America,1,city,city,,,,,,,
+herrokitty1979,c45xo0u,t3_rhsra,comments,keto,"Minneapolis MN, USA","<minneapolis, united states>",Minneapolis,,Hennepin County,Minnesota,United States,North America,1,city,city,,,,,,,
+minz12,c7sz042,t3_1655hu,comments,DotA2,Trinidad,<trinidad>,,,,,Trinidad and Tobago,North America,1,country,country,,,,,,,
+watzy,cfyi1uw,t3_1zzy18,comments,OkCupid,"Canberra, Australia - not that there are many of us around I don't think.","<canberra, australia>",Canberra,,,Australian Capital Territory,Australia,Oceania,1,city,city,,,,,,,
+quitewhimsical,crah4qk,t3_35ouk2,comments,gratefuldoe,"Las Vegas, Nevada. :) ","<las vegas, nevada>",Las Vegas,,Clark County,Nevada,United States,North America,1,city,city,,,,,,,
+drummer4hire,c6aa9f9,t3_103zqo,comments,AskReddit,Fort Defiance VA!!!!,<defiance>,Defiance,Richland Township,Defiance County,Ohio,United States,North America,0,city,city,Fort Defiance,,,Virginia,United States,North America,disambiguation
+ntssauce,c5xl74l,t3_yozsn,comments,starcraft,Bosnia and herzegovina! lol,<bosnia and herzegovina>,,,,,Bosnia and Herzegovina,Europe,1,country,country,,,,,,,
+lunchbox_assassin,c6a9ht5,t3_103zqo,comments,AskReddit,"Nampa, ID","<nampa, idaho>",Nampa,,Canyon County,Idaho,United States,North America,1,city,city,,,,,,,
+ItsDaDERP,ew29gs4,t3_cmfh5t,comments,matt,Ontario Matt here!,<ontario>,,,,Ontario,Canada,North America,1,state,state,,,,,,,
+LunarAssultVehicle,c7prkut,t3_15t21s,comments,rollerderby,"Tucson Derby Brats, Tucson AZ","<tucson derby brats, tucson>",Tucson,,Pima County,Arizona,United States,North America,1,city,city,,,,,,,
+dmirkin,c7rkcwn,t3_160anb,comments,AskReddit,Good ol' germany!,<germany>,,,,,Germany,Europe,1,country,country,,,,,,,
+thevoxman,c405yt1,t3_qsbm8,comments,atheism,"Apple Valley, California","<apple valley, california>",Apple Valley,,San Bernardino County,California,United States,North America,1,city,city,,,,,,,
+jkaska,c0spta7,t3_chwck,comments,vegan,"cape town south africa!
+
+Advantages: Loads of fresh veg and fruit, readily available, lots of restaurants have vegan items or will willingly veganise something for you, stores stock legumes, grains etc and two varieties of locally produced ""fake meat"" (the one is awesome, the other inedible), tofu, humus etc. We have a great vegan society and more and more specialist restautants / cafes / stores. 
+
+Difficulties: culture - south africans love their meat, and a braai (bbq) and love ostracising veggies. There are only two brands of vegan cheeses and both are imported and thus very expensive, not env friendly etc. 
+
+EDIT: I find it super easy to be vegan. I don't find it ""hard"" really anywhere... but then if I am in the middle of nowhere I lower my expectations and will settle for a peanutbutter sandwitch etc","<cape town, south africa>",Cape Town,,Cape Town,Western Cape,South Africa,Africa,1,city,city,,,,,,,
+tearrearbear,c6ac98h,t3_103zqo,comments,AskReddit,Singapore!,<singapore>,,,,,Singapore,Asia,1,country,country,,,,,,,
+bigstylee,ds3mbb7,t3_7npyxo,comments,vertcoin,England,<england>,,,,England,United Kingdom,Europe,1,state,state,,,,,,,
+DubstepCheetah,c6aa0lw,t3_103zqo,comments,AskReddit,"Reno, Nevada","<reno, nevada>",Reno,,Washoe County,Nevada,United States,North America,1,city,city,,,,,,,
+TheRadiantWreck,9v4skx,,submissions,AmateurRoomPorn,"Living room of our tiny home - Monteagle, TN","<monteagle, tennessee>",Monteagle,,Marion County,Tennessee,United States,North America,1,city,city,,,,,,,
+farmerstein,c6a8hpv,t3_103zqo,comments,AskReddit,"Rochester,New York","<rochester, new york>",Rochester,,Monroe County,New York,United States,North America,1,city,city,,,,,,,
+MatthewCalls,c6a9jt6,t3_103zqo,comments,AskReddit,"Ukiah, CA","<ukiah, california>",Ukiah,,Mendocino County,California,United States,North America,1,city,city,,,,,,,
+Heavescall,c40536g,t3_qsbm8,comments,atheism,"Hilo, HI, USA
+","<hilo, hawaii, united states>",Hilo,,Hawaii County,Hawaii,United States,North America,1,city,city,,,,,,,
+weiderman316,en82zjw,t3_bnpkpy,comments,RhodeIsland,👋🏻 hi fellow redditor in Westerly. Everything is like an hours drive in RI so everyone seems to know someone in every town in RI,<westerly>,Westerly,Westerly,Washington County,Rhode Island,United States,North America,1,city,city,,,,,,,
+uhlees,a4sqnu,,submissions,AmateurRoomPorn,"corner of my bedroom, los angeles",<los angeles>,Los Angeles,,Los Angeles County,California,United States,North America,1,city,city,,,,,,,
+terrordactyl911,cql8vg7,t3_33iojr,comments,amiibo,"California, Yes, Chrome",<california>,,,,California,United States,North America,1,state,state,,,,,,,
+hotdogsandwristers,eyjw63m,t3_cwofpq,comments,penguins,"Lancaster, originally Ross Twp in Pittsburgh",<lancaster>; <pittsburgh>,,,,Pennsylvania,United States,North America,1,city,state,Lancaster,,,Pennsylvania,United States,North America,multiple_locations
+Indy4Life,du3rgyx,t3_7wwo83,comments,pacers,"right outside of St. Louis on the Illinois side. Been a pacers fan since I was 4 or 5, so about 12 years",<illinois>; <st. louis>,,,,,United States,North America,1,region,country,,,,Illinois,United States,North America,multiple_locations
+TheCha96,c6aa2ql,t3_103zqo,comments,AskReddit,"Napa, CA","<napa, california>",Napa,,Napa County,California,United States,North America,1,city,city,,,,,,,
+satinandsass,au1aqf,,submissions,AmateurRoomPorn,"Sunny dining room. Dallas, TX","<dallas, texas>",Dallas,,Dallas County,Texas,United States,North America,1,city,city,,,,,,,
+Stickning,f7mbru6,t3_dwty4n,comments,LesbianGamers,"Wow, amazingly international, very cool!
+
+Hey-o from Brooklyn, NY!","<brooklyn, new york>",,,Kings County,New York,United States,North America,1,county,county,,,,,,,
+oddgirl321,dqc1mem,t3_7fhbbs,comments,AskReddit,"Wyoming, USA.  Howdy Reddit! ","<wyoming, united states>",,,,Wyoming,United States,North America,1,state,state,,,,,,,
+storander,e8g9bvd,t3_9r8d3l,comments,totalwar,"I'm from Michigan, now living in New York/Nagarond ",<michigan>,,,,Michigan,United States,North America,1,state,state,,,,,,,
+battlefield1337,cft1fr7,t3_1zczez,comments,teenagers,"North Carolina, USA","<north carolina, united states>",,,,North Carolina,United States,North America,1,state,state,,,,,,,
+notafishtoday,czvesz3,t3_453vc2,comments,ADHD,"Aussie living in Japan 
+
+I don't say anything to anyone about it. Mental health is frowned upon here. No meds, no doctor because I haven't found an English speaking doctor near me yet. 
+
+On the plus side, my case is mild and living here is a chance to find other solutions. ",<japan>,,,,,Japan,Asia,1,country,country,,,,,,,
+speakeazy,c406qie,t3_qsbm8,comments,atheism,"Hiwassee, Virginia","<hiwassee, virginia>",Hiwassee,Ingles,Pulaski County,Virginia,United States,North America,1,city,city,,,,,,,
+Topham_Kek,coj6dp6,t3_2vle0l,comments,millionairemakers,"Soooouth Korean again. Small town down south of South Korea. I was told I had an English accent which is a mashup of Aussie, American, British, and Southern accents.",<south korea>,,,,,South Korea,Asia,1,country,country,,,,,,,
+timmycloud,cy73kz1,t3_3wykp0,comments,FIFA,"Fresno, California","<fresno, california>",Fresno,,Fresno County,California,United States,North America,1,city,city,,,,,,,
+TheGoodNamesWereGone,c4083ik,t3_qsbm8,comments,atheism,"England, Europe... I hope it's not just America. That makes me sad","<england, europe>",,,,England,United Kingdom,Europe,1,state,state,,,,,,,
+porkins369,cmhjnhv,t3_2nvys1,comments,teenagers,"lehigh valley, PA",<pennsylvania>,,,,Pennsylvania,United States,North America,1,city,state,Lehigh Valley,,,Pennsylvania,United States,North America,parsing
+capitolguy,c6ehfuz,t3_10l12s,comments,AskReddit,"my door lock doesn't work, too expensive to fix. alarm still goes off. someone tried to break into my car the other day at 3am....and i live in montreal.",<montreal>,Montreal,,Montreal,Quebec,Canada,North America,1,city,city,,,,,,,
+firejasmine,dtjbrwp,t3_7ubsor,comments,CasualUK,Carlisle. Or close enough.,<carlisle>,Carlisle,,Cumbria,England,United Kingdom,Europe,1,city,city,,,,,,,
+georgethehulk,c6aagp8,t3_103zqo,comments,AskReddit,"Springdale, Arkansas","<springdale, arkansas>",Springdale,Springdale Township,Washington County,Arkansas,United States,North America,1,city,city,,,,,,,
+Duck_of_Doom71,cvzcu0q,t3_3omm9z,comments,NoMansSkyTheGame,"Kevin, 44, Pickering, Ontario, Canada.  My wife and kids are also excited for NMS as well as I've promised to name some planets and fauna after them.  :-)","<pickering, ontario, canada>",Pickering,Uxbridge,Regional Municipality of Durham,Ontario,Canada,North America,1,city,city,,,,,,,
+iamtylerdurdenman,c6a8knv,t3_103zqo,comments,AskReddit,Connecticut,<connecticut>,,,,Connecticut,United States,North America,1,state,state,,,,,,,
+claudiusbritannicus,e7kys1x,t3_9nb3mn,comments,namenerds,"Not really. I'm in Italy and most people here don't have a legal middle name, though many have more than one baptsimal names (so for example some one may legally just be ""Federico"" but be baptised as something like ""Federico Giovanni Maria"") which are never used. 
+
+I have multiple names and they're a bit of a bother because I have to write them all down on every document. Also, since people here seem to have trouble with the concept of mdidle names, they assume they can just call me by any of the names I have rather than by the one I use. With my birth name, I had a middle name that was very easy to pronounce for Italians, as opposed to my first name which was foreign, and I had a lot of teachers assume they could just call me by my middle name which I hated. 
+
+",<italy>,,,,,Italy,Europe,1,country,country,,,,,,,
+Lord_Omega,cp3zedz,t3_2xwafj,comments,metalgearsolid,"Belgium, the Flemish (dutch-speaking) part",<belgium>,,,,,Belgium,Europe,1,country,country,,,,,,,
+vitaestiter,cfm4nal,t3_1yn77u,comments,AskWomen,"No Coloradoans yet?  I live in a small town in Southern Colorado (Alamosa). 
+
+Pros: The town itself is quite liberal, there's a decent university and so there are a lot of younger people, the summers are really gorgeous and usually in the mid-80s, we're totally surrounded by mountains, the Great Sand Dunes are close, there are tons of outdoor activities, housing is much cheaper than most of Colorado, lots of great authentic Mexican food, a decent job market.
+
+Cons: Some of the surrounding towns are quite conservative and excessively religious (there is a large Mormon community and there is a lot of nepotism), it's in the middle of absolutely nowhere so if you want to go to a large store besides Walmart you have to drive 2.5+ hours, the winters can be absolutely brutal - we have been named the coldest area in the contiguous US before, because housing is cheaper pay is also lower and jobs with upward mobility can be hard to find because people never quit, it's such a small town that there is almost no anonymity.   ",<southern colorado>,Colorado Springs,,El Paso County,Colorado,United States,North America,1,city,city,,,,,,,
+BlitzMonk3y,ddofclf,t3_5to0wx,comments,trees,North Georgia.,<north georgia>,Dahlonega,,Lumpkin County,Georgia,United States,North America,1,region,city,,,,Georgia,United States,North America,geocoding_specificity
+Crazyblazy395,c6a9etm,t3_103zqo,comments,AskReddit,"Granby, Co checking in","<granby, co>",Granby,,Grand County,Colorado,United States,North America,1,city,city,,,,,,,
+throw_away_1239,cj7enpt,t3_2bora1,comments,teenagers,Northern Ireland anybody?,<northern ireland>,,,,Northern Ireland,United Kingdom,Europe,1,state,state,,,,,,,
+Lest4t,ebhgn6p,t3_a3unja,comments,NevilleGoddard,"I'm stuck in shitty Canada, I hate this place and I want to get away and I struggle to manifest that :(",<canada>,,,,,Canada,North America,1,country,country,,,,,,,
+unclefisty,dagb1a5,t3_5ezgm1,comments,AskMen,"I'm from Michigan, the Upper Peninsula specifically. Not sure what many stereotypes are from here.
+
+I'm atheist which seems pretty uncommon here. ",<michigan>,,,,Michigan,United States,North America,1,region,state,,,,Michigan,United States,North America,"geocoding_specificity, parsing"
+Tigerballer88,c6aae14,t3_103zqo,comments,AskReddit,"Lubbock Texas!! And Houston Texas!!
+","<houston, texas>; <lubbock, texas>",,,,Texas,United States,North America,1,city,state,,,,Texas,United States,North America,multiple_locations
+HotEspresso,c6a9pce,t3_103zqo,comments,AskReddit,"Oviedo, Florida.","<oviedo, florida>",Oviedo,,Seminole County,Florida,United States,North America,1,city,city,,,,,,,
+passer11,c6a9di8,t3_103zqo,comments,AskReddit,"Omaha, NE","<omaha, nebraska>",Omaha,Chicago,Douglas County,Nebraska,United States,North America,1,city,city,,,,,,,
+brendan0077,c6ab0yc,t3_103zqo,comments,AskReddit,"St. Paul, MN, usa","<st. paul, minnesota>",Saint Paul,,Ramsey County,Minnesota,United States,North America,1,city,city,,,,,,,
+saeEAGLE89,c404otv,t3_qsbm8,comments,atheism,"Hattiesburg, Mississippi 
+","<hattiesburg, mississippi>",Hattiesburg,,Forrest County,Mississippi,United States,North America,1,city,city,,,,,,,
+elliotgrbtrb,fedfgni,t3_eodytj,comments,beer,"Ann Arbor, MI...
+
+If you visit Ann Arbor and fail to visit Edelbrau Brewery, you've made a huge mistake.","<ann arbor, michigan>",Ann Arbor,,Washtenaw County,Michigan,United States,North America,1,city,city,,,,,,,
+theboneycrony,c6aawj7,t3_103zqo,comments,AskReddit,"Newberg, Oregon","<newberg, oregon>",Newberg,,Yamhill County,Oregon,United States,North America,1,city,city,,,,,,,
+panshaker,c6a9cmr,t3_103zqo,comments,AskReddit,"Easthampton MA
+",<easthampton>,Easthampton,,Hampshire County,Massachusetts,United States,North America,1,city,city,,,,,,,
+DanishGuy,cuvfydq,t3_3k7uku,comments,AskReddit,"Denmark.
+
+We pay 38% in taxes (even more if you earn fat stacks).
+On the other hand we have free healthcare and free education.  ",<denmark>,,,,,Denmark,Europe,1,country,country,,,,,,,
+pawelk1993,e3si0w9,t3_95f6rj,comments,swanseacity,Poland,<poland>,,,,,Poland,Europe,1,country,country,,,,,,,
+waaxz,ejgolj8,t3_b5xk8r,comments,Dofus,"Mexico, a friend of mine discovered the ultra old beta (which had a small astrub map) way back in the day and he showed it to me. I think its the game I have played the most in my life. ",<mexico>,,,,,Mexico,North America,1,country,country,,,,,,,
+Gorgonis,dnk6yws,t3_72nzrn,comments,CasualConversation,Colombia! ,<colombia>,,,,,Colombia,South America,1,country,country,,,,,,,
+1dayumae,dbygcc0,t3_5lu437,comments,rva,Bought my 3 bedroom house in Randolph for $120k. Mortgage was $700 a month. ,<randolph>,Randolph,,Norfolk County,Massachusetts,United States,North America,0,city,city,Randolph,,,Virginia,United States,North America,disambiguation
+yorkkat18,c6aaj3i,t3_103zqo,comments,AskReddit,"york, pa",<york>,York,,York County,Pennsylvania,United States,North America,1,city,city,,,,,,,
+meeblek,c6a81ts,t3_103zqo,comments,AskReddit,"Montreal,qc
+",<montreal>,Montreal,,Montreal,Quebec,Canada,North America,1,city,city,,,,,,,
+The_Redmen,estqal9,t3_c92mnd,comments,orlando,"Orlando native. First generation. Parents are english, came over 25+ years ago.",<orlando>,Orlando,,Orange County,Florida,United States,North America,1,city,city,,,,,,,
+I_AM_A_SKY_WIZARD,c242vad,t3_iibvp,comments,atheism,Northern Alabama. Ain't so bad up here.,<northern alabama>,Florence,,Lauderdale County,Alabama,United States,North America,1,region,city,,,,Alabama,United States,North America,geocoding_specificity
+omg_cornfields,c5eg2hi,t3_wlsz1,comments,UIUC,Rural Illinois. Close to the Peoria area,"<peoria, illinois>",Peoria,Peoria City Township,Peoria County,Illinois,United States,North America,1,city,city,,,,,,,
+4a4a,dvy09bm,t3_85k137,comments,AskReddit,Originally form Edmonton,<edmonton>,Edmonton,,Division No. 11,Alberta,Canada,North America,1,city,city,,,,,,,
+supermarco,c6a9qib,t3_103zqo,comments,AskReddit,"Montreal, Quebec, Canada (although that last part seems to be pretty temporary at the moment)","<montreal, quebec, canada>",Montreal,,Montreal,Quebec,Canada,North America,1,city,city,,,,,,,
+Pyrotechnic_Popcorn,c6aado4,t3_103zqo,comments,AskReddit,"BAKERSFIELD, CALIFORNIA! YEAH SMOG CITY!","<bakersfield, california>",Bakersfield,,Kern County,California,United States,North America,1,city,city,,,,,,,
+niking,c6abmul,t3_103zqo,comments,AskReddit,"Belgrade, Serbia","<belgrade, serbia>",Belgrade,,City of Belgrade,,Serbia,Europe,1,city,city,,,,,,,
+mf-ae,csg2r7f,t3_3at9xh,comments,AskReddit,"I am from Sinaloa, Mexico
+","<sinaloa, mexico>",,,,Sinaloa,Mexico,North America,1,state,state,,,,,,,
+Trlckery,cun8jqj,t3_3j6jky,comments,AskReddit,"Chicago, anything below 0 F. ",<chicago>,Chicago,,Cook County,Illinois,United States,North America,1,city,city,,,,,,,
+feichalo,cp580qn,t3_2xzzeh,comments,suns,"Manila, Philippines! In college right now in NYC.","<manila, philippines>",Manila,,,Metro Manila,Philippines,Asia,1,city,city,,,,,,,
+mushbo,cnjxv5t,t3_2rv35z,comments,AskReddit,"Salt Lake city, Utah.","<salt lake city, utah>",Salt Lake City,,Salt Lake County,Utah,United States,North America,1,city,city,,,,,,,
+TheSpookySloth,cpnl7p1,t3_2zu3ek,comments,entwives,"It's cool to see all the CanadiENTS on here.
+Surrey, BC here!
+
+Edit* forgot I was still on this sub (came here from /r/trees","<surrey, british columbia>",Surrey,,Greater Vancouver,British Columbia,Canada,North America,1,city,city,,,,,,,
+Aniuloup,ccqx5ye,t3_1oc3sw,comments,pokemon,"Continental, I live in Belgium.",<belgium>,,,,,Belgium,Europe,1,country,country,,,,,,,
+JorddyK,dahja3s,t3_5ezgm1,comments,AskMen,"Well, I'm from the great blue sea of Massachusetts, and I go to one of the most liberal universities in the entire country. I come from a socially liberal family, but I'm a conservative Republican. My family doesn't mind it. My friends sometimes do. 
+
+As for similarities, I have a heavy Boston accent that I try to hide in polite company and I'm studying to be a doctor.","<boston, massachusetts>",Boston,,Suffolk County,Massachusetts,United States,North America,1,state,city,,,,Massachusetts,United States,North America,multiple_locations
+Nczn,chugv58,t3_26tb79,comments,AskReddit,"Northfield, New Jersey
+
+Currently living in Las Vegas","<las vegas>; <northfield, new jersey>",,,,,United States,North America,1,city,country,Las Vegas,,,Nevada,United States,North America,multiple_locations
+dragontwin88,chkyu5m,t3_25uwz7,comments,NoFap,"Edinburgh, Scotland","<edinburgh, scotland>",Edinburgh,,Edinburgh,Scotland,United Kingdom,Europe,1,city,city,,,,,,,
+despitetheillusion,910qix,,submissions,AmateurRoomPorn,"Mine and my fiancé’s living room, I’m told no more plants, there’s 24 here. Bristol U.K.",<bristol>,Bristol,,Sullivan County,Tennessee,United States,North America,0,city,city,Bristol,,,England,United Kingdom,Europe,disambiguation
+Jayfire137,c6abh57,t3_103zqo,comments,AskReddit,Just north of san Bernardino California ,"<san bernardino, california>",San Bernardino,,San Bernardino County,California,United States,North America,1,city,city,,,,,,,
+faux--username,9kyacb,,submissions,AmateurRoomPorn,Finally got the bedroom done! - Maryland,<maryland>,,,,Maryland,United States,North America,1,state,state,,,,,,,
+New_York_City_Cops,cuncfww,t3_3j6jky,comments,AskReddit,"Anything under 50 degrees for me is chilly, but I like the cold. I live in San Antonio, Texas. ","<san antonio, texas>",San Antonio,,Bexar County,Texas,United States,North America,1,city,city,,,,,,,
+adamd2s,ckepsek,t3_2g0hgs,comments,formula1,"Hungarian, age 35. I was there at the first ever Hungarian Grand Prix in 1986 when I was 7. Been following ever since. Back in the day, I was a massive Prost fan. F1 has had some highs and lows since, I rank the current era among the highs. No favourite driver nowadays,  though I believe Hamilton and Alonso deserve more titles than they have.",<hamilton>,,,Greenwood County,Kansas,United States,North America,0,country,county,,,,,Hungary,Europe,"parsing, disambiguation"
+Whodoesntlikebagels,ff28gpl,t3_er88fy,comments,AskTeenGirls,New Jersey,<new jersey>,,,,New Jersey,United States,North America,1,state,state,,,,,,,
+UhhMrThePlague,c88uzw7,t3_17tmop,comments,AskReddit,"Hawaii, hot.",<hawaii>,,,,Hawaii,United States,North America,1,state,state,,,,,,,
+ThaddeusJP,cwmi636,t3_3ras6b,comments,Browns,Cleveland xpat now in Illinois. ,<illinois>; <cleveland>,,,,,United States,North America,1,state,country,,,,Illinois,United States,North America,multiple_locations
+0utandab0ut,eimgtk0,t3_b1cidd,comments,latebloomerlesbians,"Utah, USA here.   I'm told we have a vibrant gay community.  Haven't found it yet, but I'm trying. ","<utah, united states>",,,,Utah,United States,North America,1,state,state,,,,,,,
+reburn,c4069p6,t3_qsbm8,comments,atheism,"Leroy, MN","<leroy, minnesota>",Le Roy,,Mower County,Minnesota,United States,North America,1,city,city,,,,,,,
+FriskyCotton,c4058mw,t3_qsbm8,comments,atheism,"Houston, Texas!","<houston, texas>",Houston,,Harris County,Texas,United States,North America,1,city,city,,,,,,,
+Flstandantilus,ctkcjys,t3_3eyov3,comments,DJs,"NYC based here!
+
+[Oscar Barila - Lights off (Dave Pad Lights On Remix)](https://www.youtube.com/watch?v=Qlex3bHx3W4)
+
+Another vote for [Frankey & Sandrino - Acamar](https://www.youtube.com/watch?v=bjOmvuX77-A)
+
+[Sascha Dive - The get out of the ghetto blues (Woody remix)](https://www.youtube.com/watch?v=1T5rrSMt8KE)
+
+[Giom & Lonely Boy - Devil's Advocate (London Mix)](https://www.youtube.com/watch?v=gDGZzVv_YAQ)",<london>,London,,Greater London,England,United Kingdom,Europe,0,city,city,New York,,,New York,United States,North America,"parsing, disambiguation"
+mammoth2cool4school,akoezh,,submissions,AmateurRoomPorn,"Parents' Lived-In Kitchen - Greensboro, NC","<greensboro, north carolina>",Greensboro,,Guilford County,North Carolina,United States,North America,1,city,city,,,,,,,
+Sass0ri,dckn4q6,t3_5okkx4,comments,Gunners,"Stillwater, Oklahoma ","<stillwater, oklahoma>",Stillwater,,Payne County,Oklahoma,United States,North America,1,city,city,,,,,,,
+StampedPuppy,c6ab1cy,t3_103zqo,comments,AskReddit,"Hastings, Nebraska","<hastings, nebraska>",Hastings,,Adams County,Nebraska,United States,North America,1,city,city,,,,,,,
+bowties_n_blazers,c6u273j,t3_12cz7g,comments,Frat,South is the best. Tennessee Eta Nu,<tennessee>,,,,Tennessee,United States,North America,1,state,state,,,,,,,
+nkjns,deyiwd8,t3_5z6a5t,comments,muacjdiscussion,"I am from New York City and pretty much everyone wears the 'cool girl' makeup look.  Most working women wear makeup buts its the natural, I barely tried but look effortless look.  Even the older more conservative women keep it pretty simple.  I notice that when people try to be fun with their makeup (bright lips, interesting liner, popping blush) they stick to one thing and keep the rest of the face pretty natural.
+
+I never ever see Instagram makeup.  I think its generally looked down upon as kind of trashy.  Occasionally I may see some IG inspired brows or highlight but never full face and never during work times.  That's usually reserved for when the person is feeling kind of fancy I guess.",<new york city>,New York,,,New York,United States,North America,1,city,city,,,,,,,
+aulstinwithanl,ak3wna,,submissions,AmateurRoomPorn,"Master bedroom in Fort Worth, TX.","<fort worth, texas>",Fort Worth,,Tarrant County,Texas,United States,North America,1,city,city,,,,,,,
+rfitz9,d12fk00,t3_4ao07f,comments,TheCultCast,"From Colorado, USA! I was, and still am, a regular reader of Cult of Mac - so that's how I found the show. I've been listening since episode 1. I also have the honor of being the first listener to deliver the intro on episode 55!","<colorado, united states>",,,,Colorado,United States,North America,1,state,state,,,,,,,
+bonobrah,c6a8ue5,t3_103zqo,comments,AskReddit,"Hanover, New Hampshire","<hanover, new hampshire>",Hanover,Hanover,Grafton County,New Hampshire,United States,North America,1,city,city,,,,,,,
+xCyniX,c5xkoh3,t3_yozsn,comments,starcraft,Australia,<australia>,,,,,Australia,Oceania,1,country,country,,,,,,,
+stevie_stormborn,c6a9bj5,t3_103zqo,comments,AskReddit,"Kennesaw, GA","<kennesaw, georgia>",Kennesaw,,Cobb County,Georgia,United States,North America,1,city,city,,,,,,,
+RDRDRDx7,c406oep,t3_qsbm8,comments,atheism,"Greensboro, NC","<greensboro, north carolina>",Greensboro,,Guilford County,North Carolina,United States,North America,1,city,city,,,,,,,
+Ropes4u,e6abimb,t3_9h91bj,comments,boardgames,"Colorado Springs 
+
+I want to play: COIN games, Kill Team, and some hex and counter games. ",<colorado springs>,Colorado Springs,,El Paso County,Colorado,United States,North America,1,city,city,,,,,,,
+the_only_harris,csg1lsl,t3_3at9xh,comments,AskReddit,"Vancouver, Canada. ","<vancouver, canada>",Vancouver,,Greater Vancouver,British Columbia,Canada,North America,1,city,city,,,,,,,
+mysecretaccount17,d0gmhuh,t3_48046y,comments,AskReddit,"Cold: Below 40 or 50.
+Hot: Above 100.
+Washington.",<washington>,,,,Washington,United States,North America,1,state,state,,,,,,,
+rzrbax789,cwvg4xp,t3_3s8cap,comments,supremeclothing,"Cbus, Ohio ","<cbus, ohio>",Columbus,,Franklin County,Ohio,United States,North America,1,city,city,,,,,,,
+SamsquanchChief,cou1pnm,t3_2wf4dx,comments,fcbayern,"Calgary, Canada. ","<calgary, canada>",Calgary,,Division No. 6,Alberta,Canada,North America,1,city,city,,,,,,,
+Yukon_Goldd,cxebsit,t3_3udvvn,comments,secretsanta,"Eastern Ontario to Montreal, QC. Shipped yesterday and delivered today (successful according to Canada Post).
+
+Now, I am anxiously awaiting the reaction of my gif tee!","<eastern ontario>; <montreal, quebec, canada>",,,,,Canada,North America,1,country,country,,,,,,,
+wrentintin,c3mk51v,t3_p4f6w,comments,AskReddit,"Mayo, South Carolina","<mayo, south carolina>",Mayo,,Spartanburg County,South Carolina,United States,North America,1,city,city,,,,,,,
+Rugal140798,elt43kr,t3_bgixq9,comments,virtualgeisha,Philippines,<philippines>,,,,,Philippines,Asia,1,country,country,,,,,,,
+paladin400,ebv4269,t3_a6ibqr,comments,AskReddit,"Peru. Sure, weather is sunny all year long and the food is both tasty and ridiculously cheap. Wouldn't recommend it if you are a girl though. Peruvian men hunt foreign girls down like the last toaster on Black Friday. Unless you are into that, I ain't judging",<peru>,,,,,Peru,South America,1,country,country,,,,,,,
+ChrisF79,c1d2sgk,t3_f3s6j,comments,bicycling,"Naples, FL and I ride a [Trek Madone 5.2](http://www.trekbikes.com/us/en/bikes/road/madone/madone52/).  It's a compact since there isn't a hill within 300 miles of me.","<naples, florida>",Naples,,Collier County,Florida,United States,North America,1,city,city,,,,,,,
+GobbusterMX,dc76lp3,t3_5mx6o2,comments,realmadrid,"1) Mexico.
+2) Mestizo (half Mexican half Caucasian).
+3) 28.
+4) Would be kind of weird if I didn't, wouldn't it? ",<mexico>,,,,,Mexico,North America,1,country,country,,,,,,,
+turquiosekitten,c6ab1oo,t3_103zqo,comments,AskReddit,"Walla Walla, WA","<walla walla, washington>",Walla Walla,,Walla Walla County,Washington,United States,North America,1,city,city,,,,,,,
+thecyclopsRell,c6abqed,t3_103zqo,comments,AskReddit,"Birmingham, UK","<birmingham, united kingdom>",Birmingham,,West Midlands,England,United Kingdom,Europe,1,city,city,,,,,,,
+coryeyey,d4n5q29,t3_4powec,comments,sandiego,"Escondido
+
+ Pro: Good hiking/biking locations and relatively cheap for north county
+
+con: Can get pretty damn hot in the summer time and the schools aren't great",<escondido>,Escondido,,San Diego County,California,United States,North America,1,city,city,,,,,,,
+PhoenixMan83,c408w1t,t3_qsbm8,comments,atheism,"Memphis, TN","<memphis, tennessee>",Memphis,,Shelby County,Tennessee,United States,North America,1,city,city,,,,,,,
+MrGloopy,dfuphur,t3_63jd14,comments,AskReddit,"Sydney, Australia. We have good chocolate here! ","<sydney, australia>",Sydney,,,New South Wales,Australia,Oceania,1,city,city,,,,,,,
+GreatGabby747,d4u336k,t3_4qfitz,comments,infertility,South Western Pennsylvania,<western pennsylvania>,Pittsburgh,,Allegheny County,Pennsylvania,United States,North America,1,region,city,,,,Pennsylvania,United States,North America,geocoding_specificity
+CharliesDaniels,c3std47,t3_pwjpa,comments,electrohouse,"From California!
+
+Favorite producers: PeaceTreaty, NT89, Louis La Roche
+
+I actually opened for Lazy Rich a few months ago super nice guy. The most recent gigs I've been to Dada Life, Bart B more, Steve Aoki, Zeds Dead, Drop the Lime, Classix, Acid Girls, Kids at the Bar, Bassex, Wolfgang Gartner, PeaceTreaty, Tiga, Boys Noize, Dillon Francis, Jack Beats, Digitalism, Ratatat.",<california>,,,,California,United States,North America,1,state,state,,,,,,,
+thenerdpanda,daqcru3,t3_5g6mp6,comments,oaklandraiders,Greetings from Germany! ,<germany>,,,,,Germany,Europe,1,country,country,,,,,,,
+sidiusuk,esbtswx,t3_c6rqac,comments,Gunners,"Cornwall, UK!!!!!!! There's a fair few of us down 'ere!","<cornwall, united kingdom>",,,Cornwall,England,United Kingdom,Europe,1,county,county,,,,,,,
+yaz834,eqo97vw,t3_bz01fy,comments,AskReddit,No one from North Korea yet ?,<north korea>,,,,,North Korea,Asia,1,country,country,,,,,,,
+OreoMaster,c6a97tm,t3_103zqo,comments,AskReddit,"Iowa City, IA",<iowa city>,Iowa City,,Johnson County,Iowa,United States,North America,1,city,city,,,,,,,
+TaikongXiongmao,c6aa65z,t3_103zqo,comments,AskReddit,"Guangzhou, China :)","<guangzhou, china>",Guangzhou,,,Guangdong Province,China,Asia,1,city,city,,,,,,,
+Asianta99,cbdv4sw,t3_1jehnu,comments,teenagers,South Korea ,<south korea>,,,,,South Korea,Asia,1,country,country,,,,,,,
+HeadingtoFall,dcwck4f,t3_5q4upc,comments,cscareerquestions,"just to be fair, I'll start. hopefully this takes off.
+
+I'm in Santa Barbara, CA. The job market isn't that bad for a small town, lots of defense contractors, along with some other smaller or growing tech companies. I feel I wouldn't have too much difficulty getting another job in the area, but if you don't live nearby they don't seem like the type to fly people out here for interviews or pay relocation. The biggest name around I guess would be Sonos.
+
+It's not San Francisco pricey by any means, but it can get expensive, especially studios which I'd average to around $1500 I guess. And the quality of most of them seems pretty low. There's a lot of run down apartments designed for the large local student population though if you don't mind cockroaches and lack of amenities. Good luck if you want to try to buy a house here.
+
+The town itself is not bad, it's right on the beach and the weather is fantastic nearly year round. There are pretty decent options nearby for outdoor activities. On the other hand, there are no good food options, and it is a town, not a city. It's only a couple of hours to LA, but the town itself isn't very lively, with a large student population and a large older population, but not a lot in between. A lot of people around here feel like the stereotypical somewhat superficial rich white people with their yoga and pilates and whatever fad diets (gluten free) are popular, if you're into that.","<san francisco>; <santa barbara, california>",,,,California,United States,North America,1,city,state,Santa Barbara,,,California,United States,North America,multiple_locations
+Blueturfbronc,ex4eo6p,t3_crchm8,comments,KansasCityChiefs,"Idaho here...  saw Okoye destroy fools..  Steve Deberg slingin it, was instantly sold in an all Elway state..",<idaho>,,,,Idaho,United States,North America,1,state,state,,,,,,,
+UnicornBurrito,dnzhtfw,t3_74mrh5,comments,AskReddit,A small town in central Czechia :),<czechia>,,,,,Czechia,Europe,1,country,country,,,,,,,
+MrPresldent,dexhfat,t3_5zbg5o,comments,summonerswar,"Miami, FL","<miami, florida>",Miami,,Miami-Dade County,Florida,United States,North America,1,city,city,,,,,,,
+TylerAnthony8381,cz42tlq,t3_41jvsp,comments,gaymers,"Stillwater, OK! =D","<stillwater, oklahoma>",Stillwater,,Payne County,Oklahoma,United States,North America,1,city,city,,,,,,,
+130nard0,cmbj7g3,t3_2n8lja,comments,AskReddit,Chicago represented here,<chicago>,Chicago,,Cook County,Illinois,United States,North America,1,city,city,,,,,,,
+Boobiesmakesiteasier,c6ab1en,t3_103zqo,comments,AskReddit,"Honolulu, HI","<honolulu, hawaii>",Honolulu,,Honolulu County,Hawaii,United States,North America,1,city,city,,,,,,,
+wily6,c0npoq2,t3_bo1v5,comments,AskReddit,Me! I'm across the bay in Lafayette.,<lafayette>,Lafayette,Parish Governing Authority District B,Lafayette Parish,Louisiana,United States,North America,1,city,city,,,,,,,
+sirkylelenn,dis8iz9,t3_6gnxzm,comments,StarVStheForcesofEvil,"I live in Marysville, Washington, it's about 30 miles north of Seattle.","<seattle>; <marysville, washington>",,,,Washington,United States,North America,1,city,state,Marysville,,,Washington,United States,North America,multiple_locations
+R2Blazed,cgmgl4y,t3_22g0p9,comments,AskReddit,"Pasta, chicken and some veggies
+Denmark",<denmark>,,,,,Denmark,Europe,1,country,country,,,,,,,
+Zubeneschalami,ejhcw6a,t3_b5xk8r,comments,Dofus,"Belgium (French speaking) I started in high school when a friend introduced me to it. We stopped playing when we discovered League of Legends. Now I'm fed up with LoL, so I just recently picked Dofus again, because of nostalgia and curiosity.",<belgium>,,,,,Belgium,Europe,1,country,country,,,,,,,
+The_Derpologist,ds3859s,t3_7nl27v,comments,edmproduction,"Bangor, Maine. 
+
+I would bet 20 bucks that nobody here has even been to Maine. Lol. ","<bangor, maine>",Bangor,Orono Town,Penobscot County,Maine,United States,North America,1,city,city,,,,,,,
+BAlanStewart,c404qj9,t3_qsbm8,comments,atheism,"fullerton, california, USA","<fullerton, california, united states>",Fullerton,,Orange County,California,United States,North America,1,city,city,,,,,,,
+RetnuhLebos,d2ojftx,t3_4h98wt,comments,edmproduction,Northern Virginia DMV reppin,<northern virginia>,Springfield,Lee,Fairfax County,Virginia,United States,North America,1,region,city,,,,Virginia,United States,North America,geocoding_specificity
+vinyl-junkie,dtw2p7u,t3_7vwwdo,comments,streetwear,Big up East London bois ,<east london>,London,,Greater London,England,United Kingdom,Europe,1,city,city,,,,,,,
+aeternias,dbgl5hn,t3_5jjfos,comments,FantasyPL,Croatia here.,<croatia>,,,,,Croatia,Europe,1,country,country,,,,,,,
+STKFC,c6a9k42,t3_103zqo,comments,AskReddit,"Melbourne, Australia","<melbourne, australia>",Melbourne,,,Victoria,Australia,Oceania,1,city,city,,,,,,,
+samiam32,c6aaygp,t3_103zqo,comments,AskReddit,"Quincy, IL
+
+Finally gonna show up on a map... YES","<quincy, illinois>",Quincy,Quincy Township,Adams County,Illinois,United States,North America,1,city,city,,,,,,,
+B_randin,c405ovd,t3_qsbm8,comments,atheism,"Kennett Square, Pennsylvania, US","<pennsylvania, united states>",,,,Pennsylvania,United States,North America,1,city,state,Kennett Square,,,Pennsylvania,United States,North America,parsing
+Ruxerre,cqfzcua,t3_2yyik3,comments,Nepal,"Louisiana, USA","<louisiana, united states>",,,,Louisiana,United States,North America,1,state,state,,,,,,,
+Gembu,c6aab4o,t3_103zqo,comments,AskReddit,"Berlin, Germany","<berlin, germany>",Berlin,,,Berlin,Germany,Europe,1,city,city,,,,,,,
+lustigjh,ex78yil,t3_crmn7f,comments,straightedge,"Chicago area, started claiming edge when I lost interest in drinking alcohol for the sake of ""fitting in"".  I've always found other forms of drug use to be degrading so I've stayed away from those as a matter of principle - alcohol followed once I realized I only saw it as ""normal"" because society deemed it so.",<chicago>,Chicago,,Cook County,Illinois,United States,North America,1,city,city,,,,,,,
+JustnCas3,c6a9u1y,t3_103zqo,comments,AskReddit,"Cupertino, California","<cupertino, california>",Cupertino,,Santa Clara County,California,United States,North America,1,city,city,,,,,,,
+Torpedo_bubbles,c6acbjl,t3_103zqo,comments,AskReddit,"Lahaina, Hawaii. Maui no ka oi.","<lahaina, hawaii>",Lahaina,,Maui County,Hawaii,United States,North America,1,city,city,,,,,,,
+Bearinthemaking,cts2ea3,t3_3fud2m,comments,AskReddit,"Frankfort, KY","<frankfort, kentucky>",Frankfort,,Franklin County,Kentucky,United States,North America,1,city,city,,,,,,,
+badass_panda,cnjloxu,t3_2rv35z,comments,AskReddit,"... New Jersey.
+
+Have at it.",<new jersey>,,,,New Jersey,United States,North America,1,state,state,,,,,,,
+Harv_Spec,cucgabl,t3_3i1fns,comments,AskReddit,Colorado and we have food and beer...lots of beer...,<colorado>,,,,Colorado,United States,North America,1,country,country,,,,,,,
+Alaska_SMT,fd5e1r3,t3_ek3i5u,comments,AskReddit,Austria,<austria>,,,,,Austria,Europe,1,country,country,,,,,,,
+ErstwhileMainer,duf17e,,submissions,AmateurRoomPorn,"[Milan - Italy] I have a lot of space in my room and I just bought this desk + chair + lamp and I'm happy. I'm looking for advices, tips and critiques 🙂🙂🙂","<milan, italy>",Milan,Milan,Metropolitan City of Milan,Lombardy,Italy,Europe,1,city,city,,,,,,,
+blackvishnu,8r85ae,,submissions,AmateurRoomPorn,"Our newly renovated kitchen. This is in Cary, NC.","<cary, north carolina>",Cary,,Wake County,North Carolina,United States,North America,1,city,city,,,,,,,
+rawoyster,c76bf4,,submissions,AmateurRoomPorn,"Dining Room [Portland, Oregon] 🍋 🍊","<portland, oregon>",Portland,,Multnomah County,Oregon,United States,North America,1,city,city,,,,,,,
+orlytho,cqf78p5,t3_32vxwo,comments,AsianBeauty,"Northern California, Bay Area!! ",<northern california>,,,,California,United States,North America,1,region,state,,,,California,United States,North America,geocoding_specificity
+highguize,cpgdj2z,t3_2z6v33,comments,trees,200/oz florida,<florida>,,,,Florida,United States,North America,1,state,state,,,,,,,
+kresimirnovakovic,cm9h3fb,t3_2mztw3,comments,languagelearning,"Minneapolis, Minnesota, although my family is from Berks County Pennsylvania (deitsch country)","<minneapolis, minnesota>; <berks county, pennsylvania>",,,,,United States,North America,1,city,city,,,,,,,
+bigspks,daq50g1,t3_5g6mp6,comments,oaklandraiders,"Columbus, O.H...... I.O!!!",<columbus>,Columbus,,Franklin County,Ohio,United States,North America,1,city,city,,,,,,,
+HeyItsMarteeen,cydrnyh,t3_3yhsem,comments,smashbros,"Stockton, CA. Right between NorCal and SoCal. Also known as the Central Valley.","<stockton, california>",Stockton,,San Joaquin County,California,United States,North America,1,city,city,,,,,,,
+dantheman321456987,c6a9dms,t3_103zqo,comments,AskReddit,"Brossard, qc, canada ","<brossard, canada>",Brossard,,Champlain Regional County Municipality,Quebec,Canada,North America,1,city,city,,,,,,,
+yesgoldmund,dx7rb44,t3_8bl68x,comments,callmebyyourname,"24 yo bi woman from Verona, Italy currently living in London, UK. 
+
+I know one other person who got maybe as shaken and ripped apart as I did - Italian guy in the UK, my age, gay, similar sensibility for art and intimacy. He’s from northern Italy too. Something about being away from home pulled at our heartstrings. ","<verona, italy>; <london, united kingdom>",,,,,,Europe,1,city,continent,London,,,England,United Kingdom,Europe,multiple_locations
+CheezyMunkee,c6aajam,t3_103zqo,comments,AskReddit,"Silverthorne, Colorado","<silverthorne, colorado>",Silverthorne,,Summit County,Colorado,United States,North America,1,city,city,,,,,,,
+saberist4734,c47p3pg,t3_rpmj6,comments,minnesotavikings,"I've lived in Minnesota my whole life, but didn't really get into the Vikes until AP and Jared Allen came around. Now I'm a diehard.",<allen>; <minnesota>,,,,,United States,North America,1,state,country,,,,Minnesota,United States,North America,parsing
+Jazzyfreshh,c6a9xzd,t3_103zqo,comments,AskReddit,"Dallas, TX","<dallas, texas>",Dallas,,Dallas County,Texas,United States,North America,1,city,city,,,,,,,
+reddit_admin_,cq941w4,t3_329apz,comments,AskReddit,"McCalla, AL. Hometown of Bo Jackson. ",<alabama>; <jackson>,,,,,United States,North America,1,city,country,McCalla,,,Alabama,United States,North America,parsing
+waqar911,dbglo55,t3_5jjfos,comments,FantasyPL,Pakistan,<pakistan>,,,,,Pakistan,Asia,1,country,country,,,,,,,
+elmz370,dpjdah3,t3_7bmvkq,comments,AskReddit,"I don't eat breakfast. I'm from San Diego, CA, USA.","<san diego, california, united states>",San Diego,,San Diego County,California,United States,North America,1,city,city,,,,,,,
+StubaSceve,c6a9ll3,t3_103zqo,comments,AskReddit,"Aguadilla, Puerto Rico","<aguadilla, puerto rico>",Aguadilla Pueblo,,Caimital Bajo,Aguadilla,Puerto Rico,North America,1,city,city,,,,,,,
+jabroni_ellsbury,dbhk3bd,t3_5jjfos,comments,FantasyPL,"Newport Beach, California. Now Dystopic Trumpland","<newport beach, california>",Newport Beach,,Orange County,California,United States,North America,1,city,city,,,,,,,
+Shockum,ct6ythf,t3_3dmh26,comments,wow,"Just west of Charlotte, NC. 
+
+Currently Alliance on Stormrage...but soon to return to Horde, somewhere after a month break from the faction. ","<charlotte, north carolina>",Charlotte,Charlotte,Mecklenburg County,North Carolina,United States,North America,1,city,city,,,,,,,
+ohhhsarah,c6a9dw5,t3_103zqo,comments,AskReddit,"Monterey, CA :-]","<monterey, california>",Monterey,,Monterey County,California,United States,North America,1,city,city,,,,,,,
+queenofkingcity,c6alwtl,t3_103zqo,comments,AskReddit,"Kansas City, MO!","<kansas city, missouri>",Kansas City,,Jackson County,Missouri,United States,North America,1,city,city,,,,,,,
+Leivinia,clj3ilp,t3_2k8vco,comments,OnePiece,"Philippines, 22",<philippines>,,,,,Philippines,Asia,1,country,country,,,,,,,
+luisangel2221,cp5jmkg,t3_2xymx7,comments,leagueoflegends,I feel fucking excluded being from Dominican Republic holy shit,<dominican republic>,,,,,Dominican Republic,North America,1,country,country,,,,,,,
+50yardscreamer,e3tkp8f,t3_95f6rj,comments,swanseacity,Swansea. Living in England at the moment but helps for the away games. ,<swansea>; <england>,,,,,United Kingdom,Europe,1,state,state,,,,,,,
+HorseSchnoz,c403m39,t3_qsbm8,comments,atheism,"Calgary,Alberta,Canada","<calgary, alberta, canada>",Calgary,,Division No. 6,Alberta,Canada,North America,1,city,city,,,,,,,
+apextek,c1ivns0,t3_fv65b,comments,AskReddit,"los angeles, because the sky is sunny, the air is warm, the people are friendly and generous, jobs plentiful and pay scale is good",<los angeles>,Los Angeles,,Los Angeles County,California,United States,North America,1,city,city,,,,,,,
+darkego666,c404b5x,t3_qsbm8,comments,atheism,"Portland, OR","<portland, oregon>",Portland,,Multnomah County,Oregon,United States,North America,1,city,city,,,,,,,
+PM_ME_THE_NUMBER_112,cmkmunf,t3_2o80n0,comments,AskReddit,"London, UK.","<london, united kingdom>",London,,Greater London,England,United Kingdom,Europe,1,city,city,,,,,,,
+Where2cop321,cx10ps6,t3_3swhmv,comments,asianamerican,"I can't recall ever having this issue/dilemma myself. I'm from Boston and pretty much float around the metropolitan area and New England in general. People would usually ask where my parents are from if they want to know my ethnicity if anything, which I find harmless and non-offensive. For me sometimes I ask ""what are you?"" or ""what's your background?"" for non-Asian people and I haven't had a problem (so far) as well.",<boston>; <new england>,,,,,United States,North America,1,city,country,Boston,,,Massachusetts,United States,North America,multiple_locations
+hollygrace12,cagkkz8,t3_1fump6,comments,teenagers,"Brisbane, Australia!","<brisbane, australia>",Brisbane,,,Queensland,Australia,Oceania,1,city,city,,,,,,,
+Kinkahjoo,czwcozk,t3_459qm2,comments,Random_Acts_Of_Amazon,"Im way up in North Jersey now, right by the NY border :)",<north jersey>,,,,New Jersey,United States,North America,1,region,state,,,,New Jersey,United States,North America,geocoding_specificity
+birdablaze,c2iw6bo,t3_kb3n5,comments,AskReddit,"$800/m 1br including water, sewer, basic cable, and trash. Lake Mary, FL.
+
+It's a mediocre apartment complex but my air conditioning is super cold and because basic cable is in my rent, the cable company gives us crazy deals. So I pay like 60/m for high-speed internet, a DVR, HBO, and full on demand. ","<lake mary, florida>",Lake Mary,,Seminole County,Florida,United States,North America,1,city,city,,,,,,,
+SUCK_MY_DICK_THANKS,cucgl04,t3_3i1fns,comments,AskReddit,Canada. Poutine and Montreal smoked meat sandwiches ,"<montreal, canada>",Montreal,,Montreal,Quebec,Canada,North America,1,city,city,,,,,,,
+DaddysKitty,c6a9ixa,t3_103zqo,comments,AskReddit,"Tulsa, OK","<tulsa, oklahoma>",Tulsa,,Tulsa County,Oklahoma,United States,North America,1,city,city,,,,,,,
+ObviousThrowawayNYC,e0vkl4l,t3_8rvydv,comments,nyc,"Throwaway because LOL, although some of you should be able to guess easily.  
+
+I'm 50-ish. I usually make anywhere from $100k to $300k depending upon how hard I feel like working - I'm a freelance producer & consultant.  
+
+I rent a huge 3br/2bath pre-war with a giant dining room in a nice Queens neighborhood for $2400 (rent stabilized), rent a private 4-room office for $1500, and own a 1BR coop on the beach.  ",<queens>,,,Queens County,New York,United States,North America,1,county,county,,,,,,,
+GeorgeOlduvai,c27lj0e,t3_hhakt,comments,Scotch,"Victoria, BC","<victoria, british columbia>",Victoria,,Capital,British Columbia,Canada,North America,1,city,city,,,,,,,
+conrabies,9htamh,,submissions,AmateurRoomPorn,"A friend's living room in St. Louis, Missouri, USA","<st. louis, missouri, united states>",St. Louis,,,Missouri,United States,North America,1,city,city,,,,,,,
+Howsmydirktaste,c404crl,t3_qsbm8,comments,atheism,"Dallas, Texas, USA","<dallas, texas, united states>",Dallas,,Dallas County,Texas,United States,North America,1,city,city,,,,,,,
+MoorBoy,ci7yprd,t3_285cp4,comments,Survival,"Cornwall, near England. ;)","<cornwall, england>",,,Cornwall,England,United Kingdom,Europe,1,county,county,,,,,,,
+ice6418,eqx8l5w,t3_bzv21g,comments,realdubstep,"The immediate burbs west of Chicago, IL, USA","<chicago, illinois, united states>",Chicago,,Cook County,Illinois,United States,North America,1,city,city,,,,,,,
+MyAverageMind,c6aadmr,t3_103zqo,comments,AskReddit,"Yellowknife, Northwest Territories, Canada here! ","<yellowknife, northwest territories, canada>",Yellowknife,"Fort Smith, Unorganized",Fort Smith Region,Northwest Territories,Canada,North America,1,city,city,,,,,,,
+yuccu,c6abh2e,t3_103zqo,comments,AskReddit,"Seaside, CA","<seaside, california>",Seaside,,Monterey County,California,United States,North America,1,city,city,,,,,,,
+serfas,c6a8pos,t3_103zqo,comments,AskReddit,"Calgary, AB, Canada.","<calgary, alberta, canada>",Calgary,,Division No. 6,Alberta,Canada,North America,1,city,city,,,,,,,
+RavensIvy,d2bpvpv,t3_4fscgk,comments,travel,"I went to China to teach on a program with Bucklands group and had a blast. I was teaching kindergarten kids, it was my first real teaching experience and it is the reason I'm now studying for a degree in early childhood education! 
+
+Sure it was challenging in the beginning, but pretty soon it didn't feel like work at all. I was getting paid to mostly sing songs and play games for 15 hours a week. Fantastic.",<china>,,,,,China,Asia,0,None,country,,,,,,,irrelevant_mention
+FaitFretteCriss,dz47fcf,t3_8k0icc,comments,Naruto,Quebec,<quebec>,Quebec City,,Communauté-Urbaine-de-Québec,Quebec,Canada,North America,1,city,city,,,,,,,
+Musgoh,cqmde46,t3_33kipy,comments,soccerspirits,"Chile, the last place in the world ",<chile>,,,,,Chile,South America,1,country,country,,,,,,,
+RidePlanet,cpvlj1e,t3_30qhyp,comments,vancouver,"Kits, near the beach. 2 Bedroom,1 bath, 900 sqft plus a patio, in suite laundry. $1935.
+
+A friend of mine was just shipped off to Saskatoon for 6-12 months by his company. His experience there is that rent is almost no different. He's found a furnished 1 bedroom basement suit for $1000. Even when looking with roommates, prices were very comparable to here.",<saskatoon>,Saskatoon,Corman Park No. 344,Division No. 11,Saskatchewan,Canada,North America,1,city,city,,,,,,,
+Cherpyderp,ciez73x,t3_28vxih,comments,AskReddit,"I'm from Iowa.  I love that my town is big enough to not feel cramped, but small enough that the people here are generally nice, thoughtful, and caring.  Midwest values are really nice sometimes.",<iowa>,,,,Iowa,United States,North America,1,state,state,,,,,,,
+heresrobo,c20xln2,t3_i4v7c,comments,AskReddit,"Light Butt Bug, NY",<new york>,New York,,,New York,United States,North America,1,state,city,,,,New York,United States,North America,ambiguous
+leukos,c6abq04,t3_103zqo,comments,AskReddit,Northern Los Angeles 805 uitb!,<northern los angeles>,Los Angeles,,Los Angeles County,California,United States,North America,1,city,city,,,,,,,
+Aufwind,f4b8bkm,t3_dk5sa3,comments,keto,"I'm from germany and of course............ I quit beer.
+Sounds like a joke, but perhaps this is one of the hardest food to avoid for me. It's because of the social live and the used habits when meeting friends. 
+It's said there are some low carb beers but i didn't taste them unless my local brand offers some ;)",<germany>,,,,,Germany,Europe,1,country,country,,,,,,,
+GetEquipped,d7i9sg6,t3_527uc3,comments,TheSilphRoad,"Colorado, Android, which isn't too bad since I have terrible stomach bug currently and have no desire to walk around collecting candy.","<colorado, android>",,,,Colorado,United States,North America,1,state,state,,,,,,,
+Wendyland78,ckari3e,t3_2flk7b,comments,xxketo,"St. Louis, MO. ","<st. louis, missouri>",St. Louis,,,Missouri,United States,North America,1,city,city,,,,,,,
+katelikesgiants,9ywvd4,,submissions,AmateurRoomPorn,"Trying to keep things funky in Washington, D.C.","<washington, district of columbia>",Washington,,District of Columbia,District of Columbia,United States,North America,1,city,city,,,,,,,
+Bedstemor192,d8rkqes,t3_57f2cf,comments,AskReddit,"12:51
+Denmark ",<denmark>,,,,,Denmark,Europe,1,country,country,,,,,,,
+_squirts,c6abcs5,t3_103zqo,comments,AskReddit,"London, UK","<london, united kingdom>",London,,Greater London,England,United Kingdom,Europe,1,city,city,,,,,,,
+VeeBeeEll,f2zs9lh,t3_dez30h,comments,AskReddit,"I live in Norfolk, England but consider myself to be from Yorkshire.","<norfolk, england>",,,Norfolk,England,United Kingdom,Europe,1,county,county,,,,,,,
+danksta36,cxvookk,t3_3wcop9,comments,DIY_eJuice,"San Antonio, TX GSG!!!!","<san antonio, texas>",San Antonio,,Bexar County,Texas,United States,North America,1,city,city,,,,,,,
+mwatwe01,f0zqzsy,t3_d7dzdl,comments,AskAnAmerican,"Senior software engineer at a sports entertainment company.
+
+Louisville, Kentucky 
+
+No stated dress code. I’m a bit older, so I typically wear polo shirts and jeans. A lot of my coworkers will wear something similar or even a nice t-shirt.","<louisville, kentucky>",Louisville,,Jefferson County,Kentucky,United States,North America,1,city,city,,,,,,,
+BiohazardBunny,c5axt5b,t3_w7fyz,comments,MLPLounge,"18, Tampa Florida!","<tampa, florida>",Tampa,,Hillsborough County,Florida,United States,North America,1,city,city,,,,,,,
+oxymora,c6aahwg,t3_103zqo,comments,AskReddit,"Montgomery, Al
+:o I don't see anyone here
+foreveralone.jpg","<montgomery, al>",Montgomery,,Montgomery County,Alabama,United States,North America,1,city,city,,,,,,,
+Jadenlost,c0p50ni,t3_bxwip,comments,AskReddit,"Northwest Ohio 2 bedroom apartment, heat, cable and Internet included as well as a pool. $600 a month.",<northwest ohio>,Lima,American Township,Allen County,Ohio,United States,North America,1,region,city,,,,Ohio,United States,North America,geocoding_specificity
+Milkshaketurtle79,cqc89gh,t3_32kcya,comments,AskReddit,"Grand Rapids, Michigan. I live in rural area only a few minutes from the suburbs.","<grand rapids, michigan>",Grand Rapids,,Kent County,Michigan,United States,North America,1,city,city,,,,,,,
+Ceikun,cqcoghg,t3_32mibq,comments,SchoolIdolFestival,"Georgia, USA! I'm kind of bitter that I couldn't aim for T2 this time but I'm probably looking at T3 or T4 which is fine with me. Best of luck in the next event!","<georgia, united states>",,,,Georgia,United States,North America,1,state,state,,,,,,,
+Dipluz,c6absl4,t3_103zqo,comments,AskReddit,"Stavanger, Norway","<stavanger, norway>",Stavanger,,,Rogaland,Norway,Europe,1,city,city,,,,,,,
+ByWillAlone,dmxs3yt,t3_6zncgr,comments,AskAnAmerican,"If I am referring to just caramel by itself, I say cara-mel
+
+But for some crazy reason, if I am referring to a two word combo, it's car-mel. Example: car-mel corn, car-melled apples.
+
+Live in Seattle Washington (past 15 years), grew up in Portland Oregon.","<portland, oregon>; <seattle, washington>",,,,,United States,North America,1,city,country,Seattle,,,Washington,United States,North America,multiple_locations
+emswife,cetqi8i,t3_1vm4lx,comments,BabyBumps,Northeast Oklahoma near Tulsa.,<tulsa>; <northeast oklahoma>,,,,Oklahoma,United States,North America,1,region,state,Tulsa,,,Oklahoma,United States,North America,multiple_locations
+topazbloom,c6a9nxh,t3_103zqo,comments,AskReddit,"Bellingham, WA","<bellingham, washington>",Bellingham,,Whatcom County,Washington,United States,North America,1,city,city,,,,,,,
+King_330,ckl1nk6,t3_2gokac,comments,AskReddit,"Akron, Ohio. ","<akron, ohio>",Akron,,Summit County,Ohio,United States,North America,1,city,city,,,,,,,
+mashmanos,d2qvg07,t3_4hmlwk,comments,CODZombies,35 North London,<north london>,London,,Greater London,England,United Kingdom,Europe,1,city,city,,,,,,,
+mike_b_nimble,d1xsdbm,t3_4e7x9b,comments,AskReddit,"Appalachian Mountains, North Carolina, USA","<appalachian mountains, north carolina, united states>",,,,,United States,North America,1,region,country,,,,North Carolina,United States,North America,geocoder_error
+psy_klops,dusrxog,t3_80398s,comments,AskReddit,"India, 0
+",<india>,,,,,India,Asia,1,country,country,,,,,,,
+IgniteCorda,eb70r3t,t3_a3jh55,comments,Catholicism,Uruguay.,<uruguay>,,,,,Uruguay,South America,1,country,country,,,,,,,
+RedBeard94,cwmzene,t3_3rbcmk,comments,eagles,"A bit south of Madison. I put Packers for the market, but there seem to be a lot of Bears fans here too.",<madison>,Madison,,Dane County,Wisconsin,United States,North America,1,city,city,,,,,,,
+Feriation,ca7o2ox,t3_1f7p9g,comments,cars,"For my daily commuter it's important. There's a reason I've kept my 3 cyl rust bucket. 1995 Pontiac Firefly and still gets me a guaranteed 45mpg. 
+
+With my other car, I just accept it. It's not Miles Per Gallon, it's Smiles Per Gallon. Just accept what purpose the fuel is really going for.",<pontiac>,Pontiac,,Oakland County,Michigan,United States,North America,0,None,city,,,,,,,parsing
+saram_,f607i9q,t3_dq2o4i,comments,rugbyunion,"South Africa cos I picked them randomly in a lotto draw and get more money if they win.
+
+Already up about 20 bucks with them making the final.",<south africa>,,,,,South Africa,Africa,1,country,country,,,,,,,
+MilkThePidgeon,c6ab7up,t3_103zqo,comments,AskReddit,"Oregon city, Oregon.",<oregon city>,Oregon City,,Clackamas County,Oregon,United States,North America,1,city,city,,,,,,,
+Lodger79,do9xrvb,t3_75ypjr,comments,askgaybros,"USA here as well. What's Slovenia like? Do you guys have your own strong cultural identity? What makes you guys Slovenians specifically? I'm a history buff but don't know much about Slovenia or it's people.
+
+Also obligatory how's the gay scene there?",<slovenia>,,,,,Slovenia,Europe,1,country,country,,,,,,,
+dalcowboiz,c4034wj,t3_qsbm8,comments,atheism,"sunnyvale, ca, usa",<sunnyvale>,Sunnyvale,,Santa Clara County,California,United States,North America,1,city,city,,,,,,,
+etalasi,e7b5bff,t3_9m1m8h,comments,AskAnAmerican,"Mom's mom: [*Po po* 婆婆](http://www.cantonese.sheik.co.uk/dictionary/words/10324/)  (Cantonese kinship term)  
+Mom's dad: [*Gung gung* 公公](http://www.cantonese.sheik.co.uk/dictionary/words/11213/) (Cantonese kinship term)  
+Dad's mom: Grandma Jane  
+
+I never had a term for my dad's dad, he died when my dad was little.
+
+I'm from San Francisco, as my flair would have you think.",<san francisco>,San Francisco,,San Francisco County,California,United States,North America,1,city,city,,,,,,,
+Domi_Wl,cpemyyr,t3_2z08a2,comments,eu4,"München/Munich, Germany, when not at my parents, directly in Munich.","<munchen/munich, germany>",Munich,,Upper Bavaria,Bavaria,Germany,Europe,1,city,city,,,,,,,
+Geckor,cts3kid,t3_3fud2m,comments,AskReddit,"Gold Coast , Australia","<gold coast, australia>",Gold Coast,,City of Gold Coast,Queensland,Australia,Oceania,1,city,city,,,,,,,
+LeeeeroooyJEnKINSS,c6ab14n,t3_103zqo,comments,AskReddit,"Matamata, New Zealand. 
+Home of Hobbiton, also my neighbors property has the set on it!","<matamata, new zealand>",Matamata,,,Waikato,New Zealand,Oceania,1,city,city,,,,,,,
+rossdds,c0ymwgu,t3_d9x2m,comments,AskReddit,"Ann Arbor, MI","<ann arbor, michigan>",Ann Arbor,,Washtenaw County,Michigan,United States,North America,1,city,city,,,,,,,
+durferz,cy3s1oq,t3_3xd9x5,comments,AskReddit,"I live in Malta. Tiny island in the middle of the Mediterranean sea.
+
+5/7.
+
+Warm weather, beaches everywhere, yada yada.",<malta>,,,,,Malta,Europe,1,country,country,,,,,,,
+lolifritz,c6a8urx,t3_103zqo,comments,AskReddit,"Buffalo, New York","<buffalo, new york>",Buffalo,,Erie County,New York,United States,North America,1,city,city,,,,,,,
+elementskater264,c7rjjis,t3_160anb,comments,AskReddit,Louisiana!,<louisiana>,,,,Louisiana,United States,North America,1,state,state,,,,,,,
+OkieMallen,czen0gu,t3_42z4dw,comments,headphones,"Pure n00b action Colin atcha from Norman, OK. ","<norman, oklahoma>",Norman,,Cleveland County,Oklahoma,United States,North America,1,city,city,,,,,,,
+pickie508,c57bcg2,t3_vs5zl,comments,chicago,"Springfield, IL","<springfield, illinois>",Springfield,,Sangamon County,Illinois,United States,North America,1,city,city,,,,,,,
+MaverickGH,dlyrs1m,t3_6v7mf7,comments,Juve,"Vancouver, Canada ","<vancouver, canada>",Vancouver,,Greater Vancouver,British Columbia,Canada,North America,1,city,city,,,,,,,
+CaptnBanana,d8igz5k,t3_567z5i,comments,NintendoNX,Australia. Mate.,<australia>,,,,,Australia,Oceania,1,country,country,,,,,,,
+Countrygal0415,cmizims,t3_2o1ogf,comments,CasualConversation,"Dayton, Ohio here. ","<dayton, ohio>",Dayton,Jefferson Township,Montgomery County,Ohio,United States,North America,1,city,city,,,,,,,
+ITakeLongPoops,eqt4gyd,t3_bzchxo,comments,Everton,"Oklahoma City, OK",<oklahoma city>,Oklahoma City,,Oklahoma County,Oklahoma,United States,North America,1,city,city,,,,,,,
+CatCam89,c402zuh,t3_qsbm8,comments,atheism,"Newport Beach, California","<newport beach, california>",Newport Beach,,Orange County,California,United States,North America,1,city,city,,,,,,,
+Kookanoodles,ckeshic,t3_2g0hgs,comments,formula1,I'm from France.,<france>,,,,,France,Europe,1,country,country,,,,,,,
+kieran_n,c6aadiy,t3_103zqo,comments,AskReddit,Canberra ACT Australia,"<canberra, australia>",Canberra,,,Australian Capital Territory,Australia,Oceania,1,city,city,,,,,,,
+darthmatt527,c2419bj,t3_iibvp,comments,atheism,Puerto Rico,<puerto rico>,,,,,Puerto Rico,North America,1,country,country,,,,,,,
+keltoy1549,fcaocg7,t3_egxiwa,comments,AskReddit,"Canada. I’m always ok. 
+ How are you?",<canada>,,,,,Canada,North America,1,country,country,,,,,,,
+EnchantraDelacour,eanhsu9,t3_a11hpd,comments,secretsanta,Alberta to Ontario ,<ontario>; <alberta>,,,,,Canada,North America,1,region,country,,,,,Canada,North America,multiple_locations
+xMyCool,dqg3hda,t3_7g11al,comments,AskRedditAfterDark,Northern Kentucky ,<northern kentucky>,Highland Heights,,Campbell County,Kentucky,United States,North America,1,region,city,,,,Kentucky,United States,North America,geocoding_specificity
+MrsLittleOne,c6a9bb7,t3_103zqo,comments,AskReddit,Austin Freaking Texas,"<austin, texas>",Austin,,Travis County,Texas,United States,North America,1,city,city,,,,,,,
+RogueTF2,cmj2gcc,t3_2o2e41,comments,knifeclub,"Los Angeles, CA. Sage 1 and Leatherman Squirt PS4
+
+Also, a lot of Cali people on this thread already. ","<los angeles, california>",Los Angeles,,Los Angeles County,California,United States,North America,1,city,city,,,,,,,
+Lennyfml,csg2acp,t3_3at9xh,comments,AskReddit,Brooklyn. Ny.. Yo!,<brooklyn>,,,Kings County,New York,United States,North America,1,county,county,,,,,,,
+T3mp3st86,cvyksyz,t3_3omm9z,comments,NoMansSkyTheGame,"29, Germany. (Actually 500km away from Hamburg ;) )
+
+Seeyou around!","<hamburg, germany>",Hamburg,,,Hamburg,Germany,Europe,1,city,city,,,,,,,
+z3rO_1,dnnzfxe,t3_73629g,comments,grandorder,"A hello from Russia!
+
+Playing mostly NA, since NA release made me disinterested in JP version, sadly.",<russia>,,,,,Russia,Europe,1,country,country,,,,,,,
+xamaru,d2glpkw,t3_4gdkkv,comments,AskReddit,Brussels.,<brussels>,Brussels,,,Brussels,Belgium,Europe,1,country,country,,,,,,,
+EeveeGreyhame,cka16bi,t3_2fk8g8,comments,AskReddit,"Magnolia, Texas. USA.","<magnolia, texas>",Magnolia,,Montgomery County,Texas,United States,North America,1,city,city,,,,,,,
+Patch22,dm5ydhg,t3_6vwz9f,comments,HelloInternet,From the DC metro area on the Maryland side (I'm sorry we're special),<maryland>,,,,Maryland,United States,North America,1,region,state,,,,Maryland,United States,North America,parsing
+havrefras,djc5txt,t3_6j7067,comments,skam,"Denmark, 29, female",<denmark>,,,,,Denmark,Europe,1,country,country,,,,,,,
+harshayjha,dxn1xgv,t3_8dcwt2,comments,FantasyPL,India,<india>,,,,,India,Asia,1,country,country,,,,,,,
+No_Hetero,cnk03cj,t3_2rv35z,comments,AskReddit,"I live in Bend, Oregon",<oregon>,,,,Oregon,United States,North America,1,city,state,Bend,,,Oregon,United States,North America,stopwords
+fuckujoffery,dv47jab,t3_81pllo,comments,AskReddit,Melbourne Australia. Even though I'm not American I also assume everyone on reddit is American. ,"<melbourne, australia>",Melbourne,,,Victoria,Australia,Oceania,1,city,city,,,,,,,
+another_scientist,cetr55s,t3_1vm4lx,comments,BabyBumps,South Dakota... Anyone else drive in a blizzard on Friday and are now enjoying 63 degree sunshine? :) ,<south dakota>,,,,South Dakota,United States,North America,1,state,state,,,,,,,
+Ecoterrorist,c6a9649,t3_103zqo,comments,AskReddit,"Sacramento, California ","<sacramento, california>",Sacramento,,Sacramento County,California,United States,North America,1,city,city,,,,,,,
+xBanr,f9p9hbx,t3_e67fev,comments,AskReddit,Brazil,<brazil>,,,,,Brazil,South America,1,country,country,,,,,,,
+CommercialLender,c6a9isi,t3_103zqo,comments,AskReddit,"America's most obese city, Evansville, IN!","<evansville, indiana>",Evansville,Center Township,Vanderburgh County,Indiana,United States,North America,1,city,city,,,,,,,
+Dick_Giggles,b2xz1f,,submissions,AmateurRoomPorn,Living room in our little house in Michigan.,<michigan>,,,,Michigan,United States,North America,1,state,state,,,,,,,
+IAskShitQuestions,cu0a77t,t3_3gpplz,comments,AskReddit,Denmark!,<denmark>,,,,,Denmark,Europe,1,country,country,,,,,,,
+anttyk47,c6a9yhl,t3_103zqo,comments,AskReddit,"Newcastle, Wa","<newcastle, wa>",Newcastle,,King County,Washington,United States,North America,1,city,city,,,,,,,
+deanjonesmaloney,d7ij3if,t3_527uc3,comments,TheSilphRoad,"Florida, Android, no update","<florida, android>",,,,Florida,United States,North America,1,state,state,,,,,,,
+The_Ross,c20x4e8,t3_i4v7c,comments,AskReddit,I grew up in Michigan and have always called them Fireflies.,<michigan>,,,,Michigan,United States,North America,1,state,state,,,,,,,
+Umpire,cglskem,t3_22dggj,comments,AskReddit,"Las Vegas
+
+Famous for .... Las Vegas",<las vegas>,Las Vegas,,Clark County,Nevada,United States,North America,1,city,city,,,,,,,
+Forceburger,dj3vdnc,t3_6i6ool,comments,LiverpoolFC,"Aarhus, Denmark :)","<aarhus, denmark>",Aarhus,,,,Denmark,Europe,1,city,city,,,,,,,
+averagegamejames,cfynpbd,t3_1zzy18,comments,OkCupid,"North Carolina: from the coast, living in the Triangle.",<north carolina>,,,,North Carolina,United States,North America,1,state,state,,,,,,,
+Zink6,cqltpm7,t3_33kipy,comments,soccerspirits,Canada eh!,<canada>,,,,,Canada,North America,1,country,country,,,,,,,
+Gallagher13,ch55xq8,t3_249vxq,comments,jakeandamir,15 and from Connecticut,<connecticut>,,,,Connecticut,United States,North America,1,state,state,,,,,,,
+Menya_zavoot_dave,dem7j42,t3_5xxzac,comments,ManyATrueNerd,"From the Midlands, UK originally but live in Moscow, Russia.","<moscow, russia>; <midlands, united kingdom>",,,,,,Europe,1,city,continent,Moscow,,,,Russia,Europe,multiple_locations
