@@ -26,6 +26,8 @@ ANNOTATE_PLOTS = False
 CI_SAMPLE_PERCENT = 30
 CI_N_SAMPLES = 100
 CI_ALPHA = 0.05
+BREAKDOWN_LEVEL = "cc"
+BREAKDOWN_LOCS = ["US","CA","GB","AU","DE","NZ","IN","SE","NL","IE","MX","NO","BR"]
 
 #########################
 ### Imports
@@ -44,12 +46,20 @@ import matplotlib.pyplot as plt
 from sklearn import metrics
 from tqdm import tqdm
 import reverse_geocoder as rg # pip install reverse_geocoder
+from timezonefinder import TimezoneFinder
 
 ## Local Modules
 from smgeo.util.logging import initialize_logger
 
+#########################
+### Functions
+#########################
+
 ## Initialize Logger
 LOGGER = initialize_logger()
+
+## Timezone Finder
+TF = TimezoneFinder()
 
 #########################
 ### Functions
@@ -73,7 +83,8 @@ def bootstrap_confidence_interval(x1,
                                   func=np.mean,
                                   samples=100,
                                   sample_percent=30,
-                                  alpha = 0.05):
+                                  alpha = 0.05,
+                                  verbose=False):
     """
     Compute a statistic using a bootstrapped confidence interval
 
@@ -101,7 +112,11 @@ def bootstrap_confidence_interval(x1,
     samples = np.random.choice(N, size=(samples, sample_size), replace=True)
     ## Compute Sample Measures
     values = []
-    for sample_ind in tqdm(samples, desc="Bootstrap Sample", file=sys.stdout, total=len(samples)):
+    if verbose:
+        wrapper = lambda x: tqdm(x, desc="Bootstrap Sample", file=sys.stdout, total=len(samples))
+    else:
+        wrapper = lambda x: x
+    for sample_ind in wrapper(samples):
         if x2 is None:
             values.append(func(x1[sample_ind]))
         else:
@@ -147,15 +162,20 @@ def summarize_performance(prediction_df):
                 for score_func, score_name in zip([metrics.f1_score, metrics.precision_score, metrics.recall_score, metrics.accuracy_score],
                                                   ["f1","precision","recall","accuracy"]):
                     if score_name == "accuracy":
-                        score = score_func(l_true,
-                                           l_pred,
-                                           sample_weight=None)
+                        func = lambda x, y: score_func(x, y, sample_weight=None)
                     else:
-                        score = score_func(l_true,
-                                           l_pred,
-                                           average="weighted",
-                                           zero_division=0)
+                        func = lambda x, y: score_func(x, y, average="weighted", zero_division=0)
+                    score = func(l_true, l_pred)
                     pred_performance[f"{level}_{score_name}"] = score
+            ## Timezone Performance
+            for score_func, score_name in zip([metrics.f1_score, metrics.precision_score, metrics.recall_score, metrics.accuracy_score],
+                                              ["f1","precision","recall","accuracy"]):
+                if score_name == "accuracy":
+                    func = lambda x, y: score_func(x, y, sample_weight=None)
+                else:
+                    func = lambda x, y: score_func(x, y, average="weighted", zero_division=0)
+                tz_score = func(pred_subset["true_tz"].values, pred_subset["pred_tz"].values)
+                pred_performance[f"timezone_{score_name}"] = tz_score
             summary_df.append(pred_performance)
     ## Concatenate Results
     summary_df = pd.DataFrame(summary_df)
@@ -192,7 +212,8 @@ def accuracy_at_d(error, d = 100):
 def get_confidence_intervals(prediction_df,
                              n_samples=10,
                              sample_percent=30,
-                             alpha=0.05):
+                             alpha=0.05,
+                             groups=["train","dev"]):
     """
     Get confidence intervals around major classification statistics
 
@@ -203,8 +224,8 @@ def get_confidence_intervals(prediction_df,
                                         bootstrap sample
         alpha (float [0,0.5]): Type 1 error rate (e.g. 0.05 = 95% confidence level)
     """
-    confidence_intervals = {"train":{}, "dev":{}}
-    for group in ["train","dev"]:
+    confidence_intervals = {g:{} for g in groups} 
+    for group in groups:
         group_data = prediction_df.loc[prediction_df["group"]==group]
         y_true = group_data[["longitude_true","latitude_true"]].values
         y_pred = group_data[["longitude_pred","latitude_pred"]].values
@@ -234,22 +255,32 @@ def get_confidence_intervals(prediction_df,
             l_true = np.array(list(map(lambda i: ", ".join([i[j] for j in levels[l:]]), true_discrete)))
             l_pred = np.array(list(map(lambda i: ", ".join([i[j] for j in levels[l:]]), pred_discrete)))
             for score_func, score_name in zip([metrics.f1_score, metrics.precision_score, metrics.recall_score, metrics.accuracy_score],
-                                                ["f1","precision","recall","accuracy"]):
+                                              ["f1","precision","recall","accuracy"]):
                 if score_name == "accuracy":
-                    ci = bootstrap_confidence_interval(l_true,
-                                                       l_pred,
-                                                       func=lambda x, y: score_func(x, y),
-                                                       samples=n_samples,
-                                                       sample_percent=sample_percent,
-                                                       alpha=alpha)
+                    func = lambda x, y: score_func(x, y)
                 else:
-                    ci = bootstrap_confidence_interval(l_true,
-                                                       l_pred,
-                                                       func=lambda x, y: score_func(x, y, average="weighted", zero_division=0),
-                                                       samples=n_samples,
-                                                       sample_percent=sample_percent,
-                                                       alpha=alpha)
+                    func = lambda x, y: score_func(x, y, average="weighted", zero_division=0)
+                ci = bootstrap_confidence_interval(l_true,
+                                                l_pred,
+                                                func=func,
+                                                samples=n_samples,
+                                                sample_percent=sample_percent,
+                                                alpha=alpha)
                 confidence_intervals[group][f"{level}_{score_name}"] = ci
+        ## Classification Metrics: Timezone
+        for score_func, score_name in zip([metrics.f1_score, metrics.precision_score, metrics.recall_score, metrics.accuracy_score],
+                                          ["f1","precision","recall","accuracy"]):
+            if score_name == "accuracy":
+                func = lambda x, y: score_func(x, y)
+            else:
+                func = lambda x, y: score_func(x, y, average="weighted", zero_division=0)
+            ci = bootstrap_confidence_interval(group_data["true_tz"].values,
+                                               group_data["pred_tz"].values,
+                                               func=func,
+                                               samples=n_samples,
+                                               sample_percent=sample_percent,
+                                               alpha=alpha)
+            confidence_intervals[group][f"timezone_{score_name}"] = ci
     return confidence_intervals
 
 
@@ -287,6 +318,9 @@ def load_cross_validation_results(directory_name,
     ## Concatenate Predictions
     prediction_df = pd.concat(prediction_df)
     prediction_df = prediction_df.sort_values(["fold","group"])
+    ## Timezone Information
+    prediction_df["true_tz"] = prediction_df.apply(lambda row: TF.timezone_at(lng=row["longitude_true"],lat=row["latitude_true"]),axis=1)
+    prediction_df["pred_tz"] = prediction_df.apply(lambda row: TF.timezone_at(lng=row["longitude_pred"],lat=row["latitude_pred"]),axis=1)
     ## Append Data Parameters from Config
     prediction_df["data_resolution"] = config["data"]["MIN_RESOLUTION"]
     prediction_df["data_min_comments"] = config["data"]["MIN_COMMENTS"]
@@ -307,7 +341,8 @@ def load_cross_validation_results(directory_name,
 
 def plot_bar(summary_stats_df,
              confidence_intervals,
-             metric):
+             metric,
+             groups=["train","dev"]):
     """
     Create a bar plot showing performance over cross-validation results
 
@@ -320,9 +355,9 @@ def plot_bar(summary_stats_df,
         fig, axes (matplotlib): Training and Development performance comparison between runs
     """
     ## Initialize Figure
-    fig, axes = plt.subplots(1, 2, figsize=(10,5.8), sharey=True)
+    fig, axes = plt.subplots(1, len(groups), figsize=(10,5.8), sharey=True)
     ## Plot Data
-    for g, group in enumerate(["train","dev"]):
+    for g, group in enumerate(groups):
         cur_ind = 0
         xticks = []
         for i, (_, name) in enumerate(CV_DIRECTORIES):
@@ -358,7 +393,8 @@ def plot_bar(summary_stats_df,
     fig.tight_layout()
     return fig, axes
 
-def compute_support_effect(prediction_df):
+def compute_support_effect(prediction_df,
+                           groups=["train","dev"]):
     """
 
     """
@@ -367,7 +403,7 @@ def compute_support_effect(prediction_df):
     max_thresh = prediction_df.groupby(["source","group","fold"])["num_comments"].max().min()
     thresholds = [0]
     while thresholds[-1] < max_thresh:
-        thresholds.append(int(min(max_thresh, thresholds[-1]+20)))
+        thresholds.append(int(min(max_thresh, thresholds[-1]+50)))
     ## Add Reverse Geocoding
     prediction_df["reverse_true"] = reverse_search(prediction_df[["longitude_true","latitude_true"]].values)
     prediction_df["reverse_pred"] = reverse_search(prediction_df[["longitude_pred","latitude_pred"]].values)
@@ -380,11 +416,11 @@ def compute_support_effect(prediction_df):
                                             (prediction_df["num_comments"]>=t)]
             ## Cycle Through Group and Fold
             source_summary = []
-            for group in ["train","dev"]:
+            for group in groups:
                 for fold in source_data["fold"].unique():
                     ## Isolate Subset
                     pred_subset = source_data.loc[(prediction_df["fold"]==fold)&
-                                                    (prediction_df["group"]==group)]
+                                                  (prediction_df["group"]==group)]
                     ## Score Performance
                     pred_performance = {
                         "fold":fold,
@@ -411,6 +447,19 @@ def compute_support_effect(prediction_df):
                                                    average="weighted",
                                                    zero_division=0)
                             pred_performance[f"{level}_{score_name}"] = score
+                    ## Timezone
+                    for score_func, score_name in zip([metrics.f1_score, metrics.precision_score, metrics.recall_score, metrics.accuracy_score],
+                                                      ["f1","precision","recall","accuracy"]):
+                            if score_name == "accuracy":
+                                score = score_func(pred_subset["true_tz"].values,
+                                                   pred_subset["pred_tz"].values,
+                                                   sample_weight=None)
+                            else:
+                                score = score_func(pred_subset["true_tz"].values,
+                                                   pred_subset["pred_tz"].values,
+                                                   average="weighted",
+                                                   zero_division=0)
+                            pred_performance[f"timezone_{score_name}"] = score
                     source_summary.append(pred_performance)
             source_summary = pd.DataFrame(source_summary)
             source_summary["score_threshold"] = t
@@ -422,7 +471,8 @@ def compute_support_effect(prediction_df):
     return support_effects
 
 def plot_support_effect(support_effect_df,
-                        metric):
+                        metric,
+                        groups=["train","dev"]):
     """
 
     """
@@ -432,8 +482,8 @@ def plot_support_effect(support_effect_df,
     ## Add Standard Error
     scores_agg["standard_error"] = scores_agg["std"] / np.sqrt(scores_agg["len"]-1)
     ## Plot
-    fig, ax = plt.subplots(1, 2, figsize=(10,5.8), sharey=True)
-    for g,group in enumerate(["train","dev"]):
+    fig, ax = plt.subplots(1, len(groups), figsize=(10,5.8), sharey=True)
+    for g,group in enumerate(groups):
         for s,(source,name) in enumerate(CV_DIRECTORIES):
             plot_data = scores_agg.loc[(scores_agg["source"]==source)&
                                        (scores_agg["group"]==group)]
@@ -450,6 +500,114 @@ def plot_support_effect(support_effect_df,
     fig.tight_layout()
     return fig, ax
 
+def plot_accuracy_over_thresh(predictions_df,
+                              thresholds = [50,100,150,200,250,500,750,1000,1250,1500,1750,2000,2500,3000,3500,5000],
+                              groups=["train","dev"]):
+    """
+    Plot accuracy curves as a function of distance threshold
+
+    Args:
+        predictions_df (pandas DataFrame): Concatenated Predictions
+    
+    Returns:
+        fig, ax (matplotlib figure): Performance curves
+    """
+    ## Compute Accuracies
+    accuracies = {g:{} for g in groups}
+    for cvdir, cvlabel in CV_DIRECTORIES:
+        cv_preds = predictions_df.loc[predictions_df["source"] == cvdir]
+        for g in accuracies.keys():
+            cv_g_preds = cv_preds.loc[cv_preds["group"]==g]
+            cv_g_acc = []
+            for t in thresholds:
+                t_acc = bootstrap_confidence_interval(cv_g_preds["error"].values,
+                                                      func=lambda x: accuracy_at_d(x, t),
+                                                      samples=CI_N_SAMPLES,
+                                                      sample_percent=CI_SAMPLE_PERCENT)
+                cv_g_acc.append(t_acc)
+            accuracies[g][cvlabel] = np.vstack(cv_g_acc)
+    ## Plot
+    fig, ax = plt.subplots(1,len(accuracies), figsize=(10,5.8), sharex=True, sharey=True)
+    group_order = ["train","dev","test"]
+    gind = 0
+    for group in group_order:
+        if group not in accuracies:
+            continue
+        pax = ax[gind]
+        for s, (_, source) in enumerate(CV_DIRECTORIES):
+            gvals = accuracies[group][source].T * 100
+            pax.fill_between(thresholds,
+                             gvals[0],
+                             gvals[2],
+                             color=f"C{s}",
+                             alpha=0.5)
+            pax.plot(thresholds,
+                     gvals[1],
+                     color=f"C{s}",
+                     linewidth=2,
+                     marker="o",
+                     alpha=.9,
+                     label=source)
+        gind += 1
+        pax.spines["top"].set_visible(False)
+        pax.spines["right"].set_visible(False)
+        pax.set_xlabel("Accuracy Threshold (miles)", fontweight="bold")
+        pax.legend(loc="lower right")
+        pax.set_title(group.title(), fontweight="bold", loc="left")
+    ax[0].set_ylabel("Accuracy (%)", fontweight="bold")
+    fig.tight_layout()
+    return fig, ax
+
+def plot_performance_breakdown(predictions_df,
+                               source,
+                               groups=["train","dev"],
+                               level="cc",
+                               locations=["US","CA","GB","AU","DE","NZ","IN","SE","NL","IE","MX","NO","BR"],
+                               errorfunc=np.nanmean):
+    """
+
+    """
+    ## Isolate Source
+    source_df = predictions_df.loc[predictions_df["source"]==source].copy()
+    ## Break Out Level
+    source_df["level_true"] = source_df["reverse_true"].map(lambda i: i.get(level))
+    ## Replace Out-of-sample Locations
+    loc_set = set(locations)
+    source_df["level_true"] = source_df["level_true"].map(lambda i: i if i in loc_set else "Other")
+    loc_counts = source_df["level_true"].value_counts()
+    ## Plot Histograms
+    bins = np.arange(0, int(source_df["error"].max() + 1), 250)
+    fig, ax = plt.subplots(loc_counts.shape[0], len(groups), figsize=(10,5.8), sharex=True)
+    for g, group in enumerate(groups):
+        for l, (loc, _) in enumerate(loc_counts.items()):
+            loc_group = source_df.loc[(source_df["level_true"]==loc)&(source_df["group"]==group)]
+            pax = ax[l,g]
+            if len(loc_group) == 0:
+                continue
+            qerror = bootstrap_confidence_interval(loc_group["error"].values,
+                                                   func=errorfunc,
+                                                   samples=CI_N_SAMPLES,
+                                                   sample_percent=CI_SAMPLE_PERCENT).astype(int)
+            pax.hist(loc_group["error"], bins=bins, alpha=0.7, edgecolor="navy", color="C0")
+            for ls, q in zip([":","-",":"],qerror):
+                pax.axvline(q, linestyle=ls, color="C0", alpha=0.9, linewidth=1.5)
+            pax.text(qerror[2] + 50,
+                     pax.get_ylim()[1] / 2,
+                     "{:,d} ({:,d},{:,d})".format(qerror[1], qerror[0], qerror[2]),
+                     ha="left",
+                     va="center",
+                     fontsize=6,
+                     bbox=dict(facecolor='white', alpha=0.9))
+            if g == 0:
+                pax.set_ylabel(loc, fontweight="bold", rotation=0, ha="right", va="center")
+            pax.set_yticks([])
+            pax.set_xlim(left=0)
+        ax[0, g].set_title(group.title(), fontweight="bold")
+        ax[-1,g].set_xlabel("Error (miles)", fontweight="bold")
+    fig.tight_layout()
+    fig.subplots_adjust(hspace=.25)
+    return fig, ax
+            
 def main():
     """
     Run quantitative analysis of inference performance, comparing
@@ -494,6 +652,20 @@ def main():
     for m in plot_metrics:
         fig, ax = plot_support_effect(support_effect_df, m)
         fig.savefig(f"{analysis_dir}comment_support_{m}.png")
+        plt.close(fig)
+    ## Accuracy ~ Distance Threshold
+    fig, ax = plot_accuracy_over_thresh(predictions_df)
+    fig.savefig(f"{analysis_dir}accuracy_over_thresholds.png", dpi=300)
+    plt.close(fig)
+    ## Performance ~ Ground Truth Location (Country)
+    for source, source_name in CV_DIRECTORIES:
+        source_name_save = source_name.replace("\n","").replace(" ","").replace("+","-")
+        fig, ax = plot_performance_breakdown(predictions_df,
+                                             source=source,
+                                             errorfunc=np.nanmedian,
+                                             level=BREAKDOWN_LEVEL,
+                                             locations=BREAKDOWN_LOCS)
+        fig.savefig(f"{analysis_dir}breakdown_{BREAKDOWN_LEVEL}_{source_name_save}.png", dpi=300)
         plt.close(fig)
 
 ####################
