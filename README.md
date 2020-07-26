@@ -46,6 +46,8 @@ We will provide two pretrained geolocation inference models upon request. In add
 * `models/reddit/US_TextSubredditTime/`: Contains model and associated data for inferring location of users in the contiguous United States. This model is useful if you are confident your sample of Reddit users lives within the contiguous United States.
 * `models/reddit/Global_TextSubredditTime/`: Contains model and associated data for inferring locations of users around the entire world. This model is useful if you are not confident your sample of Reddit users only lives within the contiguous United States.
 
+Note that the model architecture used for geolocating Reddit users is outdated relative to methods used in state-of-the-art research. Adding modern (i.e. neural, network-based) approaches in on the to-do list for this project.
+
 ## Configuration
 
 Users of this package need to configure two files before running any code in this repository. Templates have been provided to make this setup easy.
@@ -239,3 +241,40 @@ The parameters are as follows:
 * `USE_SUBREDDIT`: If True, use subreddit features in the model (if available in data cache).
 * `USE_TIME`: If True, use temporal features in the model (if available in the data cache).
 * `RANDOM_STATE`: Random seed for training the model.
+
+## Dataset Noise
+
+It is important to keep in mind that our "ground truth" dataset of user geolocation labels is based on an inherently noisy distant supervision process. User location labels used for training models may be wrong and inherently skew training/evaluation. Furthermore, models are trained on data sampled around the date of self-disclosure for each user, but may not perfectly capture the most relevant data in cases where users moved within our sample window. 
+
+#### Annotation Evaluation
+
+With respect to annotation precision, an analysis of a random sample suggests the dataset contains only limited amounts of noise (see below). Moreover, the errors that arise during the annotation process are largely a result of overly-conservative labeling rules. Those interested in improving the distant geocoding procedure should reach out using the contact information listed above.
+
+```
+Label Precision: 488/500 (97.600%)
+Resolution Precision: 428/488 (87.705%)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Incorrect Error Analysis:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+disambiguation -> 7
+parsing -> 5
+movement -> 1
+multiple_locations -> 1
+irrelevant_mention -> 1
+geocoder_error -> 1
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Correct Error Analysis:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+multiple_locations -> 22
+geocoding_specificity -> 18
+parsing -> 9
+stopwords -> 4
+linking -> 3
+geocoder_error -> 2
+ambiguous -> 1
+reverse_syntax -> 1
+ner_abbreviation -> 1
+gazeteer -> 1
+unicode_handling -> 1
+```
+
