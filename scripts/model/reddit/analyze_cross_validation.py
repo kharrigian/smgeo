@@ -9,6 +9,7 @@ Post-hoc analysis of cross-validation results
 
 ## Name of Analysis
 ANALYSIS_NAME = "Global_Feature_Modality"
+# ANALYSIS_NAME = "US_Feature_Modality"
 
 ## Directories
 RESULTS_DIR = "./data/results/reddit/cross_validation/"
@@ -20,14 +21,23 @@ CV_DIRECTORIES = [
                 ("2020_04_01_21_02_Global_TextSubreddit", "Text +\nSubreddits"),
                 ("2020_04_01_21_03_Global_TextSubredditTime", "Text +\nSubreddits +\nTime")
 ]
+# CV_DIRECTORIES = [
+#                 ("2020_04_01_21_04_US_Text", "Text"),
+#                 ("2020_04_01_21_04_US_TextSubreddit", "Text +\nSubreddits"),
+#                 ("2020_04_01_21_04_US_TextSubredditTime", "Text +\nSubreddits +\nTime")
+# ]
+
+## Performance Breakdown Parameters
+BREAKDOWN_LEVEL = "cc"
+BREAKDOWN_LOCS = ["US","CA","GB","AU","DE","NZ","IN","SE","NL","IE","MX","NO","BR"]
+# BREAKDOWN_LEVEL = "admin1"
+# BREAKDOWN_LOCS = None
 
 ## Analysis Parameters
 ANNOTATE_PLOTS = False
 CI_SAMPLE_PERCENT = 30
 CI_N_SAMPLES = 100
 CI_ALPHA = 0.05
-BREAKDOWN_LEVEL = "cc"
-BREAKDOWN_LOCS = ["US","CA","GB","AU","DE","NZ","IN","SE","NL","IE","MX","NO","BR"]
 
 #########################
 ### Imports
@@ -571,6 +581,8 @@ def plot_performance_breakdown(predictions_df,
     source_df = predictions_df.loc[predictions_df["source"]==source].copy()
     ## Break Out Level
     source_df["level_true"] = source_df["reverse_true"].map(lambda i: i.get(level))
+    if locations is None or len(locations) == 0:
+        locations = source_df["level_true"].value_counts().nlargest(15).index.tolist()
     ## Replace Out-of-sample Locations
     loc_set = set(locations)
     source_df["level_true"] = source_df["level_true"].map(lambda i: i if i in loc_set else "Other")
@@ -658,15 +670,16 @@ def main():
     fig.savefig(f"{analysis_dir}accuracy_over_thresholds.png", dpi=300)
     plt.close(fig)
     ## Performance ~ Ground Truth Location (Country)
-    for source, source_name in CV_DIRECTORIES:
-        source_name_save = source_name.replace("\n","").replace(" ","").replace("+","-")
-        fig, ax = plot_performance_breakdown(predictions_df,
-                                             source=source,
-                                             errorfunc=np.nanmedian,
-                                             level=BREAKDOWN_LEVEL,
-                                             locations=BREAKDOWN_LOCS)
-        fig.savefig(f"{analysis_dir}breakdown_{BREAKDOWN_LEVEL}_{source_name_save}.png", dpi=300)
-        plt.close(fig)
+    if BREAKDOWN_LEVEL is not None:
+        for source, source_name in CV_DIRECTORIES:
+            source_name_save = source_name.replace("\n","").replace(" ","").replace("+","-")
+            fig, ax = plot_performance_breakdown(predictions_df,
+                                                source=source,
+                                                errorfunc=np.nanmedian,
+                                                level=BREAKDOWN_LEVEL,
+                                                locations=BREAKDOWN_LOCS)
+            fig.savefig(f"{analysis_dir}breakdown_{BREAKDOWN_LEVEL}_{source_name_save}.png", dpi=300)
+            plt.close(fig)
 
 ####################
 #### Execute
