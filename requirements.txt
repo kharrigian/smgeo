@@ -18,3 +18,4 @@ reverse-geocoder>=1.5.1
 global-land-mask>=0.0.3
 numba
 timezonefinder
+retriever @ git+ssh://git@github.com/kharrigian/retriever@main#egg=retriever
