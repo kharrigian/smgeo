@@ -16,9 +16,6 @@ from html.parser import HTMLParser
 ## External Libraries
 import emoji
 
-## Local
-from .helpers import flatten
-
 ####################
 ### Resources
 ####################
@@ -359,6 +356,9 @@ CONTRACTIONS =  {
             "that'll": "that will",
             }
 
+PUNCTUATION = string.punctuation
+PUNCTUATION += "“”…‘’´"
+
 ####################
 ### Regular Expressions (modified copy of twokenize.py for Python 3 Only)
 ####################
@@ -449,7 +449,11 @@ emoticon = regex_or(
 )
 
 ## Emojis
-emojis_list = map(lambda x: ''.join(x.split()), emoji.UNICODE_EMOJI.keys())
+if "en" in emoji.UNICODE_EMOJI.keys():
+    EMOJI_DICT = emoji.UNICODE_EMOJI["en"]
+else:
+    EMOJI_DICT = emoji.UNICODE_EMOJI
+emojis_list = map(lambda x: ''.join(x.split()), EMOJI_DICT.keys())
 emoji_r = re.compile('|'.join(re.escape(p) for p in emojis_list))
 
 ## Hashtags and at mentions
@@ -622,6 +626,20 @@ def split_emojis(t):
         split_t.append(t[cur_ind:])
     return split_t
 
+## Flattening List of Lists
+def flatten(l):
+    """
+    Flatten a list of lists by one level.
+
+    Args:
+        l (list of lists): List of lists
+
+    Returns:
+        flattened_list (list): Flattened list
+    """
+    flattened_list = [item for sublist in l for item in sublist]
+    return flattened_list
+    
 ####################
 ### Tokenizer
 ####################
@@ -646,7 +664,8 @@ class Tokenizer(object):
                  keep_url=True,
                  keep_hashtags=True,
                  keep_retweets=False,
-                 emoji_handling=None):
+                 emoji_handling=None,
+                 strip_hashtag=True):
         """
         Text Tokenizer. Uses twokenizer to do text splitting. Applies various 
         forms of post-processing.
@@ -675,6 +694,8 @@ class Tokenizer(object):
             emoji_handling (str or None): If None, emojis are kept as they appear in the text. Otherwise,
                                           should be "replace" or "strip". If "replace", they are replaced
                                           with a generic "<EMOJI>" token. If "strip", they are removed completely.
+            strip_hashtag (bool): If True (default), the hashtag at the start of an identified hashtag
+                                  is removed. Otherwise, it is replaced with a "HASHTAG=" prefix
         """
         ## Class Attributes
         self.stopwords = stopwords
@@ -691,6 +712,7 @@ class Tokenizer(object):
         self.keep_hashtags = keep_hashtags
         self.keep_retweets = keep_retweets
         self.emoji_handling = emoji_handling
+        self.strip_hashtag = strip_hashtag
         ## Class Initialization Procedures
         self._initialize_stopwords()
     
@@ -718,7 +740,8 @@ class Tokenizer(object):
                      "keep_hashtags",
                      "keep_retweets",
                      "emoji_handling"]:
-            fmt_str.append(f"{attr}={getattr(self,attr)}")
+            if hasattr(self, attr):
+                fmt_str.append(f"{attr}={getattr(self,attr)}")
         fmt_str = ", ".join(fmt_str)
         desc = f"Tokenizer(stopwords={self.stopwords is not None}, {fmt_str})"
         return desc
@@ -734,15 +757,15 @@ class Tokenizer(object):
             None
         """
         ## Format Stopwords into set if None
-        if self.stopwords is not None:
+        if hasattr(self, "stopwords") and self.stopwords is not None:
             self.stopwords = set(self.stopwords)
         else:
             self.stopwords = set()
         ## Contraction Handling
-        if self.expand_contractions:
+        if hasattr(self, "expand_contractions") and self.expand_contractions:
             self.stopwords = set(self._expand_contractions(list(self.stopwords)))
         ## Pronoun Handling
-        if self.keep_pronouns:
+        if hasattr(self, "keep_pronouns") and self.keep_pronouns:
             for s in list(self.stopwords):
                 if s in PRONOUNS:
                     self.stopwords.remove(s)
@@ -832,7 +855,7 @@ class Tokenizer(object):
         Returns:
             tokens (list of str): Tokens, now with an added <UPPER_FLAG> token if applicable.
         """
-        if all(t.isupper() for t in tokens if not all(char in string.punctuation for char in t) and not any(char.isdigit() for char in t)):
+        if all(t.isupper() for t in tokens if not all(char in PUNCTUATION for char in t) and not any(char.isdigit() for char in t)):
             tokens.append("<UPPER_FLAG>")
         return tokens
     
@@ -847,10 +870,10 @@ class Tokenizer(object):
         Returns:
             tokens (list of str): Tokens, now without standalone punctuation.
         """
-        tokens = list(filter(lambda t: not all(char in string.punctuation for char in t), tokens))
+        tokens = list(filter(lambda t: not all(char in PUNCTUATION for char in t), tokens))
         return tokens
     
-    def _strip_hashtag(self,
+    def _remove_hashtag(self,
                        tokens):
         """
         Remove tokens that start with hashtags
@@ -867,7 +890,8 @@ class Tokenizer(object):
     def _clean_hashtag(self,
                        tokens):
         """
-        Strip hashtags of their "#" symbol, but keep the main token.
+        Strip hashtags of their "#" symbol, but keep the main token if self.strip_hashtag
+        is set true. Otherwise, the "#" symbol is replaced with "<HASHTAG=*>" for token *
 
         Args:
             tokens (list of str): Token list
@@ -875,7 +899,10 @@ class Tokenizer(object):
         Returns:
             tokens (list of str): Tokens, now without preceeding "#".
         """
-        tokens = list(map(lambda t: t.lstrip("#") if t.startswith("#") else t, tokens))
+        if not hasattr(self, "strip_hashtag") or self.strip_hashtag:
+            tokens = list(map(lambda t: t.lstrip("#") if t.startswith("#") and len(t) > 1 else t, tokens))
+        else:
+            tokens = list(map(lambda t: "<HASHTAG={}>".format(t[1:]) if t.startswith("#") and len(t) > 1 else t, tokens))
         return tokens
     
     def _strip_url(self,
@@ -945,7 +972,7 @@ class Tokenizer(object):
                 continue
             negated_tokens.append([t])
         negated_tokens = flatten(negated_tokens)
-        if self.negate_token:
+        if hasattr(self, "negate_token") and self.negate_token:
             for _ in range(negations):
                 negated_tokens.append("<NEGATE_FLAG>")
         return negated_tokens
@@ -997,7 +1024,7 @@ class Tokenizer(object):
         Returns:
             tokens (list): List of tokens, with emoji groups split separately
         """
-        tokens = list(map(lambda t: split_emojis(t) if any(char in emoji.UNICODE_EMOJI for char in t) else [t], tokens))
+        tokens = list(map(lambda t: split_emojis(t) if any(char in EMOJI_DICT for char in t) else [t], tokens))
         tokens = flatten(tokens)
         return tokens
     
@@ -1012,21 +1039,21 @@ class Tokenizer(object):
         Returns:
             tokens (list): Token list without any emojis
         """
-        tokens = list(filter(lambda t: t not in emoji.UNICODE_EMOJI, tokens))
+        tokens = list(filter(lambda t: t not in EMOJI_DICT, tokens))
         return tokens
     
     def _replace_emojis(self,
                         tokens):
         """
         Replace emojis with a generic <EMOJI> token
-
+        
         Args:
             tokens (list): Input list of strings
         
         Returns:
             tokens (list): Tokens with emojis replace with generic string
         """
-        tokens = list(map(lambda t: "<EMOJI>" if t in emoji.UNICODE_EMOJI else t, tokens))
+        tokens = list(map(lambda t: "<EMOJI>" if t in EMOJI_DICT else t, tokens))
         return tokens
 
     def tokenize(self,
@@ -1056,50 +1083,56 @@ class Tokenizer(object):
         ## Get Tokens
         tokens = simpleTokenize(squeezeWhitespace(text))
         ## Upper Flag
-        if self.upper_flag:
+        if hasattr(self, "upper_flag") and self.upper_flag:
             tokens = self._upper_flag(tokens)
         ## Numeric Values
-        if not self.keep_numbers:
+        if hasattr(self, "keep_numbers") and not self.keep_numbers:
             tokens = self._strip_numbers(tokens)
-        else:
+        elif hasattr(self, "keep_numbers") and self.keep_numbers:
             tokens = self._replace_numbers(tokens)
         ## Hashtags
-        if not self.keep_hashtags:
-            tokens = self._strip_hashtag(tokens)
-        else:
-            tokens = self._clean_hashtag(tokens)
+        if hasattr(self, "keep_hashtags"):
+            if not self.keep_hashtags:
+                tokens = self._remove_hashtag(tokens)
+            else:
+                tokens = self._clean_hashtag(tokens)
         ## Case Normalization
-        if not self.keep_case:
+        if not hasattr(self, "keep_case") or not self.keep_case:
+            tokens = list(map(lambda i: "<HASHTAG={}".format(i.replace("<HASHTAG=","").lower()) if i.startswith("<HASHTAG=") else i, tokens))
             tokens = list(map(lambda i: i.lower() if not i.startswith("<") and not i.endswith(">") else i, tokens))
         ## Retweet Tokens
-        if not self.keep_retweets:
-            tokens = self._strip_retweets(tokens)
-        else:
-            tokens = self._replace_retweets(tokens)
+        if hasattr(self, "keep_retweets"):
+            if not self.keep_retweets:
+                tokens = self._strip_retweets(tokens)
+            else:
+                tokens = self._replace_retweets(tokens)
         ## Strip User Mentions
-        if not self.keep_user_mentions:
-            tokens = self._strip_user_mentions(tokens)
-        else:
-            tokens = self._replace_user_mentions(tokens)
+        if hasattr(self, "keep_user_mentions"):
+            if not self.keep_user_mentions:
+                tokens = self._strip_user_mentions(tokens)
+            else:
+                tokens = self._replace_user_mentions(tokens)
         ## Contraction Expansion
-        if self.expand_contractions:
+        if not hasattr(self, "expand_contractions") or self.expand_contractions:
             tokens = self._expand_contractions(tokens)
         ## Negation handling
-        if self.negate_handling:
+        if hasattr(self, "negate_handling") and self.negate_handling:
             tokens = self._handle_negations(tokens)
         ## Stopword Removal
-        tokens = list(filter(lambda x: x.lower().replace("not_","") not in self.stopwords, tokens))
+        if hasattr(self, "stopwords"):
+            tokens = list(filter(lambda x: x.lower().replace("not_","") not in self.stopwords, tokens))
         ## URL Handling
-        if not self.keep_url:
-            tokens = self._strip_url(tokens)
-        else:
-            tokens = self._replace_url(tokens)
+        if hasattr(self, "keep_url"):
+            if not self.keep_url:
+                tokens = self._strip_url(tokens)
+            else:
+                tokens = self._replace_url(tokens)
         ## Punctuation
-        if not self.keep_punctuation:
+        if not hasattr(self, "keep_punctuation") or not self.keep_punctuation:
             tokens = self._strip_punctuation(tokens)
         ## Emojis
         tokens = self._expand_emoji_groups(tokens)
-        if self.emoji_handling is not None:
+        if hasattr(self, "emoji_handling") and self.emoji_handling is not None:
             if self.emoji_handling == "replace":
                 tokens = self._replace_emojis(tokens)
             elif self.emoji_handling == "strip":
