@@ -17,8 +17,8 @@ PLOTS_DIR = "./plots/"
 
 ## Cross-Validation Runs (Folder name, Label)
 CV_DIRECTORIES = [
-                ("2020_04_01_21_01_Global_Text", "Text"),
-                ("2020_04_01_21_02_Global_TextSubreddit", "Text +\nSubreddits"),
+                # ("2020_04_01_21_01_Global_Text", "Text"),
+                # ("2020_04_01_21_02_Global_TextSubreddit", "Text +\nSubreddits"),
                 ("2020_04_01_21_03_Global_TextSubredditTime", "Text +\nSubreddits +\nTime")
 ]
 # CV_DIRECTORIES = [
@@ -297,7 +297,8 @@ def get_confidence_intervals(prediction_df,
 def load_cross_validation_results(directory_name,
                                   n_samples=10,
                                   sample_percent=30,
-                                  alpha=0.05):
+                                  alpha=0.05,
+                                  get_ci=True):
     """
     Load results from a cross-validation run
 
@@ -343,10 +344,12 @@ def load_cross_validation_results(directory_name,
     ## Summarize
     summary_df = summarize_performance(prediction_df)
     ## Get Confidence Intervals
-    confidence_intervals = get_confidence_intervals(prediction_df,
-                                                    n_samples,
-                                                    sample_percent,
-                                                    alpha)
+    confidence_intervals = {}
+    if get_ci:
+        confidence_intervals = get_confidence_intervals(prediction_df,
+                                                        n_samples,
+                                                        sample_percent,
+                                                        alpha)
     return summary_df, confidence_intervals, prediction_df
 
 def plot_bar(summary_stats_df,
