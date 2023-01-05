@@ -14,6 +14,10 @@ This repository provides the first (to my knowledge) geolocation inference appro
 
 Please note that use of code or data in this repository is governed by the LICENSE file and Data Usage Agreement. If you plan to use this code, please fill out the Data Usage Agreement and send it to Keith Harrigian at kharrigian@jhu.edu.
 
+## Disclosure
+
+*Important* As of January 1st, 2023 it is apparent that the backend API I am using for acquiring Reddit data is no longer working. Although I hope to update the codebase to support the new API in the future, I unfortunately don't have the bandwidth to do so at the moment. I recommend using the public dumps of data from Pushshift.io as opposed to the ElasticSearch backend API moving forward, as the latter tends to deal with severe rate limiting and extensive downtime.
+
 ## Installation
 
 All code was developed using Python 3.7+. Core functionality is contained within the `smgeo` package, processes such as data acquisition, annotation, and model training are related to the `scripts/` directory. We expect all code to be run from the root directory of this repository. 
