@@ -137,11 +137,11 @@ The `user_data` variable will be a list of dictionaries, each of which includes 
 
 ```json
 {
-    'author': 'HuskyKeith',
-    'author_flair_text': None,
-    'body': "I remember also being confused about people having interviews until I spoke with one of the ambassadors who helps conduct them.  Interviews for undergraduates are only offered to legacy students, those with a familiar connection to the university.  I'm sure she'll get the standard interview questions for the most part (Why she wants to come here and what she wants to do…etc)  My best advice is for her to relax and have fun with it.  I'm sure the interview can help her more than hurt her unless she has absolutely no idea how to conduct herself in an interview.  Interviewers are usually impressed if their interviewee has done their research.  If your sister knows a specific area of study with a specific professor that she wishes to pursue, I'm positive that would impress. ",
-    'created_utc': 1392758738,
-    'subreddit': 'NEU'
+    "author": "HuskyKeith",
+    "author_flair_text": null,
+    "body": "I remember also being confused about people having interviews ...",
+    "created_utc": 1392758738,
+    "subreddit": "NEU"
 }
 ```
 
