@@ -449,10 +449,7 @@ emoticon = regex_or(
 )
 
 ## Emojis
-if "en" in emoji.UNICODE_EMOJI.keys():
-    EMOJI_DICT = emoji.UNICODE_EMOJI["en"]
-else:
-    EMOJI_DICT = emoji.UNICODE_EMOJI
+EMOJI_DICT = emoji.unicode_codes.EMOJI_DATA
 emojis_list = map(lambda x: ''.join(x.split()), EMOJI_DICT.keys())
 emoji_r = re.compile('|'.join(re.escape(p) for p in emojis_list))
 
@@ -613,7 +610,6 @@ def split_emojis(t):
     Returns:
         split_t (list): List of emojis split separately
     """
-    emojis_found = emoji_r.findall(t)
     split_t = []
     cur_ind = 0
     for matched in emoji_r.finditer(t):

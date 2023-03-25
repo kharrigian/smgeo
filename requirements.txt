@@ -11,7 +11,7 @@ tqdm
 nltk
 pytest
 pytest-cov
-emoji
+emoji>=2.2.0
 unidecode
 geopy>=1.21.0
 reverse-geocoder>=1.5.1

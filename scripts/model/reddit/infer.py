@@ -47,13 +47,22 @@ def parse_command_line():
     ## Initialize Parser Object
     parser = argparse.ArgumentParser(description="Infer home location of reddit users using a pretrained model.")
     ## Required Arguments
-    parser.add_argument("model_path",
-                        help="Path to .joblib cached model file")
+    parser.add_argument("setting",
+                        type=str,
+                        choices={"retrieve","infer"},
+                        help="'retrieve' if getting user data. 'infer' if user data exists already.")
     parser.add_argument("user_list",
+                        type=str,
                         help="Path to .txt file containing users we want to infer location for")
-    parser.add_argument("output_csv",
-                        help="Path for saving the predictions. Should be a csv file.")
     ## Optional Arguments
+    parser.add_argument("--model_path",
+                        type=str,
+                        default=None,
+                        help="Path to .joblib cached model file")
+    parser.add_argument("--output_csv",
+                        type=str,
+                        default=None,
+                        help="Path for saving the predictions. Should be a csv file.")
     parser.add_argument("--overwrite_existing_histories",
                         default=False,
                         action="store_true",
@@ -93,13 +102,13 @@ def parse_command_line():
     ## Parse Arguments
     args = parser.parse_args()
     ## Check That Required Files Exist
-    if not os.path.exists(args.model_path):
+    if args.setting == "infer" and not os.path.exists(args.model_path):
         raise FileNotFoundError(f"Could not find model: {args.model_path}")
     if not os.path.exists(args.user_list):
         raise FileNotFoundError(f"Could not find user list: {args.user_list}")
     if not args.user_list.endswith(".txt"):
         raise TypeError("Expected user list to be a .txt file with each user separated by a newline character")
-    if not args.output_csv.endswith(".csv"):
+    if args.setting == "infer" and not args.output_csv.endswith(".csv"):
         raise TypeError("Expected output_csv to be a .csv file")
     return args
 
@@ -155,28 +164,30 @@ def retrieve_user_data(args,
     """
     LOGGER.info("Querying User Data")
     ## Cache Directory
-    AUTHORS_RAW_DIR = settings.get("reddit").get("AUTHORS_RAW_DIR")
-    if not os.path.exists(AUTHORS_RAW_DIR):
-        os.makedirs(AUTHORS_RAW_DIR)
-    ## Parse Retrieval Information
-    START_DATE = args.start_date
-    END_DATE = args.end_date
-    COMMENT_LIMIT = args.comment_limit
+    author_data_cache_dir = settings.get("reddit").get("AUTHORS_RAW_DIR")
+    if not os.path.exists(author_data_cache_dir):
+        os.makedirs(author_data_cache_dir)
     ## Intialize Reddit
-    reddit = RedditData()
+    reddit = None
     ## Retrieve and Cache Directory
     user_files = []
     for user in tqdm(user_list, file=sys.stdout, total=len(user_list), desc="User History Request"):
         ## Check to See If User History has been Cached
-        user_file = f"{AUTHORS_RAW_DIR}{user}.json.gz"
+        user_file = f"{author_data_cache_dir}{user}.json.gz"
         user_files.append(user_file)
         if os.path.exists(user_file) and not args.overwrite_existing_histories:
             continue
+        ## Only need to initialize if user files don't already exist and not overwriting
+        if reddit is None:
+            reddit = RedditData(init_praw=False,
+                                allow_praw=False,
+                                warn_on_limit=True,
+                                )
         ## Retrieve Comment Data
         user_comment_df = reddit.retrieve_author_comments(user, 
-                                                          start_date=START_DATE,
-                                                          end_date=END_DATE,
-                                                          limit=COMMENT_LIMIT)
+                                                          start_date=args.start_date,
+                                                          end_date=args.end_date,
+                                                          limit=args.comment_limit)
         ## Format Into Json Dictionary
         user_comment_list = preprocess.format_reddit_comments(user_comment_df)
         ## Cache
@@ -251,37 +262,55 @@ def reverse_search(coordinates):
     result = rg.search(list(map(tuple,coordinates[:,::-1])))
     return result
 
-def main():
+def get_user_data_paths(users,
+                        settings):
     """
-    Infer locations for a list of Reddit users
-
-    Args:
-        None
     
-    Returns:
-        None
     """
-    ## Parse Command Line Arguments
-    args = parse_command_line()
-    ## Load Settings
-    settings = load_settings()
-    ## Load User List
-    users = load_users(args)
-    ## Retrieve User Data
-    user_data_paths = retrieve_user_data(args,
-                                         settings,
-                                         users)
+    ## Cache Directory
+    author_data_cache_dir = settings.get("reddit").get("AUTHORS_RAW_DIR")
+    if not os.path.exists(author_data_cache_dir):
+        raise FileNotFoundError(f"Could not find author data directory: '{author_data_cache_dir}'")
+    ## Files
+    user_data_paths = []
+    user_data_paths_missing = []
+    for user in users:
+        user_file = f"{author_data_cache_dir}/{user}.json.gz"
+        if not os.path.exists(user_file):
+            user_data_paths_missing.append(user)
+        else:
+            user_data_paths.append((user, user_file))
+    if len(user_data_paths_missing) > 0:
+        LOGGER.warning("WARNING: Missing data for the following users: {}".format(user_data_paths_missing))
+    if len(user_data_paths) == 0:
+        raise FileNotFoundError("Could not find any usable user data.")
+    users = [u[0] for u in user_data_paths]
+    data_paths = [u[1] for u in user_data_paths]
+    return users, data_paths
+
+def infer_user_data(args,
+                    settings,
+                    users):
+    """
+    
+    """
     ## Load Geolocation Inference Model
     LOGGER.info("Loading Geolocation Inference Model")
     model = joblib.load(args.model_path)
+    ## Get Updated Users and Data Paths
+    LOGGER.info("Identifying Valid User Data Paths")
+    users, user_data_paths = get_user_data_paths(users, settings)
     ## Prepare User Data
+    LOGGER.info("Preparing User Data for Model")
     X, n = prepare_data(model, user_data_paths)
     ## Create Coordinate Grid
+    LOGGER.info("Initializing Coordinate Grid")
     if not args.known_coordinates:
         coordinates = model._create_coordinate_grid(args.grid_cell_size)
     else:
         coordinates = load_known_coordinates(settings)
     ## Filter by Comment Size
+    LOGGER.info("Filtering Users Based on Sample Size")
     X_mask = np.nonzero([i >= args.min_comments for i in n])[0]
     X = X[X_mask]
     users = [users[i] for i in X_mask]
@@ -303,11 +332,41 @@ def main():
             y_pred[f"{level_name}_argmax"] = level_data
     ## Add Posterior
     if args.posterior:
+        LOGGER.info("Merging Posterior With Predictions")
         P = pd.DataFrame(P, index=users, columns=list(map(tuple, coordinates)))
         y_pred = pd.merge(y_pred, P, left_index=True, right_index=True)
     ## Cache
-    LOGGER.info("Caching Inferences")
-    y_pred.to_csv(args.output_csv, index=True)
+    LOGGER.info(f"Caching Inferences: {args.output_csv}")
+    _ = y_pred.to_csv(args.output_csv, index=True)
+
+def main():
+    """
+    Infer locations for a list of Reddit users
+
+    Args:
+        None
+    
+    Returns:
+        None
+    """
+    ## Parse Command Line Arguments
+    args = parse_command_line()
+    ## Load Settings
+    settings = load_settings()
+    ## Load User List
+    users = load_users(args)
+    ## Stage 0: Retrieval
+    if args.setting == "retrieve":
+        ## Retrieve User Data
+        _ = retrieve_user_data(args,
+                               settings,
+                               users)
+    elif args.setting == "infer":
+        _ = infer_user_data(args,
+                            settings,
+                            users)
+    else:
+        raise ValueError(f"Setting = '{args.setting}' not recognized.")
     ## Done
     LOGGER.info("Script complete.")
 

@@ -16,7 +16,7 @@ Please note that use of code or data in this repository is governed by the LICEN
 
 ## Disclosure
 
-*Important* As of January 1st, 2023 it is apparent that the backend API I am using for acquiring Reddit data is no longer working. Although I hope to update the codebase to support the new API in the future, I unfortunately don't have the bandwidth to do so at the moment. I recommend using the public dumps of data from Pushshift.io as opposed to the ElasticSearch backend API moving forward, as the latter tends to deal with severe rate limiting and extensive downtime.
+*Important*: As of March 24, 2023, the [backend](https://github.com/kharrigian/retriever) I use for collecting new user comments from Reddit is functional but not stable. The Pushshift.io backend has been undergoing a transition and I cannot guarantee that all functionality provided in this package will operate as intended. Please consult the Pushshift subreddit to check on the status of the backend. There are currently known issues with accessing data from certain time periods. If you have the resources (i.e., storage), I recommend using the dumps of data available from Pushshift.io; they do not have the same limitations with rate limiting and server downtime.
 
 ## Installation
 
@@ -24,7 +24,7 @@ All code was developed using Python 3.7+. Core functionality is contained within
 
 To run any of the scripts, you will need to install the `smgeo` package first. We recommend installing the pacakge using developer mode:
 
-```
+```bash
 pip install -e .
 ```
 
@@ -60,7 +60,7 @@ Users of this package need to configure two files before running any code in thi
 
 If you want to query any data using the official Reddit API (PRAW) or geocode new strings using the Google Cloud Geocoding API, you will need to provide valid credentials. Credentials should be stored in a file called `config.json` housed in the root directory of this repository. A template file has been included and is replicated below. Note that Reddit API credentials are not necessary for all tasks (e.g. pulling comment data or searching for submissions). Instead, one can opt to query data from Pushshift.io using the PSAW wrapper. Google Cloud API credentials are only necessary if you plan to geocode location strings.
 
-```
+```json
 {
     "reddit": {
         "client_id": "CLIENT_ID",
@@ -79,7 +79,7 @@ If you want to query any data using the official Reddit API (PRAW) or geocode ne
 
 Reference directories are specified in `configurations/settings.json`. All of the directories included in the default file are created by default when you clone this directory. If you instead want to store data in different directories, you can specify so within this file. In general, we recommend keeping this structure to make understanding references within scripts easy.
 
-```
+```json
 {   
     "reddit":{
             "LABELS_DIR":"./data/raw/reddit/labels/",
@@ -95,40 +95,86 @@ Reference directories are specified in `configurations/settings.json`. All of th
 
 A basic test suite has been developed to ensure that code behaves consistently over time. The test suite uses `pytest` and `pytest-cov`. We recommend running the test suite after installation of the `smgeo` package to make sure everything was installed appropriately. You can run all tests using the following command:
 
-```
+```bash
 pytest tests/ -Wignore -v
 ```
 
 Alternatively, to run tests and check package coverage, you can do so using
 
-```
+```bash
 pytest tests/ --cov=smgeo/ --cov-report=html -v -Wignore
 ```
 
 ## Inference
 
-To infer the location of Reddit users using one of our pretrained models, you can use the following basic wrapper command:
+There are two stages involved when inferring the location of Reddit users using one of our pretrained models. 
 
-```
-python scripts/model/reddit/infer.py <model_path> <user_list> <output_csv>
-```
+### Stage 1: Retrieve User Data
 
-* `<model_path>`: Path to a "model.joblib" file. See README in "./models/" for information about available models.
-* `<user_list>`: Path to a ".txt" file with one Reddit username per line. The code will pull comment histories for these users if they haven't already been queried.
-* `<output_csv>`: Name of a ".csv" file for storing the inferences.
+The first stage (`retrieve`) uses [another package I wrote](#disclosure) to query comment data from Pushshift.io for a list of users. If you already have data for users (e.g., from official Reddit API or Pushshift.io data dumps), you can skip this stage. However, you will need to make sure your data has been placed in the appropriate directory and formatted in a standardized manner. For that reason, I recommend you continue reading this section.
 
-There are several customizable parameters to include when running the inference script. You can see them by running the following command (or reading further).
+To query data for a list of users, you can use the following command:
 
-```
-python scripts/model/reddit/infer.py --help
+```bash
+python scripts/model/reddit/infer.py retrieve <user_list>
 ```
 
-#### Inference Arguments
+where `<user_list>` is a path to a ".txt" file with one Reddit username per line.
+
+The code will iterate through the list of users specified in the file, query the Pushshift.io API for the user's comment data, and store the results as a gzipped JSON list in the `AUTHORS_RAW_DIR` specified in `configurations.settings.json`. The files will have the name format "<username>.json.gz". These files should be loadable using the following logic:
+
+```python
+import json
+import gzip
+
+filename = "<username>.json.gz"
+
+with gzip.open(filename,"rt") as the_file:
+    user_data = json.load(the_file)
+```
+
+The `user_data` variable will be a list of dictionaries, each of which includes (at least) the following fields:
+
+```json
+{
+'author': 'HuskyKeith',
+'author_flair_text': None,
+'body': "I remember also being confused about people having interviews until I spoke with one of the ambassadors who helps conduct them.  Interviews for undergraduates are only offered to legacy students, those with a familiar connection to the university.  I'm sure she'll get the standard interview questions for the most part (Why she wants to come here and what she wants to do…etc)  My best advice is for her to relax and have fun with it.  I'm sure the interview can help her more than hurt her unless she has absolutely no idea how to conduct herself in an interview.  Interviewers are usually impressed if their interviewee has done their research.  If your sister knows a specific area of study with a specific professor that she wishes to pursue, I'm positive that would impress. ",
+'created_utc': 1392758738,
+'subreddit': 'NEU'
+}
+```
+
+The following are relevant optional command-line arguments that can be included when retrieving new user data.
+
+#### Optional Retrieval Arguments
 
 * `--overwrite_existing_histories` - By default, post histories for a Reddit user are collected once and cached for future use. If this argument is included, a new query will be made to collect recent comment data.
 * `--start_date` - ISO-format string representing the start date for collecting user comment data. Default is "2008-01-01". Recent data more be indicative of a person's language if they have moved.
 * `--end_date` - ISO-format string representing the end data for collecting user comment data. Default is the current date. Filtering out new data could be useful if analyzing historical posts.
 * `--comment_limit` - Integer representing the maximum number of comments collected for each user. Default is 250. Decreasing speeds up query time, but risks diminishing classification performance.
+
+### Stage 2: Infer User Location
+
+Once you have collected data, you can infer the location of Reddit users using one of our pretrained models, you can use the following basic wrapper command:
+
+```bash
+python scripts/model/reddit/infer.py infer <user_list> --model_path <model_path> --output_csv <output_csv>
+```
+
+The `--model_path` and `--output_csv` are required arguments. The "<user_list>" is the same file that was reference in stage 1.
+
+* `<model_path>`: Path to a "model.joblib" file. See README in "./models/" for information about available models.
+* `<output_csv>`: Name of a ".csv" file for storing the inferences.
+
+There are several additional parameters to include when running the inference script. You can see all of them by running the following command (or reading further).
+
+```bash
+python scripts/model/reddit/infer.py --help
+```
+
+#### Optional Inference Arguments
+
 * `--min_comments` - Integer specifying the minimum number of comments found in a user's history to qualify for inference. In general, users with more comments (>50) have more accurate inferences.
 * `--grid_cell_size` - Float specifying the size in degrees of each grid cell to make inferences over. Only relevant if not using the `--known_coordinates` flag.
 * `--posterior` - If this flag is included, the posterior over all coordinates considered by the model will be output for each user.
