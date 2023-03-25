@@ -137,11 +137,11 @@ The `user_data` variable will be a list of dictionaries, each of which includes 
 
 ```json
 {
-'author': 'HuskyKeith',
-'author_flair_text': None,
-'body': "I remember also being confused about people having interviews until I spoke with one of the ambassadors who helps conduct them.  Interviews for undergraduates are only offered to legacy students, those with a familiar connection to the university.  I'm sure she'll get the standard interview questions for the most part (Why she wants to come here and what she wants to do…etc)  My best advice is for her to relax and have fun with it.  I'm sure the interview can help her more than hurt her unless she has absolutely no idea how to conduct herself in an interview.  Interviewers are usually impressed if their interviewee has done their research.  If your sister knows a specific area of study with a specific professor that she wishes to pursue, I'm positive that would impress. ",
-'created_utc': 1392758738,
-'subreddit': 'NEU'
+    'author': 'HuskyKeith',
+    'author_flair_text': None,
+    'body': "I remember also being confused about people having interviews until I spoke with one of the ambassadors who helps conduct them.  Interviews for undergraduates are only offered to legacy students, those with a familiar connection to the university.  I'm sure she'll get the standard interview questions for the most part (Why she wants to come here and what she wants to do…etc)  My best advice is for her to relax and have fun with it.  I'm sure the interview can help her more than hurt her unless she has absolutely no idea how to conduct herself in an interview.  Interviewers are usually impressed if their interviewee has done their research.  If your sister knows a specific area of study with a specific professor that she wishes to pursue, I'm positive that would impress. ",
+    'created_utc': 1392758738,
+    'subreddit': 'NEU'
 }
 ```
 
@@ -213,7 +213,7 @@ Author histories are tokenized and cached for future use using `scripts/preproce
 
 Inference models can be trained using `scripts/model/reddit/train.py`. The input to this script includes paths to a data configuration and a model configuration file. The syntax is as follows:
 
-```
+```bash
 python scripts/model/reddit/train.py configurations/data/<data_config>.json configurations/data/<model_config>.json
 ```
 
@@ -221,7 +221,7 @@ python scripts/model/reddit/train.py configurations/data/<data_config>.json conf
 
 Data set configurations are housed in `configurations/data/`. The base template included in this repository can be manipulated if desired (and you have access to preprocessed data). The cached data will be stored in directory specified by the `DATA_CACHE_DIR` parameter in `settings.json`.
 
-```
+```json
 {
     "NAME":"state_min5comments_250docs",
     "MIN_RESOLUTION":"administrative_area_level_1",
@@ -265,7 +265,7 @@ The parameters are as follows:
 
 This file specified how you want the inference model to be trained. Model configurations are housed in `configurations/model/`. The base template included in this repository can be manipulated if desired. Configuratons for our pretrained models have been included as well for reference.
 
-```
+```json
 {
  "NAME":"Global_TextSubreddit",
  "FILTER_TO_US":false,
