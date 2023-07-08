@@ -16,7 +16,7 @@ Please note that use of code or data in this repository is governed by the LICEN
 
 ## Disclosure
 
-*Important*: As of March 24, 2023, the [backend](https://github.com/kharrigian/retriever) I use for collecting new user comments from Reddit is functional but not stable. The Pushshift.io backend has been undergoing a transition and I cannot guarantee that all functionality provided in this package will operate as intended. Please consult the Pushshift subreddit to check on the status of the backend. There are currently known issues with accessing data from certain time periods. If you have the resources (i.e., storage), I recommend using the dumps of data available from Pushshift.io; they do not have the same limitations with rate limiting and server downtime.
+*Important*: As of July 7, 2023, the [backend](https://github.com/kharrigian/retriever) I use for collecting new user comments from Reddit is not functional. This is due to a policy change from Reddit regarding third-party APIs. The `smgeo` package can still be used for cached data, but currenty doesn't support application to new data.
 
 ## Installation
 
